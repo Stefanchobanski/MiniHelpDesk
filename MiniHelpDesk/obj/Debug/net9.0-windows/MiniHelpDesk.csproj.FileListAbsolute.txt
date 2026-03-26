@@ -1,0 +1,17 @@
+D:\MiniHelpDesk\MiniHelpDesk\bin\Debug\net9.0-windows\MiniHelpDesk.exe
+D:\MiniHelpDesk\MiniHelpDesk\bin\Debug\net9.0-windows\MiniHelpDesk.deps.json
+D:\MiniHelpDesk\MiniHelpDesk\bin\Debug\net9.0-windows\MiniHelpDesk.runtimeconfig.json
+D:\MiniHelpDesk\MiniHelpDesk\bin\Debug\net9.0-windows\MiniHelpDesk.dll
+D:\MiniHelpDesk\MiniHelpDesk\bin\Debug\net9.0-windows\MiniHelpDesk.pdb
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\RegisterForm.Form1.resources
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.csproj.GenerateResource.cache
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.GeneratedMSBuildEditorConfig.editorconfig
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.AssemblyInfoInputs.cache
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.AssemblyInfo.cs
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.csproj.CoreCompileInputs.cache
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.sourcelink.json
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.dll
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\refint\MiniHelpDesk.dll
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.pdb
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\MiniHelpDesk.genruntimeconfig.cache
+D:\MiniHelpDesk\MiniHelpDesk\obj\Debug\net9.0-windows\ref\MiniHelpDesk.dll
