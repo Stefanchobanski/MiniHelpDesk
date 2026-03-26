@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniHelpDesk.Models;
+namespace App.Models;
 
 public class User
 {
