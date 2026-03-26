@@ -1,4 +1,4 @@
-namespace RegisterForm
+namespace App
 {
     internal static class Program
     {
