@@ -29,7 +29,7 @@ namespace App
             string password = txtPassword.Text;
             string confirmPassword = txtConfirmPassword.Text;
 
-            if (RegisterEventHelpers.CheckAllFields(username, email, password, confirmPassword))
+            if (RegisterEventHelpers.CheckAllFieldsRegister(username, email, password, confirmPassword))
             {
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

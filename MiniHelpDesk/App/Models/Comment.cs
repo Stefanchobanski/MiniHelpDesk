@@ -13,6 +13,5 @@ namespace App.Models
         public int UserID { get; set; }
         public string Text { get; set; } = null!;
         public DateTime CreatedDate { get; set; }
-        // Test
     }
 }
