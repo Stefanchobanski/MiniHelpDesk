@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace App.Repositories;
 
-public interface IRepository<TEntity> where TEntity : class
+public interface IRepository<TEntity>
+    where TEntity : class
 {
-    IEnumerable<TEntity> GetAll();
-    TEntity GetById(int id);
-    void Add(TEntity entity);
-    void Update(TEntity entity);
-    bool Delete(int id);
+    Task<List<TEntity>> GetAllAsync();
+    Task<TEntity?> GetByIdAsync(int id);
+    Task AddAsync(TEntity entity);
+    Task UpdateAsync(TEntity entity);
+    Task<bool> DeleteAsync(int id);
 }
