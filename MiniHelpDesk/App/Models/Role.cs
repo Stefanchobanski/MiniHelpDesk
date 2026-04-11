@@ -13,4 +13,9 @@ public class Role
 
     public int UserID { get; set; }
     public User User { get; set; } = null!;
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

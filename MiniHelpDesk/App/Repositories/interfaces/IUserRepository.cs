@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using App.Models;
 
-namespace App.Repositories;
+namespace App.Repositories.interfaces;
 
 public interface IUserRepository : IRepository<User>
 {

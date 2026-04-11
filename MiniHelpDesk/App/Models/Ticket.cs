@@ -17,6 +17,8 @@ public class Ticket
     public Status Status { get; set; }
     public Priority Priority { get; set; }
     public DateTime CreatedDay { get; set; }
+
+    public int CategoryId {  get; set; }
     public Category Category { get; set; }
 
     public int RequesterId { get; set; }
