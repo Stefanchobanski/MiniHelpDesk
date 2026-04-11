@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Repositories.interfaces;
 using Microsoft.EntityFrameworkCore;
 using MiniHelpDesk.Data;
 using System;
@@ -9,11 +10,9 @@ using System.Threading.Tasks;
 
 namespace App.Repositories;
 
-public class AdminRepository : BaseRepository<User>
+public class AdminRepository : BaseRepository<User>, IAdminRepository
 {
-    public AdminRepository(AppDbContext db) : base(db)
-    {
-    }
+    public AdminRepository(AppDbContext db) : base(db) { }
 
     public async Task<User?> GetUserByNameAsync(string name)
     {

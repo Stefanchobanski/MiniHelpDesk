@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using App.Repositories.interfaces;
+using Microsoft.EntityFrameworkCore;
 using MiniHelpDesk.Data;
 using System;
 using System.Collections.Generic;
