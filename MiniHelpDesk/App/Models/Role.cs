@@ -11,11 +11,6 @@ public class Role
     public int RoleID { get; set; }
     public string Name { get; set; } = null!;
 
-    public int UserID { get; set; }
-    public User User { get; set; } = null!;
+    public List<User> Users { get; set; } = new List<User>();
 
-    public override string ToString()
-    {
-        return Name;
-    }
 }
