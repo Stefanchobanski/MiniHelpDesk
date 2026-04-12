@@ -16,8 +16,4 @@ public class User
     public int RoleID { get; set; }
     public Role Role { get; set; }
 
-    public override string ToString()
-    {
-        return $"Id: {UserID} - Name: {Username} - Email: {Email} - Role: {Role.Name}";
-    }
 }
