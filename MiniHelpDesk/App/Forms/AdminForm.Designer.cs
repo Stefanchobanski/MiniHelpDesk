@@ -28,68 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lbAllTickets = new ListBox();
-            lblUserName = new Label();
             lblTitle = new Label();
-            txtInfo1 = new TextBox();
-            txtInfo2 = new TextBox();
-            txtInfo3 = new TextBox();
             btnUsers = new Button();
-            button2 = new Button();
+            btnTechnician = new Button();
+            btnTickets = new Button();
+            btnReport = new Button();
             SuspendLayout();
-            // 
-            // lbAllTickets
-            // 
-            lbAllTickets.FormattingEnabled = true;
-            lbAllTickets.Location = new Point(381, 96);
-            lbAllTickets.Margin = new Padding(4);
-            lbAllTickets.Name = "lbAllTickets";
-            lbAllTickets.Size = new Size(579, 256);
-            lbAllTickets.TabIndex = 0;
-            // 
-            // lblUserName
-            // 
-            lblUserName.AutoSize = true;
-            lblUserName.Location = new Point(23, 27);
-            lblUserName.Name = "lblUserName";
-            lblUserName.Size = new Size(44, 21);
-            lblUserName.TabIndex = 1;
-            lblUserName.Text = "Име:";
             // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(497, 43);
+            lblTitle.Location = new Point(106, 19);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(113, 21);
             lblTitle.TabIndex = 3;
             lblTitle.Text = "Admin панел";
             // 
-            // txtInfo1
-            // 
-            txtInfo1.Location = new Point(23, 124);
-            txtInfo1.Name = "txtInfo1";
-            txtInfo1.Size = new Size(100, 29);
-            txtInfo1.TabIndex = 4;
-            // 
-            // txtInfo2
-            // 
-            txtInfo2.Location = new Point(23, 174);
-            txtInfo2.Name = "txtInfo2";
-            txtInfo2.Size = new Size(100, 29);
-            txtInfo2.TabIndex = 5;
-            // 
-            // txtInfo3
-            // 
-            txtInfo3.Location = new Point(23, 229);
-            txtInfo3.Name = "txtInfo3";
-            txtInfo3.Size = new Size(100, 29);
-            txtInfo3.TabIndex = 6;
-            // 
             // btnUsers
             // 
-            btnUsers.Location = new Point(44, 380);
+            btnUsers.Location = new Point(106, 82);
             btnUsers.Name = "btnUsers";
             btnUsers.Size = new Size(109, 41);
             btnUsers.TabIndex = 7;
@@ -97,28 +55,43 @@
             btnUsers.UseVisualStyleBackColor = true;
             btnUsers.Click += btnUsers_Click;
             // 
-            // button2
+            // btnTechnician
             // 
-            button2.Location = new Point(44, 438);
-            button2.Name = "button2";
-            button2.Size = new Size(109, 41);
-            button2.TabIndex = 8;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
+            btnTechnician.Location = new Point(106, 151);
+            btnTechnician.Name = "btnTechnician";
+            btnTechnician.Size = new Size(109, 41);
+            btnTechnician.TabIndex = 8;
+            btnTechnician.Text = "Technician";
+            btnTechnician.UseVisualStyleBackColor = true;
+            // 
+            // btnTickets
+            // 
+            btnTickets.Location = new Point(106, 216);
+            btnTickets.Name = "btnTickets";
+            btnTickets.Size = new Size(109, 41);
+            btnTickets.TabIndex = 9;
+            btnTickets.Text = "Tickets";
+            btnTickets.UseVisualStyleBackColor = true;
+            // 
+            // btnReport
+            // 
+            btnReport.Location = new Point(106, 281);
+            btnReport.Name = "btnReport";
+            btnReport.Size = new Size(109, 41);
+            btnReport.TabIndex = 10;
+            btnReport.Text = "Report";
+            btnReport.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1029, 630);
-            Controls.Add(button2);
+            ClientSize = new Size(340, 402);
+            Controls.Add(btnReport);
+            Controls.Add(btnTickets);
+            Controls.Add(btnTechnician);
             Controls.Add(btnUsers);
-            Controls.Add(txtInfo3);
-            Controls.Add(txtInfo2);
-            Controls.Add(txtInfo1);
             Controls.Add(lblTitle);
-            Controls.Add(lblUserName);
-            Controls.Add(lbAllTickets);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
             Name = "AdminForm";
@@ -130,12 +103,13 @@
         #endregion
 
         private ListBox lbAllTickets;
-        private Label lblUserName;
         private Label lblTitle;
         private TextBox txtInfo1;
         private TextBox txtInfo2;
         private TextBox txtInfo3;
         private Button btnUsers;
-        private Button button2;
+        private Button btnTechnician;
+        private Button btnTickets;
+        private Button btnReport;
     }
 }
