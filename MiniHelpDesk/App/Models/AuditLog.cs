@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 
 namespace App.Models
 {
-    public class Audit_Log
+    public class AuditLog
     {
-        [Key]
-        public string AuditLogId { get; set; }
-
-        [Required]
+        public int AuditLogId { get; set; }
         public string Field { get; set; }
-
         public string OldValue { get; set; }
         public string NewValue { get; set; }
-
         public DateTime ChangedDate { get; set; }
 
-        public string ChangedByUserId { get; set; }
-        public string TicketId { get; set; }
+        public int ChangedByUserId { get; set; }
+        public User UserChange { get; set; }
+
+        public int TicketId { get; set; }
+        public Ticket Ticket { get; set; }
     }
 }
