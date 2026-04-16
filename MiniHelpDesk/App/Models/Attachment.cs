@@ -7,18 +7,13 @@ using System.Threading.Tasks;
 
 namespace App.Models
 {
-    internal class Attachment
+    public class Attachment
     {
-        [Key]
-    public string Id { get; set; }
-
-        [Required]
-        public string TicketId { get; set; }
-
-        [Required]
+        public int AttachmentId { get; set; }
         public string FileName { get; set; }
-
-        [Required]
         public string Path { get; set; }
+
+        public int TicketId { get; set; }
+        public Ticket Ticket { get; set; }
     }
 }

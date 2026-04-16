@@ -31,11 +31,6 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         var entity = await _dbSet.FindAsync(id);
 
-        if (entity == null)
-        {
-            return false;
-        }
-
         _dbSet.Remove(entity);
         await _db.SaveChangesAsync();
         return true;

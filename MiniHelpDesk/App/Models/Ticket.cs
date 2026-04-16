@@ -1,5 +1,4 @@
 ﻿using App.Models.Enums;
-using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +26,7 @@ public class Ticket
     public int? TechnicianId { get; set; }
     public User? Technician { get; set; }
 
-   // public List<Comment> Comments { get; set; } = new List<Comment>();
-   // public List<Attachment> Attachments { get; set; } = new List<Attachment>();
+    public List<Comment> Comments { get; set; } = new List<Comment>();
+    public List<Attachment> Attachments = new List<Attachment>();
+    public List<AuditLog> AuditLogs = new List<AuditLog>();
 }
