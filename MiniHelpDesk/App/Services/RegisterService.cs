@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Repositories.interfaces;
 using App.Services.interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,15 @@ namespace MiniHelpDesk.Services;
 
 public class RegisterService : IRegisterService
 {
-    public Task<List<Role>> GetRolesAsync()
+    private readonly IRegisterUserRepository _registerRepository;
+
+    public RegisterService(IRegisterUserRepository registerRepository)
     {
-        throw new NotImplementedException();
+        _registerRepository = registerRepository;
+    }
+
+    public async Task AddUser(User user)
+    {
+        await _registerRepository.AddAsync(user);
     }
 }

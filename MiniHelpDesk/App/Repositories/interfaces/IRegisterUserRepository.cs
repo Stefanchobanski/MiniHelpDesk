@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Services.interfaces
+namespace App.Repositories.interfaces
 {
-    public interface IRegisterService
+    public interface IRegisterUserRepository : IRepository<User>
     {
-        Task AddUser(User user);
+        Task AddAsync(Models.User user);
     }
 }

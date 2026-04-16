@@ -16,12 +16,10 @@ namespace App.Services;
 public class AdminService : IAdminService
 {
     private readonly IAdminRepository _adminRepository;
-    private readonly IRoleRepository _roleRepository;
 
-    public AdminService(IAdminRepository adminRepository, IRoleRepository roleRepository)
+    public AdminService(IAdminRepository adminRepository)
     {
         _adminRepository = adminRepository;
-        _roleRepository = roleRepository;
     }
 
     public async Task ChangeUserRole(string userName, int id)
@@ -79,17 +77,6 @@ public class AdminService : IAdminService
         }
 
         return user;
-    }
-    public async Task<List<Role>> GetRolesAsync()
-    {
-        var roles = await _roleRepository.GetRolesAsync();
-
-        if(roles == null)
-        {
-            throw new InvalidOperationException($"Not found roles");
-        }
-
-        return roles;
     }
 
     public async Task<User> GetByIdUser(int id)

@@ -21,11 +21,13 @@ public partial class UserForm : Form
 {
     private readonly AdminForm _adminForm;
     private readonly IAdminService _adminService;
-    public UserForm(IAdminService adminService, AdminForm adminForm)
+    private readonly IRoleService _roleService;
+    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService)
     {
         InitializeComponent();
         _adminService = adminService;
         _adminForm = adminForm;
+        _roleService = roleService;
     }
 
     private int _selectedIndex = -1;
@@ -34,7 +36,7 @@ public partial class UserForm : Form
     {
         try
         {
-            var roles = await _adminService.GetRolesAsync();
+            var roles = await _roleService.GetRolesAsync();
             cmbRoles.DataSource = roles;
             cmbRoles.DisplayMember = "Name";
             cmbRoles.ValueMember = "RoleID";

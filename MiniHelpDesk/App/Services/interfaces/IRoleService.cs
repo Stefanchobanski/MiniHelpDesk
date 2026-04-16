@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace App.Services.interfaces
 {
-    public interface IRegisterService
+    public interface IRoleService
     {
-        Task AddUser(User user);
+        Task<List<Role>> GetRolesAsync();
     }
 }
