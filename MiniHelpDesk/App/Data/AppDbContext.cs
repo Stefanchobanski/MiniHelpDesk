@@ -24,6 +24,14 @@ public class AppDbContext : DbContext
             entity.HasOne(e => e.Role)
             .WithMany(r => r.Users)
             .HasForeignKey(r => r.RoleID);
+
+            entity.HasKey(u => u.UserID);
+            entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
+            entity.Property(u => u.Email).IsRequired().HasMaxLength(50);
+            entity.Property(u => u.Password).IsRequired();
         });
+
+
+
     }
 }

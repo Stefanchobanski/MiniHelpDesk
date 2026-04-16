@@ -15,130 +15,119 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace App.Forms
+namespace App.Forms;
+
+public partial class UserForm : Form
 {
-    public partial class UserForm : Form
+    private readonly AdminForm _adminForm;
+    private readonly IAdminService _adminService;
+    public UserForm(IAdminService adminService, AdminForm adminForm)
     {
-        private readonly IAdminService _adminService;
-        public UserForm(IAdminService adminService)
+        InitializeComponent();
+        _adminService = adminService;
+        _adminForm = adminForm;
+    }
+
+    private int _selectedIndex = -1;
+
+    private async void UserForm_Load(object sender, EventArgs e)
+    {
+        try
         {
-            InitializeComponent();
-             _adminService = adminService;
+            var roles = await _adminService.GetRolesAsync();
+            cmbRoles.DataSource = roles;
+            cmbRoles.DisplayMember = "Name";
+            cmbRoles.ValueMember = "RoleID";
+
+            var users = await _adminService.GetUsersWithRole();
+            lbUsers.DataSource = users;
+            lbUsers.DisplayMember = "Display";
         }
-
-        private int _selectedIndex = -1;
-
-        private async void UserForm_Load(object sender, EventArgs e)
+        catch (Exception ex)
         {
-            try
-            {
-                var roles = await _adminService.GetRolesAsync();
-                cmbRoles.DataSource = roles;
-                cmbRoles.DisplayMember = "Name";
-                cmbRoles.ValueMember = "RoleID";
-
-                var users = await _adminService.GetUsersWithRole();
-                lbUsers.DataSource = users;
-                lbUsers.DisplayMember = "Display";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+    }
 
-        private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
+    private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
         {
-            try
-            {
-                _selectedIndex = lbUsers.SelectedIndex;
-                CheckSelectedIndex(_selectedIndex);
+            _selectedIndex = lbUsers.SelectedIndex;
+            CheckSelectedIndex(_selectedIndex);
 
-                txtbUsername.Enabled = true;
-                txtbEmail.Enabled = true;
+            txtbUsername.Enabled = true;
+            txtbEmail.Enabled = true;
 
 
-                var user = lbUsers.SelectedItem as UserRoleDTO;
+            var user = lbUsers.SelectedItem as UserRoleDTO;
 
-                if(user == null)
-                {
-                    return;
-                }
+            txtbUsername.Text = user.UserName;
+            txtbEmail.Text = user.Email;
 
-                txtbUsername.Text = user.UserName;
-                txtbEmail.Text = user.Email;
-
-                cmbRoles.SelectedValue = user.RoleId;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            cmbRoles.SelectedValue = user.RoleId;
         }
-
-        private void CheckSelectedIndex(int index)
+        catch (Exception ex)
         {
-            if (index == -1)
-            {
-                throw new IndexOutOfRangeException("Not selected item");
-            }
+            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+    }
 
-        private async void btnRemoveUser_Click(object sender, EventArgs e)
+    private void CheckSelectedIndex(int index)
+    {
+        if (index == -1)
         {
-            try
-            {
-                CheckSelectedIndex(_selectedIndex);
-
-                var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
-                var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
-
-                if (tempUser == null)
-                {
-                    return;
-                }
-
-                await _adminService.RemoveUser(tempUser.UserID);
-                lbUsers.DataSource = await _adminService.GetUsersWithRole();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            throw new IndexOutOfRangeException("Not selected item");
         }
+    }
 
-        private async void btnUpdate_Click(object sender, EventArgs e)
+    private async void btnRemoveUser_Click(object sender, EventArgs e)
+    {
+        try
         {
-            try
-            {
-                CheckSelectedIndex(_selectedIndex);
+            CheckSelectedIndex(_selectedIndex);
 
-                var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
+            var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
 
-                if (selectedUser == null)
-                {
-                    return;
-                }
+            var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
 
-                var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
-
-                if (tempUser == null)
-                {
-                    return;
-                }
-
-                tempUser.Username = txtbUsername.Text;
-                tempUser.Email = txtbEmail.Text;
-                tempUser.RoleID = (int)cmbRoles.SelectedValue;
-
-                await _adminService.UpdateUsers(tempUser);
-                lbUsers.DataSource = await _adminService.GetUsersWithRole();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            await _adminService.RemoveUser(tempUser.UserID);
+            lbUsers.DataSource = await _adminService.GetUsersWithRole();
         }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private async void btnUpdate_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            CheckSelectedIndex(_selectedIndex);
+
+            var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
+
+            var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
+
+            tempUser.Username = txtbUsername.Text;
+            tempUser.Email = txtbEmail.Text;
+            tempUser.RoleID = (int)cmbRoles.SelectedValue;
+
+            await _adminService.UpdateUsers(tempUser);
+            lbUsers.DataSource = await _adminService.GetUsersWithRole();
+
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void btnBack_Click(object sender, EventArgs e)
+    {
+        _adminForm.Show();
+        _adminForm.FormClosed += (s, args) => this.Close();
+        this.Close();
     }
 }

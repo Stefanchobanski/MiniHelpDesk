@@ -42,17 +42,24 @@ public class AdminService : IAdminService
     {
         var users = await _adminRepository.GetAllAsync();
 
+        if (users == null)
+        {
+            throw new InvalidOperationException($"Not found users");
+        }
+
+        return users;
+    }
+
+    public async Task<List<UserRoleDTO>> GetUsersWithRole()
+    {
+        var users = await _adminRepository.GetAllUserWithRole();
+
         if(users == null)
         {
             throw new InvalidOperationException($"Not found users");
         }
 
-        return  users;
-    }
-
-    public async Task<List<UserRoleDTO>> GetUsersWithRole()
-    {
-        return await _adminRepository.GetAllUserWithRole();
+        return users;
     }
 
     public async Task UpdateUsers(User user)
@@ -62,11 +69,25 @@ public class AdminService : IAdminService
 
     public async Task<User?> GetUserById(int id)
     {
-        return await _adminRepository.GetByIdAsync(id);
+        var user = await _adminRepository.GetByIdAsync(id);
+
+        if(user == null)
+        {
+            throw new InvalidOperationException($"Not found user");
+        }
+
+        return user;
     }
     public async Task<List<Role>> GetRolesAsync()
     {
-        return await _adminRepository.GetRolesAsync();
+        var roles = await _adminRepository.GetRolesAsync();
+
+        if(roles == null)
+        {
+            throw new InvalidOperationException($"Not found roles");
+        }
+
+        return roles;
     }
 
     public async Task<User> GetByIdUser(int id)
@@ -92,6 +113,4 @@ public class AdminService : IAdminService
             throw new FormatException("Username is empty");
         }
     }
-
-
 }
