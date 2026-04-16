@@ -1,7 +1,11 @@
+using App.Models;
+using MiniHelpDesk.Services;
+
 namespace App
 {
     public partial class RegisterForm : Form
     {
+        private readonly RegisterService _registerService;
         public CheckBox chkRevealPassword;
         public RegisterForm()
         {
@@ -28,6 +32,7 @@ namespace App
             string email = txtEmail.Text;
             string password = txtPassword.Text;
             string confirmPassword = txtConfirmPassword.Text;
+            var roleId = cbxRole.SelectedValue;
 
             if (RegisterEventHelpers.CheckAllFieldsRegister(username, email, password, confirmPassword))
             {
@@ -49,6 +54,13 @@ namespace App
                 MessageBox.Show("Password must be at least 6 characters long.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            var user = new User()
+            {
+                Username = username,
+                Email = email,
+                Password = password,
+            };
         }
 
     }
