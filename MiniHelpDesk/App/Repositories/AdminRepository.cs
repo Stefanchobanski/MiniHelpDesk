@@ -28,11 +28,6 @@ public class AdminRepository : BaseRepository<User>, IAdminRepository
         }).ToListAsync();
     }
 
-    public async Task<List<Role>> GetRolesAsync()
-    {
-        return await _db.Roles.ToListAsync();
-    }
-
     public async Task<User?> GetUserByNameAsync(string name)
     {
         return await _dbSet.FirstOrDefaultAsync(u => u.Username == name);

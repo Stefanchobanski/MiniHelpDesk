@@ -14,7 +14,6 @@ public interface IAdminService
     Task<List<User>> GetAllUsers();
     Task UpdateUsers(User user);
     Task<List<UserRoleDTO>> GetUsersWithRole();
-    Task<List<Role>> GetRolesAsync();
     Task<User> GetByIdUser(int id);
     Task RemoveUser(int id);
 }

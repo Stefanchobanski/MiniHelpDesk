@@ -14,18 +14,20 @@ namespace App.Forms;
 public partial class AdminForm : Form
 {
     private readonly IAdminService _adminService;
-    public AdminForm(IAdminService adminService)
+    private readonly IRoleService _roleService;
+    public AdminForm(IAdminService adminService, IRoleService roleService)
     {
         InitializeComponent();
         _adminService = adminService;
+        _roleService = roleService;
     }
 
     private void btnUsers_Click(object sender, EventArgs e)
     {
         this.Hide();
 
-        UserForm userForm = new UserForm(_adminService, this);
-        userForm.FormClosed += (s, args) => this.Close();
+        UserForm userForm = new UserForm(_adminService, this, _roleService);
+        userForm.FormClosed += (s, args) => this.Show();
         userForm.Show();
     }
 

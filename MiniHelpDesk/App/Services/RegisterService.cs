@@ -1,4 +1,7 @@
-﻿using System;
+﻿using App.Models;
+using App.Repositories.interfaces;
+using App.Services.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +9,17 @@ using System.Threading.Tasks;
 
 namespace MiniHelpDesk.Services;
 
-public class RegisterService
+public class RegisterService : IRegisterService
 {
+    private readonly IRegisterUserRepository _registerRepository;
+
+    public RegisterService(IRegisterUserRepository registerRepository)
+    {
+        _registerRepository = registerRepository;
+    }
+
+    public async Task AddUser(User user)
+    {
+        await _registerRepository.AddAsync(user);
+    }
 }
