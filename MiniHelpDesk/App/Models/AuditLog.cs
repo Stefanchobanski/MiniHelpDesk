@@ -18,7 +18,7 @@ namespace App.Models
         public int ChangedByUserId { get; set; }
         public User UserChange { get; set; }
 
-        public int TicketId { get; set; }
-        public Ticket Ticket { get; set; }
+        public int? TicketId { get; set; }
+        public Ticket? Ticket { get; set; }
     }
 }

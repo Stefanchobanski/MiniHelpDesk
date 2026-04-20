@@ -30,7 +30,9 @@ public class AppDbContext : DbContext
 
             entity.HasOne(e => e.Role)
             .WithMany(r => r.Users)
-            .HasForeignKey(u => u.RoleID);
+            .HasForeignKey(u => u.RoleID)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasMany(u=> u.TicketToRequest)
             .WithOne(t=>t.Requester)
@@ -41,7 +43,7 @@ public class AppDbContext : DbContext
             entity.HasMany(u => u.TicketToTechnican)
             .WithOne(t => t.Technician)
             .HasForeignKey(t => t.TechnicianId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
 
             entity.HasMany(u => u.Comments)
@@ -56,9 +58,16 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
-            entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
-            entity.Property(u => u.Email).IsRequired().HasMaxLength(50);
-            entity.Property(u => u.Password).IsRequired();
+            entity.Property(u => u.Username)
+            .IsRequired()
+            .HasMaxLength(50);
+
+            entity.Property(u => u.Email)
+            .IsRequired()
+            .HasMaxLength(50);
+
+            entity.Property(u => u.Password)
+            .IsRequired();
         });
 
         modelBuilder.Entity<Ticket>(entity =>
@@ -68,12 +77,13 @@ public class AppDbContext : DbContext
             entity.HasOne(t=>t.Category)
             .WithMany(c=>c.TicketList)
             .HasForeignKey(t=>t.CategoryId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
             entity.HasMany(t => t.Attachments)
             .WithOne(a => a.Ticket)
             .HasForeignKey(a => a.TicketId)
-            .IsRequired();
+            .IsRequired(false);
 
             entity.HasMany(t => t.Comments)
             .WithOne(c => c.Ticket)
@@ -83,7 +93,7 @@ public class AppDbContext : DbContext
             entity.HasMany(t => t.AuditLogs)
             .WithOne(a => a.Ticket)
             .HasForeignKey(a => a.TicketId)
-            .IsRequired();
+            .IsRequired(false);
 
             entity.Property(o => o.Status).HasConversion<string>();
             entity.Property(o => o.Priority).HasConversion<string>();
