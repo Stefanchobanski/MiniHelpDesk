@@ -21,7 +21,6 @@ namespace App
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             using var db = new AppDbContext();
-
             //db.Categories.Add(new Category()
             //{
             //    Name = "IT"
@@ -77,8 +76,6 @@ namespace App
 
             //});
 
-            //db.SaveChanges();
-
 
 
             db.Database.EnsureCreated();
@@ -89,7 +86,9 @@ namespace App
             var roleRepo = new RoleRepository(db);
             var serviceAdmin = new AdminService(adminRepo);
             var serviceRole = new RoleService(roleRepo);
-            Application.Run(new AdminForm(serviceAdmin, serviceRole));
+            var categoryRepo = new CategoryRepository(db);
+            var categoryServes = new CategoryService(categoryRepo);
+            Application.Run(new AdminForm(serviceAdmin, serviceRole, categoryServes));
             var registerRepo = new RegisterUserRepository(db);
             var registerService = new RegisterService(registerRepo);
             //Application.Run(new RegisterForm(registerService, serviceRole));

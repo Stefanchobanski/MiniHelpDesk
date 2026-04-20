@@ -56,7 +56,7 @@ public partial class UserForm : Form
         try
         {
             _selectedIndex = lbUsers.SelectedIndex;
-            CheckSelectedIndex(_selectedIndex);
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
             txtbUsername.Enabled = true;
             txtbEmail.Enabled = true;
@@ -75,19 +75,13 @@ public partial class UserForm : Form
         }
     }
 
-    private void CheckSelectedIndex(int index)
-    {
-        if (index == -1)
-        {
-            throw new IndexOutOfRangeException("Not selected item");
-        }
-    }
+
 
     private async void btnRemoveUser_Click(object sender, EventArgs e)
     {
         try
         {
-            CheckSelectedIndex(_selectedIndex);
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
             var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
 
@@ -106,7 +100,7 @@ public partial class UserForm : Form
     {
         try
         {
-            CheckSelectedIndex(_selectedIndex);
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
             var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
 

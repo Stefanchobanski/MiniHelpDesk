@@ -30,7 +30,7 @@
         {
             lblTitle = new Label();
             btnUsers = new Button();
-            btnTechnician = new Button();
+            btnCategories = new Button();
             btnTickets = new Button();
             btnReport = new Button();
             SuspendLayout();
@@ -55,14 +55,15 @@
             btnUsers.UseVisualStyleBackColor = true;
             btnUsers.Click += btnUsers_Click;
             // 
-            // btnTechnician
+            // btnCategories
             // 
-            btnTechnician.Location = new Point(106, 151);
-            btnTechnician.Name = "btnTechnician";
-            btnTechnician.Size = new Size(109, 41);
-            btnTechnician.TabIndex = 8;
-            btnTechnician.Text = "Technician";
-            btnTechnician.UseVisualStyleBackColor = true;
+            btnCategories.Location = new Point(106, 151);
+            btnCategories.Name = "btnCategories";
+            btnCategories.Size = new Size(109, 41);
+            btnCategories.TabIndex = 8;
+            btnCategories.Text = "Categories";
+            btnCategories.UseVisualStyleBackColor = true;
+            btnCategories.Click += btnCategories_Click;
             // 
             // btnTickets
             // 
@@ -89,7 +90,7 @@
             ClientSize = new Size(340, 402);
             Controls.Add(btnReport);
             Controls.Add(btnTickets);
-            Controls.Add(btnTechnician);
+            Controls.Add(btnCategories);
             Controls.Add(btnUsers);
             Controls.Add(lblTitle);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -108,7 +109,7 @@
         private TextBox txtInfo2;
         private TextBox txtInfo3;
         private Button btnUsers;
-        private Button btnTechnician;
+        private Button btnCategories;
         private Button btnTickets;
         private Button btnReport;
     }
