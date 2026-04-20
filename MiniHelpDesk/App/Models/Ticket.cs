@@ -17,8 +17,8 @@ public class Ticket
     public Priority Priority { get; set; }
     public DateTime CreatedDay { get; set; }
 
-    public int CategoryId {  get; set; }
-    public Category Category { get; set; }
+    public int? CategoryId {  get; set; }
+    public Category? Category { get; set; }
 
     public int RequesterId { get; set; }
     public User Requester { get; set; }
@@ -27,6 +27,6 @@ public class Ticket
     public User? Technician { get; set; }
 
     public List<Comment> Comments { get; set; } = new List<Comment>();
-    public List<Attachment> Attachments = new List<Attachment>();
-    public List<AuditLog> AuditLogs = new List<AuditLog>();
+    public List<Attachment>? Attachments = new List<Attachment>();
+    public List<AuditLog>? AuditLogs = new List<AuditLog>();
 }
