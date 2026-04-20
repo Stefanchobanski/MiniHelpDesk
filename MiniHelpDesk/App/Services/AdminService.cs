@@ -89,7 +89,12 @@ public class AdminService : IAdminService
         await _adminRepository.DeleteAsync(id);
     }
 
+    public async Task RemoveAddUserWithTables(int id)
+    {
+        var user = await _adminRepository.GetByIdAsync(id) ?? throw new IndexOutOfRangeException("Invalid user");
 
+        await _adminRepository.RemoveTicketByUserAllTabels(user);
+    }
 
 
 
@@ -102,4 +107,5 @@ public class AdminService : IAdminService
             throw new FormatException("Username is empty");
         }
     }
+
 }

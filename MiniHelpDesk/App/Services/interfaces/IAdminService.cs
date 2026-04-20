@@ -16,4 +16,5 @@ public interface IAdminService
     Task<List<UserRoleDTO>> GetUsersWithRole();
     Task<User> GetByIdUser(int id);
     Task RemoveUser(int id);
+    Task RemoveAddUserWithTables(int id);
 }

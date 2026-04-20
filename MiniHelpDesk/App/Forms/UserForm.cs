@@ -93,7 +93,7 @@ public partial class UserForm : Form
 
             var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
 
-            await _adminService.RemoveUser(tempUser.UserID);
+            await _adminService.RemoveAddUserWithTables(tempUser.UserID);
             lbUsers.DataSource = await _adminService.GetUsersWithRole();
         }
         catch (Exception ex)
