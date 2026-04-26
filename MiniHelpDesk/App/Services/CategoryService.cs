@@ -53,5 +53,10 @@ namespace App.Services
         {
            await _categoryRepository.DeleteAsync(id);
         }
+
+        public async Task UpdateCategory(Category category)
+        {
+            await _categoryRepository.UpdateAsync(category);
+        }
     }
 }

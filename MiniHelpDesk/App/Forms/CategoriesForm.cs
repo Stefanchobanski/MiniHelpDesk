@@ -53,7 +53,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message , "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -69,7 +69,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -87,7 +87,32 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnUpdateCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FormHelper.CheckSelectedIndex(_index);
+
+                string name = txtbName.Text;
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    throw new IndexOutOfRangeException("Трябва да напишете нещо!");
+                }
+
+                Category category = lbCategories.SelectedItem as Category;
+                category.Name = name;
+
+                await _categoryService.UpdateCategory(category);
+                lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

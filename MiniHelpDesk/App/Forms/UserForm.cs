@@ -47,7 +47,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -71,7 +71,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -92,7 +92,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -101,6 +101,11 @@ public partial class UserForm : Form
         try
         {
             FormHelper.CheckSelectedIndex(_selectedIndex);
+
+            if (string.IsNullOrWhiteSpace(txtbUsername.Text))
+            {
+                throw new IndexOutOfRangeException("Трябва да напишете нещо!");
+            }
 
             var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
 
@@ -116,7 +121,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

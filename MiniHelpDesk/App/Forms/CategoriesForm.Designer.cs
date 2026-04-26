@@ -55,12 +55,13 @@
             btnUpdateCategory.TabIndex = 19;
             btnUpdateCategory.Text = "Update";
             btnUpdateCategory.UseVisualStyleBackColor = true;
+            btnUpdateCategory.Click += btnUpdateCategory_Click;
             // 
             // btnRemoveCategory
             // 
-            btnRemoveCategory.Location = new Point(79, 359);
+            btnRemoveCategory.Location = new Point(79, 364);
             btnRemoveCategory.Name = "btnRemoveCategory";
-            btnRemoveCategory.Size = new Size(119, 54);
+            btnRemoveCategory.Size = new Size(119, 44);
             btnRemoveCategory.TabIndex = 18;
             btnRemoveCategory.Text = "Remove";
             btnRemoveCategory.UseVisualStyleBackColor = true;

@@ -13,5 +13,6 @@ namespace App.Services.interfaces
         public Task<Category>? GetCategoryById(int id);
         public Task AddCategory(string name);
         public Task RemoveCategory(int id);
+        public Task UpdateCategory(Category category);
     }
 }
