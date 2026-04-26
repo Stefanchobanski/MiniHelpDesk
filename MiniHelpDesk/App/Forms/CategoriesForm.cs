@@ -69,7 +69,25 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
+            }
+        }
+
+        private async void btnRemoveCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FormHelper.CheckSelectedIndex(_index);
+
+                var category = lbCategories.SelectedItem as Category;
+
+                await _categoryService.RemoveCategory(category.CategoryId);
+
+                lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
             }
         }
     }

@@ -64,6 +64,7 @@
             btnRemoveCategory.TabIndex = 18;
             btnRemoveCategory.Text = "Remove";
             btnRemoveCategory.UseVisualStyleBackColor = true;
+            btnRemoveCategory.Click += btnRemoveCategory_Click;
             // 
             // txtbName
             // 

@@ -48,5 +48,10 @@ namespace App.Services
                 throw new IndexOutOfRangeException("Тази категория вече съществува");
             }
         }
+
+        public async Task RemoveCategory(int id)
+        {
+           await _categoryRepository.DeleteAsync(id);
+        }
     }
 }
