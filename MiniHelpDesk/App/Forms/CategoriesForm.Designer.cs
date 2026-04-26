@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             btnBack = new Button();
-            btnUpdate = new Button();
+            btnUpdateCategory = new Button();
             btnRemoveCategory = new Button();
             txtbName = new TextBox();
             lblName = new Label();
             lbCategories = new ListBox();
-            btnAdd = new Button();
+            btnAddCategory = new Button();
             SuspendLayout();
             // 
             // btnBack
@@ -47,14 +47,14 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
-            // btnUpdate
+            // btnUpdateCategory
             // 
-            btnUpdate.Location = new Point(79, 433);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(119, 44);
-            btnUpdate.TabIndex = 19;
-            btnUpdate.Text = "Update";
-            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdateCategory.Location = new Point(79, 433);
+            btnUpdateCategory.Name = "btnUpdateCategory";
+            btnUpdateCategory.Size = new Size(119, 44);
+            btnUpdateCategory.TabIndex = 19;
+            btnUpdateCategory.Text = "Update";
+            btnUpdateCategory.UseVisualStyleBackColor = true;
             // 
             // btnRemoveCategory
             // 
@@ -62,7 +62,7 @@
             btnRemoveCategory.Name = "btnRemoveCategory";
             btnRemoveCategory.Size = new Size(119, 54);
             btnRemoveCategory.TabIndex = 18;
-            btnRemoveCategory.Text = "Remove category";
+            btnRemoveCategory.Text = "Remove";
             btnRemoveCategory.UseVisualStyleBackColor = true;
             // 
             // txtbName
@@ -91,23 +91,24 @@
             lbCategories.TabIndex = 11;
             lbCategories.SelectedIndexChanged += lbCategories_SelectedIndexChanged;
             // 
-            // btnAdd
+            // btnAddCategory
             // 
-            btnAdd.Location = new Point(79, 295);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(119, 44);
-            btnAdd.TabIndex = 21;
-            btnAdd.Text = "Add";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAddCategory.Location = new Point(79, 295);
+            btnAddCategory.Name = "btnAddCategory";
+            btnAddCategory.Size = new Size(119, 44);
+            btnAddCategory.TabIndex = 21;
+            btnAddCategory.Text = "Add";
+            btnAddCategory.UseVisualStyleBackColor = true;
+            btnAddCategory.Click += btnAddCategory_Click;
             // 
             // CategoriesForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1029, 630);
-            Controls.Add(btnAdd);
+            Controls.Add(btnAddCategory);
             Controls.Add(btnBack);
-            Controls.Add(btnUpdate);
+            Controls.Add(btnUpdateCategory);
             Controls.Add(btnRemoveCategory);
             Controls.Add(txtbName);
             Controls.Add(lblName);
@@ -124,11 +125,11 @@
         #endregion
 
         private Button btnBack;
-        private Button btnUpdate;
+        private Button btnUpdateCategory;
         private Button btnRemoveCategory;
         private TextBox txtbName;
         private Label lblName;
         private ListBox lbCategories;
-        private Button btnAdd;
+        private Button btnAddCategory;
     }
 }

@@ -9,5 +9,6 @@ namespace App.Repositories.interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
+        public Task<Category?> GetCategoryByName(string name);
     }
 }

@@ -11,5 +11,6 @@ namespace App.Services.interfaces
     {
         public Task<List<Category>>? GetCategoriesAsync();
         public Task<Category>? GetCategoryById(int id);
+        public Task AddCategory(string name);
     }
 }

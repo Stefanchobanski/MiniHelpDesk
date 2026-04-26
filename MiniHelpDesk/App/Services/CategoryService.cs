@@ -29,5 +29,24 @@ namespace App.Services
         {
             return await _categoryRepository.GetByIdAsync(id) ?? throw new InvalidOperationException("Not found categories");
         }
+
+        public async Task AddCategory(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new IndexOutOfRangeException("Трябва да напишете нещо!");
+            }
+
+            var category = await _categoryRepository.GetCategoryByName(name);
+
+            if (category is null)
+            {
+                await _categoryRepository.AddAsync(new Category() { Name = name });
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Тази категория вече съществува");
+            }
+        }
     }
 }

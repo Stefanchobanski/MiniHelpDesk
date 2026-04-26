@@ -58,5 +58,19 @@ namespace App.Forms
 
         }
 
+        private async void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string name = txtbName.Text;
+
+                await _categoryService.AddCategory(name);
+                lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
