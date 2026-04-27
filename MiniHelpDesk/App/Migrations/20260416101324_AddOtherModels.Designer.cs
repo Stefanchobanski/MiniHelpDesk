@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniHelpDesk.Data;
 
@@ -11,9 +12,11 @@ using MiniHelpDesk.Data;
 namespace App.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260416101324_AddOtherModels")]
+    partial class AddOtherModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,7 +161,7 @@ namespace App.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDay")
@@ -214,7 +217,7 @@ namespace App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleID")
+                    b.Property<int>("RoleID")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -233,7 +236,9 @@ namespace App.Migrations
                 {
                     b.HasOne("App.Models.Ticket", "Ticket")
                         .WithMany("Attachments")
-                        .HasForeignKey("TicketId");
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Ticket");
                 });
@@ -281,7 +286,8 @@ namespace App.Migrations
                     b.HasOne("App.Models.Category", "Category")
                         .WithMany("TicketList")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("App.Models.User", "Requester")
                         .WithMany("TicketToRequest")
@@ -292,7 +298,7 @@ namespace App.Migrations
                     b.HasOne("App.Models.User", "Technician")
                         .WithMany("TicketToTechnican")
                         .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Category");
 
@@ -306,7 +312,8 @@ namespace App.Migrations
                     b.HasOne("App.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

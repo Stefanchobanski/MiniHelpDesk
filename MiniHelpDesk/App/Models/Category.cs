@@ -11,5 +11,5 @@ public class Category
     public int CategoryId {  get; set; }
     public string Name { get; set; }    
 
-    public List<Ticket> TicketList { get; set; }
+    public List<Ticket> TicketList { get; set; } = new List<Ticket>();
 }

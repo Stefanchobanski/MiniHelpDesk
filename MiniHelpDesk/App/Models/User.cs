@@ -13,7 +13,11 @@ public class User
     public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;
 
-    public int RoleID { get; set; }
-    public Role Role { get; set; }
+    public int? RoleID { get; set; }
+    public Role? Role { get; set; }
 
+    public List<Comment> Comments { get; set; } = new List<Comment>();
+    public List<Ticket>? TicketToRequest { get; set; } = new List<Ticket>();
+    public List<Ticket>? TicketToTechnican { get; set; } = new List<Ticket>();
+    public List<AuditLog>? AuditLogs { get; set; } = new List<AuditLog>();
 }

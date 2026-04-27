@@ -145,7 +145,6 @@
             // 
             cbxRole.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxRole.FormattingEnabled = true;
-            cbxRole.Items.AddRange(new object[] { "Администратор", "Техник", "Заявител" });
             cbxRole.Location = new Point(112, 414);
             cbxRole.Name = "cbxRole";
             cbxRole.Size = new Size(358, 29);
@@ -218,6 +217,7 @@
             Name = "RegisterForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Register Form";
+            Load += RegisterForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
