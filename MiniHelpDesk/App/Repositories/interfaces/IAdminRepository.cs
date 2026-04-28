@@ -12,5 +12,4 @@ public interface IAdminRepository : IRepository<User>
 {
     Task<User?> GetUserByNameAsync(string name);
     Task<List<UserRoleDTO>> GetAllUserWithRole();
-    Task<List<Role>> GetRolesAsync();
 }

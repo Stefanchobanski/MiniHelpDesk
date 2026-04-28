@@ -78,17 +78,6 @@ public class AdminService : IAdminService
 
         return user;
     }
-    public async Task<List<Role>> GetRolesAsync()
-    {
-        var roles = await _adminRepository.GetRolesAsync();
-
-        if(roles == null)
-        {
-            throw new InvalidOperationException($"Not found roles");
-        }
-
-        return roles;
-    }
 
     public async Task<User> GetByIdUser(int id)
     {
