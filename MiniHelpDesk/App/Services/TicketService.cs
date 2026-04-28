@@ -15,6 +15,7 @@ namespace App.Services
 
     public class TicketService : ITicketService
     {
+       
         private readonly ITicketRepository TicketRepository;
         public TicketService(ITicketRepository ticketRepository)
         {
@@ -43,10 +44,11 @@ namespace App.Services
 
         public void UpdateTicketStatus(int ticketId, string status)
         {
-            var ticket = TicketRepository.GetByIdAsync(ticketId);
+            var ticket =  TicketRepository.GetByIdAsync(ticketId);
 
             if (ticket == null)
                 throw new Exception("Ticket not found");
         }
+
     }
 }
