@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Models.Enums;
 
 namespace App.Services
 {
@@ -29,7 +30,26 @@ namespace App.Services
 
         public TicketResponseDTO CreateTicket(CreateTicketRequestDTO request)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(request.Email))
+                throw new ArgumentException("Email is required");
+
+            if (string.IsNullOrWhiteSpace(request.Description))
+                throw new ArgumentException("Description is required");
+
+            var ticket = new Ticket
+            {
+                Description = request.Description,
+                Status = Status.New
+            };
+
+            TicketRepository.Add(ticket);
+
+            return new TicketResponseDTO
+            {
+                TicketId = ticket.TicketId,
+                Description = ticket.Description,
+                Status = ticket.Status.ToString() 
+            };
         }
 
         public TicketResponseDTO GetTicketById(int ticketId)

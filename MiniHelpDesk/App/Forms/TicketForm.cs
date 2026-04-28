@@ -23,6 +23,13 @@ namespace App.Forms
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+             if (string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                 string.IsNullOrWhiteSpace(txtDescription.Text))
+             {  
+                MessageBox.Show("Please fill all fields!");
+                return;
+             }
+
             try
             {
                 var request = new CreateTicketRequestDTO
