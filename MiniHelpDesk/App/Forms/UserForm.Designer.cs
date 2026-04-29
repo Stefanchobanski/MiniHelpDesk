@@ -141,7 +141,7 @@
             btnShowTickets.TabIndex = 11;
             btnShowTickets.Text = "View tickets";
             btnShowTickets.UseVisualStyleBackColor = true;
-            btnShowTickets.Visible = false;
+            btnShowTickets.Click += btnShowTickets_Click;
             // 
             // UserForm
             // 

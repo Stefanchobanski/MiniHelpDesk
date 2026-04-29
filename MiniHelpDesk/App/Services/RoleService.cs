@@ -69,10 +69,10 @@ namespace App.Services
 
             if (role.Name == "Null"      ||
                 role.Name == "Admin"     ||
-                role.Name == "Techicial" ||
+                role.Name == "Technician" ||
                 role.Name == "Requester")
             {
-                throw new InvalidOperationException("Cannot remove the 'Null', 'Admin', 'Techicial' or 'Requester' role.");
+                throw new InvalidOperationException("Cannot remove the 'Null', 'Admin', 'Technician' or 'Requester' role.");
             }
             await _roleRepository.RemoveAndSetDeffaut(id);
         }
@@ -88,10 +88,10 @@ namespace App.Services
 
             if (role.Name == "Null"      ||
                 role.Name == "Admin"     ||
-                role.Name == "Techicial" ||
+                role.Name == "Technician" ||
                 role.Name == "Requester")
             {
-                throw new InvalidOperationException("Cannot update the 'Null', 'Admin', 'Techicial' or 'Requester' role.");
+                throw new InvalidOperationException("Cannot update the 'Null', 'Admin', 'Technician' or 'Requester' role.");
             }
 
             role.Name = newName;

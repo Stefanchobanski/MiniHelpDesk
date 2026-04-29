@@ -64,15 +64,6 @@ public partial class UserForm : Form
 
             var user = lbUsers.SelectedItem as UserRoleDTO;
 
-            if (user.Role.ToLower() == "requester")
-            {
-                btnShowTickets.Visible = true;
-            }
-            else
-            {
-                btnShowTickets.Visible = false;
-            }
-
             txtbUsername.Text = user.UserName;
             txtbEmail.Text = user.Email;
             cmbRoles.SelectedValue = user.RoleId;
@@ -123,5 +114,10 @@ public partial class UserForm : Form
         _adminForm.Show();
         _adminForm.FormClosed += (s, args) => this.Close();
         this.Close();
+    }
+
+    private void btnShowTickets_Click(object sender, EventArgs e)
+    {
+
     }
 }

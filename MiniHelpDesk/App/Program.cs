@@ -3,95 +3,166 @@ using App.Models;
 using App.Models.Enums;
 using App.Repositories;
 using App.Services;
-using Microsoft.EntityFrameworkCore;
 using MiniHelpDesk.Data;
 using MiniHelpDesk.Services;
-using System.Xml.Linq;
 
 namespace App
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            using var db = new AppDbContext();
-            //db.Categories.Add(new Category()
-            //{
-            //    Name = "IT"
-            //});
+            try
+            {
+                ApplicationConfiguration.Initialize();
 
-            //db.Users.Add(new User()
-            //{
-            //    Username = "Technic",
-            //    Password = "1`2211",
-            //    Email = "32121@.121",
-            //    RoleID = 2
-            //});
+                using var db = new AppDbContext();
 
+                // ⚠️ FOR TESTING ONLY (reset DB each run)
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
+                // ======================
+                // SEED DATA
+                // ======================
 
-            //db.Tickets.Add(new Ticket()
-            //{
-            //    RequesterId = 3,
-            //    TechnicianId = 6,
-            //    Title = "New Tickety",
-            //    Description = "ddsdsdsdsdsdsds",
-            //    Status = Status.New,
-            //    Priority = Priority.High,
-            //    CreatedDay = new DateTime(),
-            //    Attachments = new List<Attachment>()
-            //    {
-            //        new Attachment()
-            //        {
-            //            FileName = "dsds",
-            //            Path = "dsds/dsds/../"
-            //        },
-            //    },
-            //    Comments = new List<Comment>()
-            //    {
-            //        new Comment()
-            //        {
-            //            UserID = 3,
-            //            Text = "dsdsds",
-            //            CreatedDate = DateTime.Now,
-            //        }
-            //    },
-            //    AuditLogs = new List<AuditLog>()
-            //    {
-            //        new AuditLog()
-            //        {
-            //            ChangedByUserId = 6,
-            //            Field = "dsds",
-            //            OldValue = "dsds",
-            //            NewValue = "Dsdsds",
-            //            ChangedDate = DateTime.Now,
-            //        }
-            //    },
+                // ROLES
+                var adminRole = new Role { Name = "Admin" };
+                var techRole = new Role { Name = "Technician" };
+                var userRole = new Role { Name = "Requester" };
+                var nullRole = new Role { Name = "Null" };
 
-            //});
+                db.Roles.AddRange(adminRole, techRole, userRole, nullRole);
+                db.SaveChanges();
 
+                // USERS
+                var admin = new User
+                {
+                    Username = "admin",
+                    Email = "admin@mail.com",
+                    Password = "1234",
+                    RoleID = adminRole.RoleID
+                };
 
+                var tech = new User
+                {
+                    Username = "tech1",
+                    Email = "tech@mail.com",
+                    Password = "1234",
+                    RoleID = techRole.RoleID
+                };
 
-            db.Database.EnsureCreated();
-            ApplicationConfiguration.Initialize();
+                var user = new User
+                {
+                    Username = "user1",
+                    Email = "user@mail.com",
+                    Password = "1234",
+                    RoleID = userRole.RoleID
+                };
 
-            var adminRepo = new AdminRepository(db);
+                db.Users.AddRange(admin, tech, user);
+                db.SaveChanges();
 
-            var roleRepo = new RoleRepository(db);
-            var serviceAdmin = new AdminService(adminRepo);
-            var serviceRole = new RoleService(roleRepo);
-            var categoryRepo = new CategoryRepository(db);
-            var categoryServes = new CategoryService(categoryRepo);
-            Application.Run(new AdminForm(serviceAdmin, serviceRole, categoryServes));
-            var registerRepo = new RegisterUserRepository(db);
-            var registerService = new RegisterService(registerRepo);
-            //Application.Run(new RegisterForm(registerService, serviceRole));
+                // CATEGORIES
+                var hardware = new Category { Name = "Hardware" };
+                var software = new Category { Name = "Software" };
+
+                db.Categories.AddRange(hardware, software);
+                db.SaveChanges();
+
+                // TICKETS
+                var ticket1 = new Ticket
+                {
+                    Title = "PC not starting",
+                    Description = "Computer does not boot when power button is pressed",
+                    Status = Status.New,
+                    Priority = Priority.High,
+                    CreatedDay = DateTime.Now,
+                    CategoryId = hardware.CategoryId,
+                    RequesterId = user.UserID,
+                    TechnicianId = tech.UserID
+                };
+
+                var ticket2 = new Ticket
+                {
+                    Title = "Windows update error",
+                    Description = "Update fails with error 0x80070002",
+                    Status = Status.New,
+                    Priority = Priority.Medium,
+                    CreatedDay = DateTime.Now,
+                    CategoryId = software.CategoryId,
+                    RequesterId = user.UserID,
+                    TechnicianId = tech.UserID
+                };
+
+                db.Tickets.AddRange(ticket1, ticket2);
+                db.SaveChanges();
+
+                // COMMENTS
+                db.Comments.Add(new Comment
+                {
+                    Text = "We will check the power supply first.",
+                    CreatedDate = DateTime.Now,
+                    TicketID = ticket1.TicketId,
+                    UserID = tech.UserID
+                });
+
+                db.Comments.Add(new Comment
+                {
+                    Text = "Try restarting Windows Update service.",
+                    CreatedDate = DateTime.Now,
+                    TicketID = ticket2.TicketId,
+                    UserID = tech.UserID
+                });
+
+                db.SaveChanges();
+
+                // ATTACHMENTS
+                db.Attachments.Add(new Attachment
+                {
+                    FileName = "error.png",
+                    Path = "/files/error.png",
+                    TicketId = ticket2.TicketId
+                });
+
+                db.SaveChanges();
+
+                // AUDIT LOGS
+                db.AuditLogs.Add(new AuditLog
+                {
+                    Field = "Status",
+                    OldValue = "New",
+                    NewValue = "InProgress",
+                    ChangedDate = DateTime.Now,
+                    ChangedByUserId = tech.UserID,
+                    TicketId = ticket2.TicketId
+                });
+
+                db.SaveChanges();
+
+                // ======================
+                // SERVICES + REPOS
+                // ======================
+                var adminRepo = new AdminRepository(db);
+                var roleRepo = new RoleRepository(db);
+                var categoryRepo = new CategoryRepository(db);
+                var registerRepo = new RegisterUserRepository(db);
+
+                var serviceAdmin = new AdminService(adminRepo);
+                var serviceRole = new RoleService(roleRepo);
+                var categoryService = new CategoryService(categoryRepo);
+                var registerService = new RegisterService(registerRepo);
+
+                // ======================
+                // START APP
+                // ======================
+                Application.Run(new AdminForm(serviceAdmin, serviceRole, categoryService));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "APP ERROR");
+            }
         }
     }
 }
