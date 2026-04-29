@@ -31,6 +31,7 @@ namespace App.Forms
         {
             lbRoles.DataSource = await _roleService.GetRolesAsync();
             lbRoles.DisplayMember = "Display";
+            lbRoles.ValueMember = "RoleId";
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -46,14 +47,7 @@ namespace App.Forms
             {
                 FormHelper.CheckSelectedIndex(_index);
 
-                var role = lbRoles.SelectedItem as RoleDTO;
-
-                if (role.Name == "Null")
-                {
-                    throw new InvalidOperationException("Cannot remove the 'Null' role.");
-                }
-
-                await _roleService.RemoveRole(role.RoleId);
+                await _roleService.RemoveRole((int)lbRoles.SelectedValue);
 
                 lbRoles.DataSource = await _roleService.GetRolesAsync();
             }
@@ -63,7 +57,7 @@ namespace App.Forms
             }
         }
 
-        private void lbRoles_SelectedIndexChanged(object sender, EventArgs e)
+        private async void lbRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
@@ -81,13 +75,30 @@ namespace App.Forms
             }
         }
 
-        private void btnAddRole_Click(object sender, EventArgs e)
+        private async void btnAddRole_Click(object sender, EventArgs e)
         {
             try
             {
                 string name = txtbName.Text;
-                _roleService.AddRole(name);
-                lbRoles.DataSource = _roleService.GetRolesAsync();
+                await _roleService.AddRole(name);
+                lbRoles.DataSource = await _roleService.GetRolesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try 
+            { 
+                FormHelper.CheckSelectedIndex(_index);
+
+                string newName = txtbName.Text;
+
+                await _roleService.UpdateRole((int)lbRoles.SelectedValue, newName);
+                lbRoles.DataSource = await _roleService.GetRolesAsync();
             }
             catch(Exception ex)
             {

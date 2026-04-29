@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using App.Repositories;
 using App.Services.interfaces;
 using System;
@@ -18,9 +19,9 @@ namespace App.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<CategoryDTO>> GetCategoriesAsync()
         {
-            var categories = _categoryRepository.GetAllAsync() ?? throw new InvalidOperationException("Not found categories");
+            var categories = _categoryRepository.GetAllCategories() ?? throw new InvalidOperationException("Not found categories");
 
             return await categories;
         }
@@ -54,8 +55,16 @@ namespace App.Services
            await _categoryRepository.DeleteAsync(id);
         }
 
-        public async Task UpdateCategory(Category category)
+        public async Task UpdateCategory(int id, string newName)
         {
+            if(string.IsNullOrWhiteSpace(newName))
+            {
+                throw new IndexOutOfRangeException("Трябва да напишете нещо!");
+            }
+
+            var category = await _categoryRepository.GetByIdAsync(id);
+            category.Name = newName;    
+
             await _categoryRepository.UpdateAsync(category);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using App.Services;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,8 @@ namespace App.Forms
         private async void CategoriesForm_Load(object sender, EventArgs e)
         {
             lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
-            lbCategories.DisplayMember = "Name";
+            lbCategories.DisplayMember = "Info";
+            lbCategories.ValueMember = "CategoryId";
         }
 
         private void lbCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,9 +49,8 @@ namespace App.Forms
 
                 FormHelper.CheckSelectedIndex(_index);
 
-                var role = lbCategories.SelectedItem as Category;
-
-                txtbName.Text = role.Name;
+                var category = lbCategories.SelectedItem as CategoryDTO;
+                txtbName.Text = category.Name;
             }
             catch (Exception ex)
             {
@@ -79,9 +80,8 @@ namespace App.Forms
             {
                 FormHelper.CheckSelectedIndex(_index);
 
-                var category = lbCategories.SelectedItem as Category;
 
-                await _categoryService.RemoveCategory(category.CategoryId);
+                await _categoryService.RemoveCategory((int)lbCategories.SelectedValue);
 
                 lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
             }
@@ -99,15 +99,7 @@ namespace App.Forms
 
                 string name = txtbName.Text;
 
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    throw new IndexOutOfRangeException("Трябва да напишете нещо!");
-                }
-
-                Category category = lbCategories.SelectedItem as Category;
-                category.Name = name;
-
-                await _categoryService.UpdateCategory(category);
+                await _categoryService.UpdateCategory((int)lbCategories.SelectedValue, name);
                 lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
             }
             catch(Exception ex)

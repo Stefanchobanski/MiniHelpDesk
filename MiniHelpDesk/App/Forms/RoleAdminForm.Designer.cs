@@ -55,6 +55,7 @@
             btnUpdate.TabIndex = 20;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // btnRemoveUser
             // 
@@ -69,7 +70,7 @@
             // txtbName
             // 
             txtbName.Enabled = false;
-            txtbName.Location = new Point(79, 88);
+            txtbName.Location = new Point(79, 167);
             txtbName.Name = "txtbName";
             txtbName.Size = new Size(146, 29);
             txtbName.TabIndex = 17;
@@ -77,7 +78,7 @@
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Location = new Point(107, 64);
+            lblName.Location = new Point(124, 143);
             lblName.Name = "lblName";
             lblName.Size = new Size(52, 21);
             lblName.TabIndex = 13;

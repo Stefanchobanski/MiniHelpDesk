@@ -44,6 +44,7 @@ public partial class UserForm : Form
             var users = await _adminService.GetUsersWithRole();
             lbUsers.DataSource = users;
             lbUsers.DisplayMember = "Display";
+            lbUsers.ValueMember = "UserId";
         }
         catch (Exception ex)
         {
@@ -61,10 +62,9 @@ public partial class UserForm : Form
             txtbUsername.Enabled = true;
             txtbEmail.Enabled = true;
 
-
             var user = lbUsers.SelectedItem as UserRoleDTO;
 
-            if (user.Role != null && user.Role.ToLower() == "requester")
+            if (user.Role.ToLower() == "requester")
             {
                 btnShowTickets.Visible = true;
             }
@@ -83,19 +83,13 @@ public partial class UserForm : Form
         }
     }
 
-
-
     private async void btnRemoveUser_Click(object sender, EventArgs e)
     {
         try
         {
             FormHelper.CheckSelectedIndex(_selectedIndex);
 
-            var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
-
-            var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
-
-            await _adminService.RemoveAddUserWithTables(tempUser.UserID);
+            await _adminService.RemoveAddUserWithTables((int)lbUsers.SelectedValue);
             lbUsers.DataSource = await _adminService.GetUsersWithRole();
         }
         catch (Exception ex)
@@ -110,20 +104,11 @@ public partial class UserForm : Form
         {
             FormHelper.CheckSelectedIndex(_selectedIndex);
 
-            if (string.IsNullOrWhiteSpace(txtbUsername.Text))
-            {
-                throw new IndexOutOfRangeException("Трябва да напишете нещо!");
-            }
+            string username = txtbUsername.Text;
+            string email = txtbEmail.Text;
+            int roleId = (int)cmbRoles.SelectedValue;
 
-            var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
-
-            var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
-
-            tempUser.Username = txtbUsername.Text;
-            tempUser.Email = txtbEmail.Text;
-            tempUser.RoleID = (int)cmbRoles.SelectedValue;
-
-            await _adminService.UpdateUsers(tempUser);
+            await _adminService.UpdateUsers((int)lbUsers.SelectedValue, username, email, roleId);
             lbUsers.DataSource = await _adminService.GetUsersWithRole();
 
         }

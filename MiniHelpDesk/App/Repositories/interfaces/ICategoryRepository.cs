@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace App.Repositories.interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        public Task<Category?> GetCategoryByName(string name);
+        Task<Category?> GetCategoryByName(string name);
+        Task<List<CategoryDTO>> GetAllCategories();
     }
 }

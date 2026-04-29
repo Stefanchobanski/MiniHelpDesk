@@ -14,6 +14,6 @@ namespace App.Services.interfaces
         Task<Role?> GetRoleByName(string name);
         Task RemoveRole(int id);
         Task AddRole(string name);
-        Task<Role?> GetRoleById(int id);
+        Task UpdateRole(int id, string newName);
     }
 }

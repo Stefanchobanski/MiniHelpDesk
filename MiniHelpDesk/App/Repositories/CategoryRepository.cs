@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using App.Models.DTOs;
 
 namespace App.Repositories
 {
@@ -14,6 +15,16 @@ namespace App.Repositories
     {
         public CategoryRepository(AppDbContext db) : base(db)
         {
+        }
+
+        public async Task<List<CategoryDTO>> GetAllCategories()
+        {
+            return await _dbSet.Select(c => new CategoryDTO
+            {
+                CategoryId = c.CategoryId,
+                Name = c.Name,
+                Info = $"Id: {c.CategoryId} - Name: {c.Name}"
+            }).ToListAsync();
         }
 
         public async Task<Category?> GetCategoryByName(string name)
