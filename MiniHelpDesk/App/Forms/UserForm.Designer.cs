@@ -38,6 +38,7 @@
             btnRemoveUser = new Button();
             btnUpdate = new Button();
             btnBack = new Button();
+            btnShowTickets = new Button();
             SuspendLayout();
             // 
             // lbUsers
@@ -104,7 +105,7 @@
             // 
             // btnRemoveUser
             // 
-            btnRemoveUser.Location = new Point(72, 334);
+            btnRemoveUser.Location = new Point(72, 412);
             btnRemoveUser.Name = "btnRemoveUser";
             btnRemoveUser.Size = new Size(119, 44);
             btnRemoveUser.TabIndex = 8;
@@ -114,7 +115,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(72, 409);
+            btnUpdate.Location = new Point(72, 471);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(119, 44);
             btnUpdate.TabIndex = 9;
@@ -124,7 +125,7 @@
             // 
             // btnBack
             // 
-            btnBack.Location = new Point(72, 482);
+            btnBack.Location = new Point(72, 530);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(119, 44);
             btnBack.TabIndex = 10;
@@ -132,11 +133,22 @@
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
+            // btnShowTickets
+            // 
+            btnShowTickets.Location = new Point(72, 353);
+            btnShowTickets.Name = "btnShowTickets";
+            btnShowTickets.Size = new Size(119, 44);
+            btnShowTickets.TabIndex = 11;
+            btnShowTickets.Text = "View tickets";
+            btnShowTickets.UseVisualStyleBackColor = true;
+            btnShowTickets.Visible = false;
+            // 
             // UserForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1029, 630);
+            Controls.Add(btnShowTickets);
             Controls.Add(btnBack);
             Controls.Add(btnUpdate);
             Controls.Add(btnRemoveUser);
@@ -170,5 +182,6 @@
         private Button btnRemoveUser;
         private Button btnUpdate;
         private Button btnBack;
+        private Button btnShowTickets;
     }
 }

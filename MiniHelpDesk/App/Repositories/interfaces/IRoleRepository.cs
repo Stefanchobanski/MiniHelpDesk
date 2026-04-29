@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace App.Repositories.interfaces
 {
     public interface IRoleRepository : IRepository<Role>
     {
-        Task<List<Role>> GetRolesAsync();
+        Task<List<RoleDTO>> GetRolesAsync();
+        Task<Role?> GetRoleByName(string name);
+        Task RemoveAndSetDeffaut(int id);
     }
 }

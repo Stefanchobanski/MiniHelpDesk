@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using App.Repositories.interfaces;
 using App.Services.interfaces;
 using System;
@@ -18,16 +19,45 @@ namespace App.Services
             _roleRepository = roleRepository;
         }
 
-        public async Task<List<Role>> GetRolesAsync()
+        public Task AddRole(string name)
         {
-            var roles = await _roleRepository.GetRolesAsync();
-
-            if (roles == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new InvalidOperationException($"Not found roles");
+                throw new ArgumentException("Role name cannot be null or empty.");
             }
 
+            Role role = 
+
+        }
+
+        public Task<Role?> GetRoleById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Role?> GetRoleByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Role name cannot be null or empty.");
+            }
+
+            Role role = await _roleRepository.GetRoleByName(name) ?? throw new InvalidOperationException($"Not found role with name: {name}");
+
+            return role;
+        }
+
+        public async Task<List<RoleDTO>> GetRolesAsync()
+        {
+            var roles = await _roleRepository.GetRolesAsync() ?? throw new InvalidOperationException($"Not found roles");
+
+
             return roles;
+        }
+
+        public async Task RemoveRole(int id)
+        {
+            await _roleRepository.RemoveAndSetDeffaut(id);
         }
     }
 }

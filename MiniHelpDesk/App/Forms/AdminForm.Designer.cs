@@ -31,7 +31,7 @@
             lblTitle = new Label();
             btnUsers = new Button();
             btnCategories = new Button();
-            btnTickets = new Button();
+            btnRoles = new Button();
             btnReport = new Button();
             SuspendLayout();
             // 
@@ -65,14 +65,15 @@
             btnCategories.UseVisualStyleBackColor = true;
             btnCategories.Click += btnCategories_Click;
             // 
-            // btnTickets
+            // btnRoles
             // 
-            btnTickets.Location = new Point(106, 216);
-            btnTickets.Name = "btnTickets";
-            btnTickets.Size = new Size(109, 41);
-            btnTickets.TabIndex = 9;
-            btnTickets.Text = "Tickets";
-            btnTickets.UseVisualStyleBackColor = true;
+            btnRoles.Location = new Point(106, 216);
+            btnRoles.Name = "btnRoles";
+            btnRoles.Size = new Size(109, 41);
+            btnRoles.TabIndex = 9;
+            btnRoles.Text = "Roles";
+            btnRoles.UseVisualStyleBackColor = true;
+            btnRoles.Click += btnRoles_Click;
             // 
             // btnReport
             // 
@@ -89,7 +90,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(340, 402);
             Controls.Add(btnReport);
-            Controls.Add(btnTickets);
+            Controls.Add(btnRoles);
             Controls.Add(btnCategories);
             Controls.Add(btnUsers);
             Controls.Add(lblTitle);
@@ -110,7 +111,7 @@
         private TextBox txtInfo3;
         private Button btnUsers;
         private Button btnCategories;
-        private Button btnTickets;
+        private Button btnRoles;
         private Button btnReport;
     }
 }

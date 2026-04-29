@@ -42,4 +42,13 @@ public partial class AdminForm : Form
         categoryForm.FormClosed += (s, args) => this.Show();
         categoryForm.Show();
     }
+
+    private void btnRoles_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+
+        RoleAdminForm roleForm = new RoleAdminForm(this, _roleService);
+        roleForm.FormClosed += (s, args) => this.Show();
+        roleForm.Show();
+    }
 }

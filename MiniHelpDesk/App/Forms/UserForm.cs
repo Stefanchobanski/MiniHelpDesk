@@ -51,7 +51,7 @@ public partial class UserForm : Form
         }
     }
 
-    private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
+    private async void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
     {
         try
         {
@@ -64,9 +64,17 @@ public partial class UserForm : Form
 
             var user = lbUsers.SelectedItem as UserRoleDTO;
 
+            if (user.Role != null && user.Role.ToLower() == "requester")
+            {
+                btnShowTickets.Visible = true;
+            }
+            else
+            {
+                btnShowTickets.Visible = false;
+            }
+
             txtbUsername.Text = user.UserName;
             txtbEmail.Text = user.Email;
-
             cmbRoles.SelectedValue = user.RoleId;
         }
         catch (Exception ex)
