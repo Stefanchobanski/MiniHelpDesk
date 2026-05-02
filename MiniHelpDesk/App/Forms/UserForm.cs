@@ -44,42 +44,33 @@ public partial class UserForm : Form
             var users = await _adminService.GetUsersWithRole();
             lbUsers.DataSource = users;
             lbUsers.DisplayMember = "Display";
+            lbUsers.ValueMember = "UserId";
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
-    private void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
+    private async void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
     {
         try
         {
             _selectedIndex = lbUsers.SelectedIndex;
-            CheckSelectedIndex(_selectedIndex);
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
             txtbUsername.Enabled = true;
             txtbEmail.Enabled = true;
-
 
             var user = lbUsers.SelectedItem as UserRoleDTO;
 
             txtbUsername.Text = user.UserName;
             txtbEmail.Text = user.Email;
-
             cmbRoles.SelectedValue = user.RoleId;
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    private void CheckSelectedIndex(int index)
-    {
-        if (index == -1)
-        {
-            throw new IndexOutOfRangeException("Not selected item");
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -87,18 +78,14 @@ public partial class UserForm : Form
     {
         try
         {
-            CheckSelectedIndex(_selectedIndex);
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
-            var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
-
-            var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
-
-            await _adminService.RemoveUser(tempUser.UserID);
+            await _adminService.RemoveAddUserWithTables((int)lbUsers.SelectedValue);
             lbUsers.DataSource = await _adminService.GetUsersWithRole();
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -106,23 +93,19 @@ public partial class UserForm : Form
     {
         try
         {
-            CheckSelectedIndex(_selectedIndex);
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
-            var selectedUser = lbUsers.SelectedItem as UserRoleDTO;
+            string username = txtbUsername.Text;
+            string email = txtbEmail.Text;
+            int roleId = (int)cmbRoles.SelectedValue;
 
-            var tempUser = await _adminService.GetByIdUser(selectedUser.UserId);
-
-            tempUser.Username = txtbUsername.Text;
-            tempUser.Email = txtbEmail.Text;
-            tempUser.RoleID = (int)cmbRoles.SelectedValue;
-
-            await _adminService.UpdateUsers(tempUser);
+            await _adminService.UpdateUsers((int)lbUsers.SelectedValue, username, email, roleId);
             lbUsers.DataSource = await _adminService.GetUsersWithRole();
 
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -131,5 +114,10 @@ public partial class UserForm : Form
         _adminForm.Show();
         _adminForm.FormClosed += (s, args) => this.Close();
         this.Close();
+    }
+
+    private void btnShowTickets_Click(object sender, EventArgs e)
+    {
+
     }
 }

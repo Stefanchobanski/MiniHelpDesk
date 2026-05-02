@@ -27,6 +27,6 @@ public class Ticket
     public User? Technician { get; set; }
 
     public List<Comment> Comments { get; set; } = new List<Comment>();
-    public List<Attachment>? Attachments = new List<Attachment>();
-    public List<AuditLog>? AuditLogs = new List<AuditLog>();
+    public List<Attachment> Attachments { get; set; } = new List<Attachment>();
+    public List<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
 }

@@ -1,4 +1,5 @@
-﻿using App.Services.interfaces;
+﻿using App.Services;
+using App.Services.interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,11 +16,13 @@ public partial class AdminForm : Form
 {
     private readonly IAdminService _adminService;
     private readonly IRoleService _roleService;
-    public AdminForm(IAdminService adminService, IRoleService roleService)
+    private readonly CategoryService _categoryService;
+    public AdminForm(IAdminService adminService, IRoleService roleService, CategoryService categoryService)
     {
         InitializeComponent();
         _adminService = adminService;
         _roleService = roleService;
+        _categoryService = categoryService;
     }
 
     private void btnUsers_Click(object sender, EventArgs e)
@@ -31,4 +34,21 @@ public partial class AdminForm : Form
         userForm.Show();
     }
 
+    private void btnCategories_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+
+        CategoriesForm categoryForm = new CategoriesForm(this, _categoryService);
+        categoryForm.FormClosed += (s, args) => this.Show();
+        categoryForm.Show();
+    }
+
+    private void btnRoles_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+
+        RoleAdminForm roleForm = new RoleAdminForm(this, _roleService);
+        roleForm.FormClosed += (s, args) => this.Show();
+        roleForm.Show();
+    }
 }

@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace App.Repositories.interfaces
 {
-    public interface IRoleRepository : IRepository<Role>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        Task<List<RoleDTO>> GetRolesAsync();
-        Task<Role?> GetRoleByName(string name);
-        Task RemoveAndSetDeffaut(int id);
+        Task<Category?> GetCategoryByName(string name);
+        Task<List<CategoryDTO>> GetAllCategories();
     }
 }

@@ -12,8 +12,9 @@ public interface IAdminService
 {
     Task ChangeUserRole(string userName, int id);
     Task<List<User>> GetAllUsers();
-    Task UpdateUsers(User user);
+    Task UpdateUsers(int id, string name, string email, int roleId);
     Task<List<UserRoleDTO>> GetUsersWithRole();
     Task<User> GetByIdUser(int id);
     Task RemoveUser(int id);
+    Task RemoveAddUserWithTables(int id);
 }

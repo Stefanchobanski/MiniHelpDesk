@@ -28,15 +28,21 @@ public class AppDbContext : DbContext
         {
             entity.HasKey(u => u.UserID);
 
+            entity.HasIndex(u => u.Username)
+            .IsUnique();
+
+            entity.HasIndex(u => u.Email)
+            .IsUnique();
+
             entity.HasOne(e => e.Role)
             .WithMany(r => r.Users)
             .HasForeignKey(u => u.RoleID)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.SetNull);
 
-            entity.HasMany(u=> u.TicketToRequest)
-            .WithOne(t=>t.Requester)
-            .HasForeignKey(t=>t.RequesterId)
+            entity.HasMany(u => u.TicketToRequest)
+            .WithOne(t => t.Requester)
+            .HasForeignKey(t => t.RequesterId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
@@ -74,9 +80,9 @@ public class AppDbContext : DbContext
         {
             entity.HasKey(t => t.TicketId);
 
-            entity.HasOne(t=>t.Category)
-            .WithMany(c=>c.TicketList)
-            .HasForeignKey(t=>t.CategoryId)
+            entity.HasOne(t => t.Category)
+            .WithMany(c => c.TicketList)
+            .HasForeignKey(t => t.CategoryId)
             .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
 
@@ -95,9 +101,85 @@ public class AppDbContext : DbContext
             .HasForeignKey(a => a.TicketId)
             .IsRequired(false);
 
-            entity.Property(o => o.Status).HasConversion<string>();
-            entity.Property(o => o.Priority).HasConversion<string>();
+            entity.Property(t => t.Status)
+            .HasConversion<string>()
+            .IsRequired();
+
+            entity.Property(t => t.Priority)
+            .HasConversion<string>()
+            .IsRequired();
+
+            entity.Property(t => t.Title)
+            .HasMaxLength(50)
+            .IsRequired();
+
+            entity.Property(t => t.Description)
+            .HasMaxLength(300)
+            .IsRequired();
+
+            entity.Property(t => t.CreatedDay)
+            .IsRequired();
         });
 
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(c => c.CategoryId);
+
+            entity.HasIndex(c => c.Name)
+            .IsUnique();
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(r => r.RoleID);
+
+            entity.HasIndex(r => r.Name)
+            .IsUnique();
+        });
+
+        modelBuilder.Entity<Attachment>(entity =>
+        {
+            entity.HasKey(a => a.AttachmentId);
+
+            entity.Property(a => a.FileName)
+            .HasMaxLength(20)
+            .IsRequired();
+
+            entity.Property(a => a.Path)
+            .HasMaxLength(20)
+            .IsRequired();
+        });
+
+        modelBuilder.Entity<Comment>(entity =>
+        {
+            entity.HasKey(c => c.CommentID);
+
+            entity.Property(c => c.Text)
+            .HasMaxLength(200)
+            .IsRequired();
+
+            entity.Property(c => c.CreatedDate)
+            .IsRequired();
+        });
+
+        modelBuilder.Entity<AuditLog>(entity =>
+        {
+            entity.HasKey(a => a.AuditLogId);
+
+            entity.Property(a=>a.Field)
+            .HasMaxLength(100)
+            .IsRequired();
+
+            entity.Property(a => a.OldValue)
+            .HasMaxLength(100)
+            .IsRequired();
+
+            entity.Property(a => a.NewValue)
+            .HasMaxLength(100)
+            .IsRequired();
+
+            entity.Property(a => a.ChangedDate)
+            .IsRequired();
+        });
     }
 }
