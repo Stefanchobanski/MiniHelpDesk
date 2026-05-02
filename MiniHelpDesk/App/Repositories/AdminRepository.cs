@@ -33,4 +33,30 @@ public class AdminRepository : BaseRepository<User>, IAdminRepository
         return await _dbSet.FirstOrDefaultAsync(u => u.Username == name);
     }
 
+    public async Task RemoveTicketByUserAllTabels(User user)
+    {
+        var tickets = _db.Tickets.Where(t => t.TechnicianId == user.UserID ||
+            t.RequesterId == user.UserID);
+
+        var ticketsId = tickets.Select(t => t.TicketId);
+
+        var comments = _db.Comments
+            .Where(c => ticketsId.Contains(c.TicketID));
+
+        var attachments = _db.Attachments.Where(a => a.TicketId.HasValue &&
+            ticketsId.Contains(a.TicketId.Value));
+
+        var auditLogs = _db.AuditLogs.Where(a => a.TicketId.HasValue &&
+            ticketsId.Contains(a.TicketId.Value));
+
+        _db.Comments.RemoveRange(comments);
+        _db.AuditLogs.RemoveRange(auditLogs);
+        _db.Attachments.RemoveRange(attachments);
+
+        _db.Tickets.RemoveRange(tickets);
+
+        _db.Users.Remove(user);
+
+        await _db.SaveChangesAsync();
+    }
 }
