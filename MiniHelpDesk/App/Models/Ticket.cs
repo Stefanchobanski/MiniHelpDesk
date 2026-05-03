@@ -11,11 +11,13 @@ namespace App.Models;
 public class Ticket
 {
     public int TicketId { get; set; }
+    public string Email { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public Status Status { get; set; }
     public Priority Priority { get; set; }
-    public DateTime CreatedDay { get; set; }
+    public string? AssignedTo { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public int? CategoryId {  get; set; }
     public Category? Category { get; set; }
@@ -25,6 +27,8 @@ public class Ticket
 
     public int? TechnicianId { get; set; }
     public User? Technician { get; set; }
+
+   
 
     public List<Comment> Comments { get; set; } = new List<Comment>();
     public List<Attachment> Attachments { get; set; } = new List<Attachment>();

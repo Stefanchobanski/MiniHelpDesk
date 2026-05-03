@@ -9,6 +9,8 @@ namespace App.Repositories.interfaces
 {
     public interface ITicketRepository : IRepository<Ticket>
     {
+        IEnumerable<Ticket> GetByEmail(string email);
 
+        IEnumerable<Ticket> GetAllTickets();
     }
 }

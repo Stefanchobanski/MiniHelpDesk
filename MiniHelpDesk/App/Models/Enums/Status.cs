@@ -9,7 +9,7 @@ namespace App.Models.Enums;
 public enum Status
 {
     New,
-    InProres,
+    InProgress,
     Waiting,
     Resolved,
     Closed

@@ -16,59 +16,83 @@ namespace App.Services
 
     public class TicketService : ITicketService
     {
-       
-        private readonly ITicketRepository TicketRepository;
+        private readonly ITicketRepository _ticketRepository;
+
         public TicketService(ITicketRepository ticketRepository)
         {
-            TicketRepository = ticketRepository;
-        }
-        public void CheckedEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                throw new ArgumentException("Email is required");
+            _ticketRepository = ticketRepository;
         }
 
-        public TicketResponseDTO CreateTicket(CreateTicketRequestDTO request)
+        public async Task<TicketResponseDTO> CreateTicket(CreateTicketRequestDTO request)
         {
-            if (string.IsNullOrWhiteSpace(request.Email))
-                throw new ArgumentException("Email is required");
-
-            if (string.IsNullOrWhiteSpace(request.Description))
-                throw new ArgumentException("Description is required");
-
             var ticket = new Ticket
             {
+                Email = request.Email,
                 Description = request.Description,
-                Status = Status.New
+                Status = App.Models.Enums.Status.New
             };
 
-            TicketRepository.Add(ticket);
-
-            return new TicketResponseDTO
-            {
-                TicketId = ticket.TicketId,
-                Description = ticket.Description,
-                Status = ticket.Status.ToString() 
-            };
+            await _ticketRepository.AddAsync(ticket);
+            return MapToResponse(ticket);
         }
 
-        public TicketResponseDTO GetTicketById(int ticketId)
+        public async Task<TicketResponseDTO> GetTicketById(int ticketId)
         {
-            throw new NotImplementedException();
+            var ticket = await _ticketRepository.GetByIdAsync(ticketId);
+            return ticket == null ? null : MapToResponse(ticket);
         }
 
         public IEnumerable<TicketSummaryDTO> GetTicketsByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _ticketRepository.GetByEmail(email)
+                .Select(t => new TicketSummaryDTO
+                {
+                    TicketId = t.TicketId,
+                    Status = t.Status.ToString()
+                });
         }
 
-        public void UpdateTicketStatus(int ticketId, string status)
+        public IEnumerable<TicketResponseDTO> GetAllTickets()
         {
-            var ticket =  TicketRepository.GetByIdAsync(ticketId);
-
-            if (ticket == null)
-                throw new Exception("Ticket not found");
+            return _ticketRepository.GetAllTickets().Select(MapToResponse);
         }
 
+        public async Task AssignTicket(int ticketId, string technicalEmail)
+        {
+            var ticket = await _ticketRepository.GetByIdAsync(ticketId);
+            if (ticket == null) throw new Exception("Ticket not found");
+
+            ticket.AssignedTo = technicalEmail;
+            ticket.Status = App.Models.Enums.Status.InProgress;
+            await _ticketRepository.UpdateAsync(ticket);
+        }
+
+        public async Task UpdateTicketStatus(int ticketId, App.Models.Enums.Status status)
+        {
+            var ticket = await _ticketRepository.GetByIdAsync(ticketId);
+            if (ticket == null) throw new Exception("Ticket not found");
+
+            ticket.Status = status;
+            await _ticketRepository.UpdateAsync(ticket);
+        }
+
+        public async Task DeleteTicket(int ticketId)
+        {
+            var ticket = await _ticketRepository.GetByIdAsync(ticketId);
+            if (ticket != null)
+                await _ticketRepository.DeleteAsync(ticket.TicketId);
+        }
+
+        private TicketResponseDTO MapToResponse(Ticket ticket)
+        {
+            return new TicketResponseDTO
+            {
+                TicketId = ticket.TicketId,
+                Email = ticket.Email,
+                Description = ticket.Description,
+                Status = ticket.Status.ToString(),
+                AssignedTo = ticket.AssignedTo
+            };
+        }
     }
 }

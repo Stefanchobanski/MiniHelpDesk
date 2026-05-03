@@ -10,5 +10,6 @@ namespace App.Models.DTOs
     {
         public int TicketId { get; set; }
         public string Status { get; set; }
+        public string Description { get; set; }
     }
 }
