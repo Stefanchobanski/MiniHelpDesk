@@ -3,13 +3,16 @@ using App.Models;
 using App.Models.Enums;
 using App.Repositories;
 using App.Services;
+using Microsoft.Extensions.Logging;
 using MiniHelpDesk.Data;
 using MiniHelpDesk.Services;
+using Serilog;
 
 namespace App
 {
     internal static class Program
     {
+
         [STAThread]
         static void Main()
         {
@@ -18,6 +21,16 @@ namespace App
                 ApplicationConfiguration.Initialize();
 
                 using var db = new AppDbContext();
+
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.File(
+                        $"../../../logs/log_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt")
+                    .CreateLogger();
+
+                var loggerFactory = LoggerFactory.Create(builder =>
+                 {
+                     builder.AddSerilog();
+                 });
 
                 // ⚠️ FOR TESTING ONLY (reset DB each run)
                 db.Database.EnsureDeleted();
@@ -149,9 +162,9 @@ namespace App
                 var categoryRepo = new CategoryRepository(db);
                 var registerRepo = new RegisterUserRepository(db);
 
-                var serviceAdmin = new AdminService(adminRepo);
+                var serviceAdmin = new AdminService(adminRepo, loggerFactory.CreateLogger<AdminService>());
                 var serviceRole = new RoleService(roleRepo);
-                var categoryService = new CategoryService(categoryRepo);
+                var categoryService = new CategoryService(categoryRepo, loggerFactory.CreateLogger<CategoryService>());
                 var registerService = new RegisterService(registerRepo);
 
                 // ======================
@@ -162,6 +175,10 @@ namespace App
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "APP ERROR");
+            }
+            finally
+            {
+                Log.CloseAndFlush(); 
             }
         }
     }

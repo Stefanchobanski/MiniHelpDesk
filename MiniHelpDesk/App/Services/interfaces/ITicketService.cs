@@ -1,5 +1,6 @@
 ﻿using App.Models;
 using App.Models.DTOs;
+using App.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace App.Services.interfaces
 {
     public interface ITicketService
     {
-        TicketResponseDTO CreateTicket(CreateTicketRequestDTO request);
-        TicketResponseDTO GetTicketById(int ticketId);
+        Task<TicketResponseDTO> CreateTicket(CreateTicketRequestDTO request);
+        Task<TicketResponseDTO> GetTicketById(int ticketId);
         IEnumerable<TicketSummaryDTO> GetTicketsByEmail(string email);
 
-        void UpdateTicketStatus(int ticketId, string status);
+        Task UpdateTicketStatus(int ticketId, Status status);
     }
 }
