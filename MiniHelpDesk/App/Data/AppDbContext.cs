@@ -119,6 +119,10 @@ public class AppDbContext : DbContext
 
             entity.Property(t => t.CreatedAt)
             .IsRequired();
+
+            entity.Property(t => t.Email)
+            .HasMaxLength(50)
+            .IsRequired();
         });
 
         modelBuilder.Entity<Category>(entity =>
