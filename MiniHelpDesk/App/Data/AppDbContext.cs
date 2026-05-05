@@ -117,7 +117,7 @@ public class AppDbContext : DbContext
             .HasMaxLength(300)
             .IsRequired();
 
-            entity.Property(t => t.CreatedDay)
+            entity.Property(t => t.CreatedAt)
             .IsRequired();
         });
 

@@ -91,7 +91,7 @@ namespace App
                     Description = "Computer does not boot when power button is pressed",
                     Status = Status.New,
                     Priority = Priority.High,
-                    CreatedDay = DateTime.Now,
+                    CreatedAt = DateTime.Now,
                     CategoryId = hardware.CategoryId,
                     RequesterId = user.UserID,
                     TechnicianId = tech.UserID
@@ -103,7 +103,7 @@ namespace App
                     Description = "Update fails with error 0x80070002",
                     Status = Status.New,
                     Priority = Priority.Medium,
-                    CreatedDay = DateTime.Now,
+                    CreatedAt = DateTime.Now,
                     CategoryId = software.CategoryId,
                     RequesterId = user.UserID,
                     TechnicianId = tech.UserID
