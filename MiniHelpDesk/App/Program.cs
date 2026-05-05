@@ -94,7 +94,8 @@ namespace App
                     CreatedAt = DateTime.Now,
                     CategoryId = hardware.CategoryId,
                     RequesterId = user.UserID,
-                    TechnicianId = tech.UserID
+                    TechnicianId = tech.UserID,
+                    Email ="dsds"
                 };
 
                 var ticket2 = new Ticket
@@ -106,7 +107,8 @@ namespace App
                     CreatedAt = DateTime.Now,
                     CategoryId = software.CategoryId,
                     RequesterId = user.UserID,
-                    TechnicianId = tech.UserID
+                    TechnicianId = tech.UserID,
+                    Email = "dsdsada"
                 };
 
                 db.Tickets.AddRange(ticket1, ticket2);
@@ -163,7 +165,7 @@ namespace App
                 var registerRepo = new RegisterUserRepository(db);
 
                 var serviceAdmin = new AdminService(adminRepo, loggerFactory.CreateLogger<AdminService>());
-                var serviceRole = new RoleService(roleRepo);
+                var serviceRole = new RoleService(roleRepo, loggerFactory.CreateLogger<RoleService>());
                 var categoryService = new CategoryService(categoryRepo, loggerFactory.CreateLogger<CategoryService>());
                 var registerService = new RegisterService(registerRepo);
 
