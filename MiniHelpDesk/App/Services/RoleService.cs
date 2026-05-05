@@ -2,6 +2,7 @@
 using App.Models.DTOs;
 using App.Repositories.interfaces;
 using App.Services.interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,24 +15,24 @@ namespace App.Services
     public class RoleService : IRoleService
     {
         private readonly IRoleRepository _roleRepository;
+        private readonly ILogger<RoleService> _logger;
 
-        public RoleService(IRoleRepository roleRepository)
+        public RoleService(IRoleRepository roleRepository, ILogger<RoleService> logger)
         {
             _roleRepository = roleRepository;
+            _logger = logger;
         }
 
         public async Task AddRole(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Role name cannot be null or empty.");
-            }
+            ServiceHelper.CheckFields(name, _logger, "Ролята ");
 
             var role = await _roleRepository.GetRoleByName(name);
 
             if (role is not null)
             {
-                throw new InvalidOperationException($"Role with name '{name}' already exists.");
+                _logger.LogError($"Ролята с име {name} съществува!");
+                throw new InvalidOperationException($"Ролята съществува!");
             }
 
             role = new Role
@@ -45,53 +46,56 @@ namespace App.Services
 
         public async Task<Role?> GetRoleByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Role name cannot be null or empty.");
-            }
+            ServiceHelper.CheckFields(name, _logger, "Ролята ");
 
-            Role role = await _roleRepository.GetRoleByName(name) ?? throw new InvalidOperationException($"Not found role with name: {name}");
+            Role role = await _roleRepository.GetRoleByName(name);
+
+            ServiceHelper.ObjectIsNull(role, _logger);
 
             return role;
         }
 
         public async Task<List<RoleDTO>> GetRolesAsync()
         {
-            var roles = await _roleRepository.GetRolesAsync() ?? throw new InvalidOperationException($"Not found roles");
+            var roles = await _roleRepository.GetRolesAsync();
 
+            ServiceHelper.ObjectIsNull(roles, _logger);
 
             return roles;
         }
 
         public async Task RemoveRole(int id)
         {
-            var role = await _roleRepository.GetByIdAsync(id) ?? throw new InvalidOperationException($"Not found role with id: {id}");
+            var role = await _roleRepository.GetByIdAsync(id); 
+
+            ServiceHelper.ObjectIsNull(role, _logger);
 
             if (role.Name == "Null"      ||
                 role.Name == "Admin"     ||
                 role.Name == "Technician" ||
                 role.Name == "Requester")
             {
-                throw new InvalidOperationException("Cannot remove the 'Null', 'Admin', 'Technician' or 'Requester' role.");
+                _logger.LogError($"Не можеш да премахнеш 'Null', 'Admin', 'Technician' or 'Requester' роли.");
+                throw new InvalidOperationException("Не можеш да премахнеш 'Null', 'Admin', 'Technician' or 'Requester' роли.");
             }
             await _roleRepository.RemoveAndSetDeffaut(id);
         }
 
         public async Task UpdateRole(int id, string newName)
         {
-            if (string.IsNullOrWhiteSpace(newName))
-            {
-                throw new ArgumentException("Role name cannot be null or empty.");
-            }
+            ServiceHelper.CheckFields(newName, _logger, "Ролята ");
 
-            var role = await _roleRepository.GetByIdAsync(id) ?? throw new InvalidOperationException($"Not found roles"); ;
+            var role = await _roleRepository.GetByIdAsync(id);
+
+            ServiceHelper.ObjectIsNull(role, _logger);
 
             if (role.Name == "Null"      ||
                 role.Name == "Admin"     ||
                 role.Name == "Technician" ||
                 role.Name == "Requester")
             {
-                throw new InvalidOperationException("Cannot update the 'Null', 'Admin', 'Technician' or 'Requester' role.");
+                _logger.LogError($"Не можеш да обновиш 'Null', 'Admin', 'Technician' or 'Requester' роли.");
+                throw new InvalidOperationException("Не можеш да обновиш 'Null', 'Admin', 'Technician' or 'Requester' роли.");
             }
 
             role.Name = newName;

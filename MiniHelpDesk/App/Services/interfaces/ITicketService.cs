@@ -1,5 +1,6 @@
 ﻿using App.Models;
 using App.Models.DTOs;
+using App.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
