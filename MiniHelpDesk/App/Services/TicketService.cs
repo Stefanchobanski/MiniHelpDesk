@@ -83,6 +83,46 @@ namespace App.Services
                 await _ticketRepository.DeleteAsync(ticket.TicketId);
         }
 
+        public async Task UpdateTicket(TicketResponseDTO ticketDTO)
+        {
+            var ticket = await _ticketRepository.GetByIdAsync(ticketDTO.TicketId);
+
+            if (ticket == null) return;
+
+            if (!string.IsNullOrWhiteSpace(ticketDTO.Email))
+                ticket.Email = ticketDTO.Email;
+
+            if (!string.IsNullOrWhiteSpace(ticketDTO.Description))
+                ticket.Description = ticketDTO.Description;
+
+            if (!string.IsNullOrWhiteSpace(ticketDTO.Status))
+                ticket.Status = Enum.Parse<Status>(ticketDTO.Status);
+
+            if (!string.IsNullOrWhiteSpace(ticketDTO.AssignedTo))
+                ticket.AssignedTo = ticketDTO.AssignedTo;
+
+            if (ticketDTO.CreatedAt != default)
+                ticket.CreatedAt = ticketDTO.CreatedAt;
+
+            if (!string.IsNullOrWhiteSpace(ticketDTO.Title))
+                ticket.Title = ticketDTO.Title;
+
+            if (!string.IsNullOrWhiteSpace(ticketDTO.Priority) &&
+                Enum.TryParse<Priority>(ticketDTO.Priority, out var priority))
+                ticket.Priority = priority;
+
+            if (ticketDTO.RequesterId.HasValue && ticketDTO.RequesterId != 0)
+                ticket.RequesterId = ticketDTO.RequesterId.Value;
+
+            if (ticketDTO.TechnicianId.HasValue && ticketDTO.TechnicianId != 0)
+                ticket.TechnicianId = ticketDTO.TechnicianId.Value;
+
+            if (ticketDTO.CategoryId.HasValue && ticketDTO.CategoryId != 0)
+                ticket.CategoryId = ticketDTO.CategoryId.Value;
+
+            await _ticketRepository.SaveChanges();
+        }
+
         private TicketResponseDTO MapToResponse(Ticket ticket)
         {
             return new TicketResponseDTO
@@ -91,7 +131,13 @@ namespace App.Services
                 Email = ticket.Email,
                 Description = ticket.Description,
                 Status = ticket.Status.ToString(),
-                AssignedTo = ticket.AssignedTo
+                AssignedTo = ticket.AssignedTo,
+                CreatedAt = ticket.CreatedAt,
+                Title = ticket.Title,
+                Priority = ticket.Priority.ToString(),
+                RequesterId = ticket.RequesterId,
+                TechnicianId = ticket.TechnicianId,
+                CategoryId = ticket.CategoryId
             };
         }
     }

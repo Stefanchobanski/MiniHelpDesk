@@ -14,5 +14,10 @@ namespace App.Models.DTOs
         public string Status { get; set; }
         public string? AssignedTo { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? Title { get; set; }
+        public string? Priority { get; set; }
+        public int? RequesterId { get; set; }
+        public int? TechnicianId { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace App.Repositories.interfaces
         IEnumerable<Ticket> GetByEmail(string email);
 
         IEnumerable<Ticket> GetAllTickets();
+        Task SaveChanges();
     }
 }

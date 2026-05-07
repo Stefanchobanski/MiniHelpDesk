@@ -38,7 +38,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<List<TEntity>> GetAllAsync()
     {
-       return await _dbSet.ToListAsync();
+        return await _dbSet.ToListAsync();
     }
 
     public async Task<TEntity?> GetByIdAsync(int id)
@@ -49,6 +49,10 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     public async Task UpdateAsync(TEntity entity)
     {
         _dbSet.Update(entity);
+        await _db.SaveChangesAsync();
+    }
+    public async Task SaveChanges()
+    {
         await _db.SaveChangesAsync();
     }
 }

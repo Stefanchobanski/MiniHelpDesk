@@ -22,12 +22,14 @@ public partial class UserForm : Form
     private readonly AdminForm _adminForm;
     private readonly IAdminService _adminService;
     private readonly IRoleService _roleService;
-    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService)
+    private readonly TicketService _ticketService;
+    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService, TicketService ticketService)
     {
         InitializeComponent();
         _adminService = adminService;
         _adminForm = adminForm;
         _roleService = roleService;
+        _ticketService = ticketService;
     }
 
     private int _selectedIndex = -1;
@@ -118,6 +120,10 @@ public partial class UserForm : Form
 
     private void btnShowTickets_Click(object sender, EventArgs e)
     {
+        this.Hide();
 
+        TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService);
+        ticketForm.FormClosed += (s, args) => this.Show();
+        ticketForm.Show();
     }
 }
