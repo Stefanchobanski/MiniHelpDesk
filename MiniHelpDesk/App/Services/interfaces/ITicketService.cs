@@ -22,5 +22,6 @@ namespace App.Services.interfaces
         Task AssignTicket(int ticketId, string technicalEmail);
         Task UpdateTicketStatus(int ticketId, App.Models.Enums.Status status);
         Task DeleteTicket(int ticketId);
+        Task UpdateTicket(TicketResponseDTO ticketDTO);
     }
 }

@@ -169,10 +169,13 @@ namespace App
                 var categoryService = new CategoryService(categoryRepo, loggerFactory.CreateLogger<CategoryService>());
                 var registerService = new RegisterService(registerRepo);
 
+                var ticketRepo = new TicketRepository(db);
+                var tiketService = new TicketService(ticketRepo);
+
                 // ======================
                 // START APP
                 // ======================
-                Application.Run(new AdminForm(serviceAdmin, serviceRole, categoryService));
+                Application.Run(new AdminForm(serviceAdmin, serviceRole, categoryService, tiketService));
             }
             catch (Exception ex)
             {

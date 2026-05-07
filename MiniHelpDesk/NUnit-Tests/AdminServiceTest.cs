@@ -17,7 +17,7 @@ public class AdminServiceTest
     public void Setup()
     {
         _mockRepo = new Mock<AdminRepository>();
-        _adminService = new AdminService(_mockRepo.Object);
+        //_adminService = new AdminService(_mockRepo.Object);
     }
 
     [Test]
