@@ -18,11 +18,13 @@ namespace App.Forms
     {
         private readonly UserForm _userForm;
         private readonly TicketService _ticketService;
-        public TicketAdminForm(UserForm userForm, TicketService ticketService)
+        private readonly int _userId;
+        public TicketAdminForm(UserForm userForm, TicketService ticketService, int userId)
         {
             InitializeComponent();
             _userForm = userForm;
             _ticketService = ticketService;
+            _userId = userId;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -32,12 +34,14 @@ namespace App.Forms
             this.Close();
         }
 
-        private void TicketAdminForm_Load(object sender, EventArgs e)
+        private async void TicketAdminForm_Load(object sender, EventArgs e)
         {
             try
             {
-                dgvTikets.DataSource = _ticketService.GetAllTickets().ToList();
+                dgvTikets.DataSource = await _ticketService.GetAllTicketsForUser(_userId);
                 dgvTikets.Columns["TicketId"].ReadOnly = true;
+                dgvTikets.Columns["CreatedAt"].ReadOnly = true;
+                dgvTikets.Columns["RequesterId"].ReadOnly = true;
             }
             catch (Exception ex)
             {

@@ -113,17 +113,33 @@ public partial class UserForm : Form
 
     private void btnBack_Click(object sender, EventArgs e)
     {
-        _adminForm.Show();
-        _adminForm.FormClosed += (s, args) => this.Close();
-        this.Close();
+        try
+        {
+            _adminForm.Show();
+            _adminForm.FormClosed += (s, args) => this.Close();
+            this.Close();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Възникна грешка!");
+        }
     }
 
     private void btnShowTickets_Click(object sender, EventArgs e)
     {
-        this.Hide();
+        try
+        {
+            FormHelper.CheckSelectedIndex(_selectedIndex);
 
-        TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService);
-        ticketForm.FormClosed += (s, args) => this.Show();
-        ticketForm.Show();
+            this.Hide();
+
+            TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService, (int)lbUsers.SelectedValue);
+            ticketForm.FormClosed += (s, args) => this.Show();
+            ticketForm.Show();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Възникна грешка!");
+        }
     }
 }

@@ -23,5 +23,6 @@ namespace App.Services.interfaces
         Task UpdateTicketStatus(int ticketId, App.Models.Enums.Status status);
         Task DeleteTicket(int ticketId);
         Task UpdateTicket(TicketResponseDTO ticketDTO);
+        Task<List<TicketResponseDTO>> GetAllTicketsForUser(int id);
     }
 }
