@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace App.Repositories.interfaces
 
         IEnumerable<Ticket> GetAllTickets();
         Task SaveChanges();
+        Task<List<Ticket>> GetAllTicketsForUser(int id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using App.Models;
+using App.Models.DTOs;
 using App.Repositories.interfaces;
 using Microsoft.EntityFrameworkCore;
 using MiniHelpDesk.Data;
@@ -26,5 +27,11 @@ namespace App.Repositories
             return _db.Tickets.ToList();
         }
 
+        public Task<List<Ticket>> GetAllTicketsForUser(int id)
+        {
+            return _dbSet
+                .Where(t => t.RequesterId == id || t.TechnicianId == id)
+                .ToListAsync();
+        }
     }
 }

@@ -60,7 +60,11 @@ namespace App.Services
         public async Task AssignTicket(int ticketId, string technicalEmail)
         {
             var ticket = await _ticketRepository.GetByIdAsync(ticketId);
-            if (ticket == null) throw new Exception("Ticket not found");
+            if (ticket == null)
+            {
+                //logger
+                throw new Exception("Ticket not found");
+            }
 
             ticket.AssignedTo = technicalEmail;
             ticket.Status = App.Models.Enums.Status.InProgress;
@@ -70,7 +74,11 @@ namespace App.Services
         public async Task UpdateTicketStatus(int ticketId, App.Models.Enums.Status status)
         {
             var ticket = await _ticketRepository.GetByIdAsync(ticketId);
-            if (ticket == null) throw new Exception("Ticket not found");
+            if (ticket == null)
+            {
+                //logger
+                throw new Exception("Ticket not found");
+            }
 
             ticket.Status = status;
             await _ticketRepository.UpdateAsync(ticket);
@@ -80,7 +88,10 @@ namespace App.Services
         {
             var ticket = await _ticketRepository.GetByIdAsync(ticketId);
             if (ticket != null)
+            {
+                //logger
                 await _ticketRepository.DeleteAsync(ticket.TicketId);
+            }
         }
 
         public async Task UpdateTicket(TicketResponseDTO ticketDTO)
@@ -139,6 +150,28 @@ namespace App.Services
                 TechnicianId = ticket.TechnicianId,
                 CategoryId = ticket.CategoryId
             };
+        }
+
+        public async Task<List<TicketResponseDTO>> GetAllTicketsForUser(int id)
+        {
+            if (id < 0)
+            {
+                //logger
+                throw new IndexOutOfRangeException("Invalid id");
+            }
+
+            var tickets = await _ticketRepository.GetAllTicketsForUser(id);
+
+            //Можеш и за проверките да използваш: 
+            //ServiceHelper.ObjectIsNull();
+            //ServiceHelper.CheckFields();
+            if (tickets == null)
+            {
+                //logger
+                throw new Exception("No tickets found for user");
+            }
+
+            return tickets.Select(MapToResponse).ToList();
         }
     }
 }
