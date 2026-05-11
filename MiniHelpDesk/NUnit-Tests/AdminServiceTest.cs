@@ -9,6 +9,7 @@ using MiniHelpDesk.Data;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace NUnit_Tests;
 
 public class AdminServiceTest
 {
-    private AppDbContext _context;
     private AdminService _adminService;
     private Mock<IAdminRepository> _mockRepo;
 
@@ -29,6 +29,17 @@ public class AdminServiceTest
             Email = email,
             Password = password,
             RoleID = roleId
+        };
+        return user;
+    }
+    private User CreateUser(string name, Role role, string email, string password)
+    {
+        User user = new User()
+        {
+            Username = name,
+            Email = email,
+            Password = password,
+            Role = role
         };
         return user;
     }
@@ -49,7 +60,6 @@ public class AdminServiceTest
     [SetUp]
     public void Setup()
     {
-        _context = new AppDbContext();
         _mockRepo = new Mock<IAdminRepository>();
         var logger = NullLogger<AdminService>.Instance;
         _adminService = new AdminService(_mockRepo.Object, logger);
@@ -58,7 +68,6 @@ public class AdminServiceTest
     [TearDown]
     public void TearDown()
     {
-        _context.Dispose();
     }
 
     #region ChangeUserRole()
@@ -127,14 +136,68 @@ public class AdminServiceTest
 
     #region GetUsersWithRole()
     [Test]
-    public void GetUsersWithRole_Succes_Test()
+    public async Task GetUsersWithRole_Success_Test()
     {
-        var userDTO1 = ConvertUserToDTO(CreateUser("Mitko", 1, "dsds", "dsds"));
-        var userDTO2 = ConvertUserToDTO(CreateUser("Ivan", 5, "e343", "5454"));
+        var role1 = new Role()
+        {
+            Name = "IT",
+            RoleID = 1
+        };
+        var role2 = new Role()
+        {
+            Name = "Programmer",
+            RoleID = 5
+        };
 
-        List<UserRoleDTO> list = new List<UserRoleDTO>() { userDTO1,  userDTO2 };
+        var user1 = CreateUser("Mitko", role1, "dsds", "dsds");
+        var user2 = CreateUser("Ivan", role2, "e343", "5454");
 
-        _mockRepo.Setup(r => r.GetAllUserWithRole()).ReturnsAsync(list);
+        var userDTO1 = ConvertUserToDTO(user1);
+        var userDTO2 = ConvertUserToDTO(user2);
+
+        List<UserRoleDTO> list = new List<UserRoleDTO>() { userDTO1, userDTO2 };
+
+        _mockRepo.Setup(r => r.GetAllUserWithRole())
+            .ReturnsAsync(list);
+
+        var result = await _adminService.GetUsersWithRole();
+
+        Assert.That(result.Count, Is.EqualTo(2));
+        Assert.That(result[0].Role, Is.EqualTo(userDTO1.Role));
+
+        _mockRepo.Verify(r => r.GetAllUserWithRole(), Times.Once);
+    }
+    [Test]
+    public async Task GetUsersWithRole_ThrowNullExeption_Test()
+    {
+        Assert.ThrowsAsync<InvalidOperationException>(() => _adminService.GetUsersWithRole());
+        _mockRepo.Verify(r => r.GetAllUserWithRole(), Times.Once);
+    }
+    #endregion
+
+    #region UpdateUsers()
+    [Test]
+    public async Task UpdateUsers_Success_Test()
+    {
+        var user = CreateUser("Koki", 2, "ewew@fdfd.fd", "dsdsds");
+
+        _mockRepo
+            .Setup(r => r.GetByIdAsync(user.UserID))
+            .ReturnsAsync(user);
+
+        _mockRepo
+            .Setup(r => r.UpdateAsync(It.IsAny<User>()))
+            .Returns(Task.CompletedTask);
+
+        await _adminService.UpdateUsers(user.UserID, "Ivan", "test", 4);
+
+        Assert.That(user.Username, Is.EqualTo("Ivan"));
+        Assert.That(user.Email, Is.EqualTo("test"));
+        Assert.That(user.RoleID, Is.EqualTo(4));
+
+        _mockRepo.Verify(r => r.GetByIdAsync(It.IsAny<int>()), Times.Once);
+
+        _mockRepo.Verify(r => r.UpdateAsync(It.IsAny<User>()), Times.Once);
     }
     #endregion
 }
