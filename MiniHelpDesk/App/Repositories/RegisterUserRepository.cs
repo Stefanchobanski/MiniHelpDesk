@@ -16,10 +16,5 @@ namespace App.Repositories
         public RegisterUserRepository(AppDbContext db) : base(db)
         {
         }
-
-        public async Task AddUser(User user)
-        {
-            _dbSet.Add(user);
-        }
     }
 }

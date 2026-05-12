@@ -7,15 +7,14 @@ namespace App
     public partial class RegisterForm : Form
     {
         private readonly IRegisterService _registerService;
-        private readonly IRoleService _roleService;
 
         public CheckBox chkRevealPassword;
-        public RegisterForm(IRegisterService registerService, IRoleService roleService)
+        public RegisterForm(IRegisterService registerService)
         {
             InitializeComponent();
             _registerService = registerService;
-            _roleService = roleService;
         }
+
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
         {
             chkRevealPassword = (CheckBox)sender;
@@ -76,21 +75,5 @@ namespace App
             _registerService.AddUser(user);
         }
 
-        private async void RegisterForm_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                var roles = await _roleService.GetRolesAsync();
-                cbxRole.DataSource = roles;
-                cbxRole.DisplayMember = "Name";
-                cbxRole.ValueMember = "RoleID";
-
-                cbxRole.SelectedIndex = -1;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 }

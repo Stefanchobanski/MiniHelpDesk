@@ -1,6 +1,7 @@
 ﻿using App.Models;
 using App.Repositories.interfaces;
 using App.Services.interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace MiniHelpDesk.Services;
 public class RegisterService : IRegisterService
 {
     private readonly IRegisterUserRepository _registerRepository;
+    private readonly ILogger<RegisterService> _logger;
 
-    public RegisterService(IRegisterUserRepository registerRepository)
+    public RegisterService(IRegisterUserRepository registerRepository, ILogger<RegisterService> logger)
     {
         _registerRepository = registerRepository;
+        _logger = logger;
     }
 
     public async Task AddUser(User user)
