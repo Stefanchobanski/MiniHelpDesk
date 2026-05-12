@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App.Models.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace App.Services
 {
@@ -17,10 +18,12 @@ namespace App.Services
     public class TicketService : ITicketService
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly ILogger<TicketService> _logger;
 
-        public TicketService(ITicketRepository ticketRepository)
+        public TicketService(ITicketRepository ticketRepository, ILogger<TicketService> logger)
         {
             _ticketRepository = ticketRepository;
+            _logger = logger;
         }
 
         public async Task<TicketResponseDTO> CreateTicket(CreateTicketRequestDTO request)
@@ -63,8 +66,10 @@ namespace App.Services
             if (ticket == null)
             {
                 //logger
+                _logger.LogError($"Ticket with ID {ticketId} was not found");
                 throw new Exception("Ticket not found");
             }
+                    _logger.LogInformation($"Ticket {ticketId} assigned to technician {technicalEmail}");
 
             ticket.AssignedTo = technicalEmail;
             ticket.Status = App.Models.Enums.Status.InProgress;
@@ -77,8 +82,10 @@ namespace App.Services
             if (ticket == null)
             {
                 //logger
+                _logger.LogError($"Ticket with ID {ticketId} was not found");
                 throw new Exception("Ticket not found");
             }
+            _logger.LogInformation($"Ticket {ticketId} status updated to {status}");
 
             ticket.Status = status;
             await _ticketRepository.UpdateAsync(ticket);
@@ -90,7 +97,12 @@ namespace App.Services
             if (ticket != null)
             {
                 //logger
+                _logger.LogInformation($"Deleting ticket with ID {ticket.TicketId}");
                 await _ticketRepository.DeleteAsync(ticket.TicketId);
+            }
+            else
+            {
+                _logger.LogWarning($"Attempted to delete non-existing ticket with ID {ticketId}");
             }
         }
 
@@ -157,6 +169,7 @@ namespace App.Services
             if (id < 0)
             {
                 //logger
+                _logger.LogError($"Invalid user ID: {id}");
                 throw new IndexOutOfRangeException("Invalid id");
             }
 
@@ -168,6 +181,7 @@ namespace App.Services
             if (tickets == null)
             {
                 //logger
+                _logger.LogError($"No tickets found for user with ID {id}");
                 throw new Exception("No tickets found for user");
             }
 
