@@ -170,7 +170,7 @@ namespace App
                 var registerService = new RegisterService(registerRepo);
 
                 var ticketRepo = new TicketRepository(db);
-                var tiketService = new TicketService(ticketRepo);
+                var tiketService = new TicketService(ticketRepo, loggerFactory.CreateLogger<TicketService>());
 
                 // ======================
                 // START APP
