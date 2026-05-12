@@ -1,6 +1,7 @@
 ﻿using App.Models;
 using App.Models.DTOs;
 using App.Repositories;
+using App.Repositories.interfaces;
 using App.Services.interfaces;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,10 +14,10 @@ namespace App.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly CategoryRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly ILogger<CategoryService> _logger;
 
-        public CategoryService(CategoryRepository categoryRepository, ILogger<CategoryService> logger)
+        public CategoryService(ICategoryRepository categoryRepository, ILogger<CategoryService> logger)
         {
             _categoryRepository = categoryRepository;
             _logger = logger;
@@ -28,6 +29,8 @@ namespace App.Services
 
             ServiceHelper.ObjectIsNull(categories, _logger);
 
+            _logger.LogInformation("Успешно взети категории!");
+
             return await categories;
         }
 
@@ -36,6 +39,8 @@ namespace App.Services
             var category = await _categoryRepository.GetByIdAsync(id);
 
             ServiceHelper.ObjectIsNull(category, _logger);
+
+            _logger.LogInformation("Успешно взета категория!");
 
             return category;
         }
@@ -72,6 +77,8 @@ namespace App.Services
             ServiceHelper.ObjectIsNull(category, _logger);
 
             category.Name = newName;
+
+            _logger.LogInformation("Успешно промененена категория!");
 
             await _categoryRepository.UpdateAsync(category);
         }
