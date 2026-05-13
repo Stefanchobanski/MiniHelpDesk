@@ -41,6 +41,7 @@
             btnRegister = new Button();
             pictureBox1 = new PictureBox();
             lblMiniHelpDesk = new Label();
+            btnLogin = new Button();
             chkRevealPassword = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -148,6 +149,7 @@
             btnRegister.TabIndex = 12;
             btnRegister.Text = "Регистрирация";
             btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.Click += btnRegister_Click;
             // 
             // pictureBox1
             // 
@@ -169,11 +171,23 @@
             lblMiniHelpDesk.TabIndex = 14;
             lblMiniHelpDesk.Text = "MiniHelpDesk";
             // 
+            // btnLogin
+            // 
+            btnLogin.Font = new Font("Segoe UI", 13F);
+            btnLogin.Location = new Point(112, 786);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(358, 50);
+            btnLogin.TabIndex = 15;
+            btnLogin.Text = "Логин";
+            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
+            // 
             // RegisterForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(588, 881);
+            Controls.Add(btnLogin);
             Controls.Add(lblMiniHelpDesk);
             Controls.Add(pictureBox1);
             Controls.Add(btnRegister);
@@ -212,5 +226,6 @@
         private Button btnRegister;
         private PictureBox pictureBox1;
         private Label lblMiniHelpDesk;
+        private Button btnLogin;
     }
 }

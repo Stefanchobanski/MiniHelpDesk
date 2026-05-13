@@ -16,7 +16,7 @@ namespace App.Services
             _logger = logger;
         }
 
-        public async Task<User> LoginAsync(string username, string password)
+        public async Task<string> LoginAsync(string username, string password)
         {
             ServiceHelper.CheckFields<LoginService>(username, _logger, "Username");
             ServiceHelper.CheckFields<LoginService>(password, _logger, "Password");
@@ -30,7 +30,7 @@ namespace App.Services
             }
 
             _logger.LogInformation($"User '{username}' logged in successfully.");
-            return user;
+            return user.Role.Name;
         }
     }
 }

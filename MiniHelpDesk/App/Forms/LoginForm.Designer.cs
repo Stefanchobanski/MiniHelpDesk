@@ -37,9 +37,22 @@
             lblPassword = new Label();
             txtPassword = new TextBox();
             btnLogin = new Button();
+            btnRegister = new Button();
             chkRevealPassword = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxPgtk).BeginInit();
             SuspendLayout();
+            // 
+            // chkRevealPassword
+            // 
+            chkRevealPassword.AutoSize = true;
+            chkRevealPassword.Font = new Font("Segoe UI", 13F);
+            chkRevealPassword.Location = new Point(112, 347);
+            chkRevealPassword.Name = "chkRevealPassword";
+            chkRevealPassword.Size = new Size(160, 29);
+            chkRevealPassword.TabIndex = 24;
+            chkRevealPassword.Text = "Покажи парола";
+            chkRevealPassword.UseVisualStyleBackColor = true;
+            chkRevealPassword.CheckedChanged += chkRevealPassword_CheckedChanged;
             // 
             // lblMiniHelpDesk
             // 
@@ -106,6 +119,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(358, 23);
             txtPassword.TabIndex = 22;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // btnLogin
             // 
@@ -118,23 +132,23 @@
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
-            // chkRevealPassword
+            // btnRegister
             // 
-            chkRevealPassword.AutoSize = true;
-            chkRevealPassword.Font = new Font("Segoe UI", 13F);
-            chkRevealPassword.Location = new Point(112, 347);
-            chkRevealPassword.Name = "chkRevealPassword";
-            chkRevealPassword.Size = new Size(160, 29);
-            chkRevealPassword.TabIndex = 24;
-            chkRevealPassword.Text = "Покажи парола";
-            chkRevealPassword.UseVisualStyleBackColor = true;
-            chkRevealPassword.CheckedChanged += chkRevealPassword_CheckedChanged;
+            btnRegister.Font = new Font("Segoe UI", 13F);
+            btnRegister.Location = new Point(112, 449);
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(358, 50);
+            btnRegister.TabIndex = 25;
+            btnRegister.Text = "Регистация";
+            btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.Click += btnRegister_Click;
             // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(588, 528);
+            Controls.Add(btnRegister);
             Controls.Add(chkRevealPassword);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);
@@ -163,5 +177,6 @@
         private Label lblPassword;
         private TextBox txtPassword;
         private Button btnLogin;
+        private Button btnRegister;
     }
 }

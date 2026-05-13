@@ -159,6 +159,8 @@ namespace App
                 // ======================
                 // SERVICES + REPOS
                 // ======================
+
+
                 var adminRepo = new AdminRepository(db);
                 var roleRepo = new RoleRepository(db);
                 var categoryRepo = new CategoryRepository(db);
@@ -167,7 +169,11 @@ namespace App
                 var serviceAdmin = new AdminService(adminRepo, loggerFactory.CreateLogger<AdminService>());
                 var serviceRole = new RoleService(roleRepo, loggerFactory.CreateLogger<RoleService>());
                 var categoryService = new CategoryService(categoryRepo, loggerFactory.CreateLogger<CategoryService>());
-                var registerService = new RegisterService(registerRepo, loggerFactory.CreateLogger<RegisterService>());
+
+                var registerService = new RegisterService(registerRepo, loggerFactory.CreateLogger<RegisterService>(), roleRepo);
+
+                var loginRepo = new LoginRepository(db);
+                var loginService = new LoginService(loginRepo, loggerFactory.CreateLogger<LoginService>());
 
                 var ticketRepo = new TicketRepository(db);
                 var tiketService = new TicketService(ticketRepo, loggerFactory.CreateLogger<TicketService>());
@@ -175,7 +181,7 @@ namespace App
                 // ======================
                 // START APP
                 // ======================
-                Application.Run(new RegisterForm(registerService));
+                Application.Run(new RegisterForm(registerService, loginService, serviceAdmin, serviceRole, categoryService, tiketService));
             }
             catch (Exception ex)
             {

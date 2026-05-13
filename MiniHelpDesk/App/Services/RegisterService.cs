@@ -9,12 +9,14 @@ namespace MiniHelpDesk.Services;
 public class RegisterService : IRegisterService
 {
     private readonly IRegisterUserRepository _registerRepository;
+    private readonly IRoleRepository _roleRepository;
     private readonly ILogger<RegisterService> _logger;
 
-    public RegisterService(IRegisterUserRepository registerRepository, ILogger<RegisterService> logger)
+    public RegisterService(IRegisterUserRepository registerRepository, ILogger<RegisterService> logger, IRoleRepository roleRepository)
     {
         _registerRepository = registerRepository;
         _logger = logger;
+        _roleRepository = roleRepository;
     }
 
     public async Task RegisterUser(string username, string email, string password)
@@ -52,7 +54,8 @@ public class RegisterService : IRegisterService
         {
             Username = username,
             Email = email,
-            Password = password
+            Password = password,
+            Role = await _roleRepository.GetRoleByName("Requester")
         };
 
         await _registerRepository.AddAsync(user);
