@@ -1,11 +1,17 @@
-﻿namespace App.Forms
+﻿using App.Services.Interfaces;
+
+namespace App.Forms
 {
     public partial class LoginForm : Form
     {
+        private readonly ILoginService _loginService;
+
         public CheckBox chkRevealPassword;
-        public LoginForm()
+
+        public LoginForm(ILoginService loginService)
         {
             InitializeComponent();
+            _loginService = loginService;
         }
 
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
@@ -21,7 +27,7 @@
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string password = txtPassword.Text;
