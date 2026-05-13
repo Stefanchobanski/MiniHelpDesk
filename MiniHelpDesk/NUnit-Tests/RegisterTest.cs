@@ -11,8 +11,8 @@ public class RegisterTest
 {
 
     private RegisterService _registerService;
-    private RegisterUserRepository _registerUserRepository;
-    private Mock<IRegisterUserRepository> _mockRepo;
+    private Mock<IRegisterUserRepository> _registerUserRepoMock;
+    private Mock<IRoleRepository> _roleRepoMock;
 
     private User CreateUser(string username, string email, string password)
     {
@@ -27,9 +27,10 @@ public class RegisterTest
     [SetUp]
     public void Setup()
     {
-        _mockRepo = new Mock<IRegisterUserRepository>();
+        _registerUserRepoMock = new Mock<IRegisterUserRepository>();
+        _roleRepoMock = new Mock<IRoleRepository>();
         var logger = NullLogger<RegisterService>.Instance;
-        _registerService = new RegisterService(_mockRepo.Object, logger, );
+        _registerService = new RegisterService(_registerUserRepoMock.Object, logger, _roleRepoMock.Object);
     }
 
     [TearDown]
@@ -43,8 +44,8 @@ public class RegisterTest
         Assert.ThrowsAsync<FormatException>(() =>
             _registerService.RegisterUser("   ", "test@test.com", "password123"));
 
-        _mockRepo.Verify(r => r.ExistsByUsernameAsync(It.IsAny<string>()), Times.Never);
-        _mockRepo.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
+        _registerUserRepoMock.Verify(r => r.ExistsByUsernameAsync(It.IsAny<string>()), Times.Never);
+        _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
     }
 
     [Test]
@@ -53,7 +54,7 @@ public class RegisterTest
         Assert.ThrowsAsync<FormatException>(() =>
             _registerService.RegisterUser("testuser", "   ", "password123"));
 
-        _mockRepo.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
+        _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
     }
 
     [Test]
@@ -62,7 +63,7 @@ public class RegisterTest
         Assert.ThrowsAsync<FormatException>(() =>
             _registerService.RegisterUser("testuser", "test@test.com", "   "));
 
-        _mockRepo.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
+        _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
     }
 
     #endregion
