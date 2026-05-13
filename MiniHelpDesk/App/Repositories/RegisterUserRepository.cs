@@ -2,6 +2,7 @@
 using App.Repositories;
 using App.Repositories.interfaces;
 using App.Services.interfaces;
+using Microsoft.EntityFrameworkCore;
 using MiniHelpDesk.Data;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,14 @@ namespace App.Repositories
     {
         public RegisterUserRepository(AppDbContext db) : base(db)
         {
+
         }
+
+        public async Task<bool> ExistsByUsernameAsync(string username)
+            => await _dbSet.AnyAsync(u => u.Username == username);
+
+        public async Task<bool> ExistsByEmailAsync(string email)
+            => await _dbSet.AnyAsync(u => u.Email == email);
+
     }
 }

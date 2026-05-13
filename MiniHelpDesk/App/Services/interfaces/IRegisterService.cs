@@ -9,6 +9,6 @@ namespace App.Services.interfaces
 {
     public interface IRegisterService
     {
-        Task AddUser(User user);
+        Task RegisterUser(string username, string email, string password);
     }
 }

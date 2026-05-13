@@ -1,6 +1,5 @@
-using App.Models;
+using App.Forms;
 using App.Services.interfaces;
-using MiniHelpDesk.Services;
 
 namespace App
 {
@@ -9,6 +8,7 @@ namespace App
         private readonly IRegisterService _registerService;
 
         public CheckBox chkRevealPassword;
+
         public RegisterForm(IRegisterService registerService)
         {
             InitializeComponent();
@@ -18,62 +18,51 @@ namespace App
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
         {
             chkRevealPassword = (CheckBox)sender;
-            if (chkRevealPassword.Checked)
-            {
-                txtPassword.UseSystemPasswordChar = false;
-                txtConfirmPassword.UseSystemPasswordChar = false;
-            }
-            else
-            {
-                txtPassword.UseSystemPasswordChar = true;
-                txtConfirmPassword.UseSystemPasswordChar = true;
-            }
+            txtPassword.UseSystemPasswordChar = !chkRevealPassword.Checked;
+            txtConfirmPassword.UseSystemPasswordChar = !chkRevealPassword.Checked;
         }
 
-        private void btnRegister_Click(object sender, EventArgs e)
+        private async void btnRegister_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string email = txtEmail.Text;
             string password = txtPassword.Text;
             string confirmPassword = txtConfirmPassword.Text;
-            var roleId = cbxRole.SelectedValue;
 
             if (RegisterEventHelpers.CheckAllFieldsRegister(username, email, password, confirmPassword))
             {
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!email.Contains("@") || !email.Contains("."))
-            {
-                MessageBox.Show("Please enter a valid email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+
             if (password != confirmPassword)
             {
                 MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (password.Length < 6 && confirmPassword.Length < 6)
-            {
-                MessageBox.Show("Password must be at least 6 characters long.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if(cbxRole.SelectedIndex < 0)
-            {
-                MessageBox.Show("Not selected item", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            var user = new User()
+            try
             {
-                Username = username,
-                Email = email,
-                Password = password,
-                RoleID = (int)cbxRole.SelectedValue
-            };
+                await _registerService.RegisterUser(username, email, password);
 
-            _registerService.AddUser(user);
+                MessageBox.Show("Registration successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                var loginForm = new LoginForm();
+                loginForm.Show();
+                this.Hide();
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
     }
 }

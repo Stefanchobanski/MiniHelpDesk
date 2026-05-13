@@ -1,12 +1,8 @@
-﻿using App.Models;
+﻿using App;
+using App.Models;
 using App.Repositories.interfaces;
 using App.Services.interfaces;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniHelpDesk.Services;
 
@@ -21,8 +17,45 @@ public class RegisterService : IRegisterService
         _logger = logger;
     }
 
-    public async Task AddUser(User user)
+    public async Task RegisterUser(string username, string email, string password)
     {
+        ServiceHelper.CheckFields<RegisterService>(username, _logger, "Username");
+        ServiceHelper.CheckFields<RegisterService>(email, _logger, "Email");
+        ServiceHelper.CheckFields<RegisterService>(password, _logger, "Password");
+
+        if (!email.Contains('@') || !email.Contains('.'))
+        {
+            _logger.LogWarning("Invalid email format.");
+            throw new FormatException("Please enter a valid email address.");
+        }
+
+        if (password.Length < 6)
+        {
+            _logger.LogWarning("Password too short.");
+            throw new ArgumentException("Password must be at least 6 characters long.");
+        }
+
+        bool usernameTaken = await _registerRepository.ExistsByUsernameAsync(username);
+        if (usernameTaken)
+        {
+            _logger.LogWarning($"Username '{username}' is already taken.");
+            throw new InvalidOperationException($"Username '{username}' is already taken.");
+        }
+
+        bool emailTaken = await _registerRepository.ExistsByEmailAsync(email);
+        if (emailTaken)
+        {
+            _logger.LogWarning($"Email '{email}' is already registered.");
+            throw new InvalidOperationException($"Email '{email}' is already registered.");
+        }
+        var user = new User
+        {
+            Username = username,
+            Email = email,
+            Password = password
+        };
+
         await _registerRepository.AddAsync(user);
+        _logger.LogInformation($"User '{username}' registered successfully.");
     }
 }

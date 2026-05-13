@@ -38,8 +38,6 @@
             txtEmail = new TextBox();
             txtPassword = new TextBox();
             txtConfirmPassword = new TextBox();
-            cbxRole = new ComboBox();
-            lblRole = new Label();
             btnRegister = new Button();
             pictureBox1 = new PictureBox();
             lblMiniHelpDesk = new Label();
@@ -51,7 +49,7 @@
             // 
             chkRevealPassword.AutoSize = true;
             chkRevealPassword.Font = new Font("Segoe UI", 13F);
-            chkRevealPassword.Location = new Point(112, 642);
+            chkRevealPassword.Location = new Point(112, 676);
             chkRevealPassword.Name = "chkRevealPassword";
             chkRevealPassword.Size = new Size(160, 29);
             chkRevealPassword.TabIndex = 11;
@@ -75,7 +73,7 @@
             // 
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 13F);
-            lblUsername.Location = new Point(112, 204);
+            lblUsername.Location = new Point(112, 218);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(173, 25);
             lblUsername.TabIndex = 1;
@@ -83,7 +81,7 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(112, 232);
+            txtUsername.Location = new Point(112, 246);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(358, 29);
             txtUsername.TabIndex = 2;
@@ -92,7 +90,7 @@
             // 
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 13F);
-            lblEmail.Location = new Point(112, 290);
+            lblEmail.Location = new Point(112, 325);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(70, 25);
             lblEmail.TabIndex = 3;
@@ -102,7 +100,7 @@
             // 
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 13F);
-            lblPassword.Location = new Point(112, 479);
+            lblPassword.Location = new Point(112, 447);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(78, 25);
             lblPassword.TabIndex = 4;
@@ -112,7 +110,7 @@
             // 
             lblConfirmPassword.AutoSize = true;
             lblConfirmPassword.Font = new Font("Segoe UI", 13F);
-            lblConfirmPassword.Location = new Point(112, 579);
+            lblConfirmPassword.Location = new Point(112, 571);
             lblConfirmPassword.Name = "lblConfirmPassword";
             lblConfirmPassword.Size = new Size(237, 25);
             lblConfirmPassword.TabIndex = 5;
@@ -120,14 +118,14 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(112, 318);
+            txtEmail.Location = new Point(112, 353);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(358, 29);
             txtEmail.TabIndex = 6;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(112, 507);
+            txtPassword.Location = new Point(112, 475);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(358, 29);
             txtPassword.TabIndex = 7;
@@ -135,41 +133,21 @@
             // 
             // txtConfirmPassword
             // 
-            txtConfirmPassword.Location = new Point(112, 607);
+            txtConfirmPassword.Location = new Point(112, 599);
             txtConfirmPassword.Name = "txtConfirmPassword";
             txtConfirmPassword.Size = new Size(358, 29);
             txtConfirmPassword.TabIndex = 8;
             txtConfirmPassword.UseSystemPasswordChar = true;
             // 
-            // cbxRole
-            // 
-            cbxRole.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbxRole.FormattingEnabled = true;
-            cbxRole.Location = new Point(112, 414);
-            cbxRole.Name = "cbxRole";
-            cbxRole.Size = new Size(358, 29);
-            cbxRole.TabIndex = 9;
-            // 
-            // lblRole
-            // 
-            lblRole.AutoSize = true;
-            lblRole.Font = new Font("Segoe UI", 13F);
-            lblRole.Location = new Point(112, 386);
-            lblRole.Name = "lblRole";
-            lblRole.Size = new Size(55, 25);
-            lblRole.TabIndex = 10;
-            lblRole.Text = "Роля:";
-            // 
             // btnRegister
             // 
             btnRegister.Font = new Font("Segoe UI", 13F);
-            btnRegister.Location = new Point(112, 743);
+            btnRegister.Location = new Point(112, 720);
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(358, 50);
             btnRegister.TabIndex = 12;
             btnRegister.Text = "Регистрирация";
             btnRegister.UseVisualStyleBackColor = true;
-            btnRegister.Click += btnRegister_Click;
             // 
             // pictureBox1
             // 
@@ -200,8 +178,6 @@
             Controls.Add(pictureBox1);
             Controls.Add(btnRegister);
             Controls.Add(chkRevealPassword);
-            Controls.Add(lblRole);
-            Controls.Add(cbxRole);
             Controls.Add(txtConfirmPassword);
             Controls.Add(txtPassword);
             Controls.Add(txtEmail);
@@ -233,8 +209,6 @@
         private TextBox txtEmail;
         private TextBox txtPassword;
         private TextBox txtConfirmPassword;
-        private ComboBox cbxRole;
-        private Label lblRole;
         private Button btnRegister;
         private PictureBox pictureBox1;
         private Label lblMiniHelpDesk;
