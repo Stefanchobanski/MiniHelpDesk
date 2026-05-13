@@ -107,7 +107,6 @@ public class AdminService : IAdminService
         var user = await _adminRepository.GetByIdAsync(id);
 
         ServiceHelper.ObjectIsNull(user, _logger);
-
         _logger.LogInformation($"Потребител с ID: {id} е намерен в базата данни! Продължавам с изтриването на свързаните таблици!");
 
         await _adminRepository.RemoveTicketByUserAllTabels(user);

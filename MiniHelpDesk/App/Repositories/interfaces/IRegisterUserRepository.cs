@@ -9,6 +9,7 @@ namespace App.Repositories.interfaces
 {
     public interface IRegisterUserRepository : IRepository<User>
     {
-        Task AddAsync(Models.User user);
+        Task<bool> ExistsByUsernameAsync(string username);
+        Task<bool> ExistsByEmailAsync(string email);
     }
 }

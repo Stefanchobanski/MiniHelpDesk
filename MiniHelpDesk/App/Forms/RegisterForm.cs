@@ -1,96 +1,90 @@
-using App.Models;
+using App.Forms;
+using App.Services;
 using App.Services.interfaces;
-using MiniHelpDesk.Services;
+using App.Services.Interfaces;
 
 namespace App
 {
     public partial class RegisterForm : Form
     {
         private readonly IRegisterService _registerService;
+        private readonly ILoginService _loginService;
+
+        private readonly IAdminService _adminService;
         private readonly IRoleService _roleService;
+        private readonly CategoryService _categoryService;
+        private readonly TicketService _ticketService;
 
         public CheckBox chkRevealPassword;
-        public RegisterForm(IRegisterService registerService, IRoleService roleService)
+
+        public RegisterForm(IRegisterService registerService, ILoginService loginService, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService)
         {
             InitializeComponent();
             _registerService = registerService;
+            _loginService = loginService;
+            _adminService = adminService;
             _roleService = roleService;
+            _categoryService = categoryService;
+            _ticketService = ticketService;
         }
+
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
         {
             chkRevealPassword = (CheckBox)sender;
-            if (chkRevealPassword.Checked)
-            {
-                txtPassword.UseSystemPasswordChar = false;
-                txtConfirmPassword.UseSystemPasswordChar = false;
-            }
-            else
-            {
-                txtPassword.UseSystemPasswordChar = true;
-                txtConfirmPassword.UseSystemPasswordChar = true;
-            }
+            txtPassword.UseSystemPasswordChar = !chkRevealPassword.Checked;
+            txtConfirmPassword.UseSystemPasswordChar = !chkRevealPassword.Checked;
         }
 
-        private void btnRegister_Click(object sender, EventArgs e)
+        private async void btnRegister_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string email = txtEmail.Text;
             string password = txtPassword.Text;
             string confirmPassword = txtConfirmPassword.Text;
-            var roleId = cbxRole.SelectedValue;
 
             if (RegisterEventHelpers.CheckAllFieldsRegister(username, email, password, confirmPassword))
             {
                 MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!email.Contains("@") || !email.Contains("."))
-            {
-                MessageBox.Show("Please enter a valid email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+
             if (password != confirmPassword)
             {
                 MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (password.Length < 6 && confirmPassword.Length < 6)
-            {
-                MessageBox.Show("Password must be at least 6 characters long.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if(cbxRole.SelectedIndex < 0)
-            {
-                MessageBox.Show("Not selected item", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            var user = new User()
-            {
-                Username = username,
-                Email = email,
-                Password = password,
-                RoleID = (int)cbxRole.SelectedValue
-            };
-
-            _registerService.AddUser(user);
-        }
-
-        private async void RegisterForm_Load(object sender, EventArgs e)
-        {
             try
             {
-                var roles = await _roleService.GetRolesAsync();
-                cbxRole.DataSource = roles;
-                cbxRole.DisplayMember = "Name";
-                cbxRole.ValueMember = "RoleID";
+                await _registerService.RegisterUser(username, email, password);
 
-                cbxRole.SelectedIndex = -1;
+                MessageBox.Show("Registration successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                var loginForm = new LoginForm(_loginService, this, _adminService, _roleService, _categoryService, _ticketService);
+                loginForm.FormClosed += (s, args) => this.Show();
+                loginForm.Show();
+                this.Hide();
             }
-            catch (Exception ex)
+            catch (FormatException ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.StackTrace, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            var loginForm = new LoginForm(_loginService, this, _adminService, _roleService, _categoryService, _ticketService);
+            loginForm.FormClosed += (s, args) => this.Show();
+            loginForm.Show();
+            this.Hide();
         }
     }
 }
