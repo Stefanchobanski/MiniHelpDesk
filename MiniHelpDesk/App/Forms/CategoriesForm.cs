@@ -1,6 +1,9 @@
 ﻿using App.Models;
 using App.Models.DTOs;
 using App.Services;
+using Microsoft.Extensions.Logging;
+using Serilog.Core;
+using Serilog.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,14 +20,16 @@ namespace App.Forms
     {
         private readonly AdminForm _adminForm;
         private readonly CategoryService _categoryService;
+        private readonly ILogger<CategoriesForm> _logger;
 
         private int _index = -1;
 
-        public CategoriesForm(AdminForm adminForm, CategoryService categoryService)
+        public CategoriesForm(AdminForm adminForm, CategoryService categoryService, ILogger<CategoriesForm> logger)
         {
             InitializeComponent();
             _adminForm = adminForm;
             _categoryService = categoryService;
+            _logger = logger;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -54,9 +59,9 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message , "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
-
         }
 
         private async void btnAddCategory_Click(object sender, EventArgs e)
@@ -70,7 +75,8 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
 
@@ -87,7 +93,8 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
 
@@ -102,9 +109,10 @@ namespace App.Forms
                 await _categoryService.UpdateCategory((int)lbCategories.SelectedValue, name);
                 lbCategories.DataSource = await _categoryService.GetCategoriesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
     }

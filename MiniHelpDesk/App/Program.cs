@@ -181,7 +181,7 @@ namespace App
                 // ======================
                 // START APP
                 // ======================
-                Application.Run(new RegisterForm(registerService, loginService, serviceAdmin, serviceRole, categoryService, tiketService));
+                Application.Run(new RegisterForm(registerService, loginService, serviceAdmin, serviceRole, categoryService, tiketService, loggerFactory.CreateLogger<CategoriesForm>(), loggerFactory.CreateLogger<RoleAdminForm>()));
             }
             catch (Exception ex)
             {

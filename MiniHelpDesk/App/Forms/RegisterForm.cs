@@ -2,6 +2,7 @@ using App.Forms;
 using App.Services;
 using App.Services.interfaces;
 using App.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace App
 {
@@ -15,9 +16,12 @@ namespace App
         private readonly CategoryService _categoryService;
         private readonly TicketService _ticketService;
 
+        private readonly ILogger<CategoriesForm> _categoryLogger;
+        private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
+
         public CheckBox chkRevealPassword;
 
-        public RegisterForm(IRegisterService registerService, ILoginService loginService, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService)
+        public RegisterForm(IRegisterService registerService, ILoginService loginService, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger)
         {
             InitializeComponent();
             _registerService = registerService;
@@ -26,6 +30,8 @@ namespace App
             _roleService = roleService;
             _categoryService = categoryService;
             _ticketService = ticketService;
+            _categoryLogger = categoryLogger;
+            _roleAdminFormLogger = roleAdminFormLogger;
         }
 
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
@@ -60,7 +66,7 @@ namespace App
 
                 MessageBox.Show("Registration successful! Please log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                var loginForm = new LoginForm(_loginService, this, _adminService, _roleService, _categoryService, _ticketService);
+                var loginForm = new LoginForm(_loginService, this, _adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger);
                 loginForm.FormClosed += (s, args) => this.Show();
                 loginForm.Show();
                 this.Hide();
@@ -81,7 +87,7 @@ namespace App
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var loginForm = new LoginForm(_loginService, this, _adminService, _roleService, _categoryService, _ticketService);
+            var loginForm = new LoginForm(_loginService, this, _adminService, _roleService, _categoryService, _ticketService, _categoryLogger);
             loginForm.FormClosed += (s, args) => this.Show();
             loginForm.Show();
             this.Hide();

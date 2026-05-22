@@ -1,6 +1,7 @@
 ﻿using App.Services;
 using App.Services.interfaces;
 using App.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using System.CodeDom;
 
 namespace App.Forms
@@ -15,9 +16,12 @@ namespace App.Forms
         private readonly CategoryService _categoryService;
         private readonly TicketService _ticketService;
 
+        private readonly ILogger<CategoriesForm> _categoryLogger;
+        private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
+
         public CheckBox chkRevealPassword;
 
-        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService)
+        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger)
         {
             InitializeComponent();
             _loginService = loginService;
@@ -26,6 +30,8 @@ namespace App.Forms
             _roleService = roleService;
             _categoryService = categoryService;
             _ticketService = ticketService;
+            _categoryLogger = categoryLogger;
+            _roleAdminFormLogger = roleAdminFormLogger;
         }
 
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
@@ -61,7 +67,7 @@ namespace App.Forms
                 switch (role)
                 {
                     case "Admin":
-                        nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService);
+                        nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger);
                         break;
                     case "Requester":
                         break;

@@ -2,6 +2,7 @@
 using App.Services;
 using App.Services.interfaces;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,11 +19,15 @@ namespace App.Forms
     {
         private AdminForm _adminForm;
         private IRoleService _roleService;
-        public RoleAdminForm(AdminForm adminForm, IRoleService roleService)
+
+        private ILogger<RoleAdminForm> _logger;
+
+        public RoleAdminForm(AdminForm adminForm, IRoleService roleService, ILogger<RoleAdminForm> logger)
         {
             InitializeComponent();
             _adminForm = adminForm;
             _roleService = roleService;
+            _logger = logger;
         }
 
         private int _index = -1;
@@ -53,7 +58,8 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
 
@@ -71,7 +77,8 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
 
@@ -85,7 +92,8 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
 
@@ -102,7 +110,8 @@ namespace App.Forms
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
     }
