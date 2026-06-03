@@ -31,15 +31,17 @@
             btnBack = new Button();
             dgvTikets = new DataGridView();
             btnUpdate = new Button();
+            btnRemove = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvTikets).BeginInit();
             SuspendLayout();
             // 
             // btnBack
             // 
             btnBack.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnBack.Location = new Point(23, 402);
+            btnBack.Location = new Point(26, 536);
+            btnBack.Margin = new Padding(3, 4, 3, 4);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(119, 44);
+            btnBack.Size = new Size(136, 59);
             btnBack.TabIndex = 11;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = true;
@@ -48,30 +50,47 @@
             // dgvTikets
             // 
             dgvTikets.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvTikets.Location = new Point(12, 12);
+            dgvTikets.Location = new Point(14, 16);
+            dgvTikets.Margin = new Padding(3, 4, 3, 4);
             dgvTikets.Name = "dgvTikets";
-            dgvTikets.Size = new Size(956, 283);
+            dgvTikets.RowHeadersWidth = 51;
+            dgvTikets.Size = new Size(1093, 377);
             dgvTikets.TabIndex = 12;
             // 
             // btnUpdate
             // 
             btnUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnUpdate.Location = new Point(23, 335);
+            btnUpdate.Location = new Point(26, 447);
+            btnUpdate.Margin = new Padding(3, 4, 3, 4);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(119, 44);
+            btnUpdate.Size = new Size(136, 59);
             btnUpdate.TabIndex = 13;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
             btnUpdate.Click += btnUpdate_Click;
             // 
+            // btnRemove
+            // 
+            btnRemove.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRemove.Location = new Point(197, 447);
+            btnRemove.Margin = new Padding(3, 4, 3, 4);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(136, 59);
+            btnRemove.TabIndex = 14;
+            btnRemove.Text = "Remove";
+            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
+            // 
             // TicketAdminForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(980, 490);
+            ClientSize = new Size(1120, 653);
+            Controls.Add(btnRemove);
             Controls.Add(btnUpdate);
             Controls.Add(dgvTikets);
             Controls.Add(btnBack);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "TicketAdminForm";
             Text = "TicketAdminForm";
             Load += TicketAdminForm_Load;
@@ -84,5 +103,6 @@
         private Button btnBack;
         private DataGridView dgvTikets;
         private Button btnUpdate;
+        private Button btnRemove;
     }
 }

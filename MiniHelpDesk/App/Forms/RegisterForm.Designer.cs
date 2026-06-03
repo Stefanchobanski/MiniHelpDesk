@@ -50,9 +50,9 @@
             // 
             chkRevealPassword.AutoSize = true;
             chkRevealPassword.Font = new Font("Segoe UI", 13F);
-            chkRevealPassword.Location = new Point(112, 676);
+            chkRevealPassword.Location = new Point(110, 522);
             chkRevealPassword.Name = "chkRevealPassword";
-            chkRevealPassword.Size = new Size(160, 29);
+            chkRevealPassword.Size = new Size(194, 34);
             chkRevealPassword.TabIndex = 11;
             chkRevealPassword.Text = "Покажи парола";
             chkRevealPassword.UseVisualStyleBackColor = true;
@@ -63,9 +63,9 @@
             lblTitle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            lblTitle.Location = new Point(160, 155);
+            lblTitle.Location = new Point(158, 104);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(250, 30);
+            lblTitle.Size = new Size(317, 38);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Регистрационна форма";
             lblTitle.TextAlign = ContentAlignment.TopCenter;
@@ -74,26 +74,26 @@
             // 
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 13F);
-            lblUsername.Location = new Point(112, 218);
+            lblUsername.Location = new Point(110, 167);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(173, 25);
+            lblUsername.Size = new Size(216, 30);
             lblUsername.TabIndex = 1;
             lblUsername.Text = "Име на потребител:";
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(112, 246);
+            txtUsername.Location = new Point(110, 195);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(358, 29);
+            txtUsername.Size = new Size(358, 34);
             txtUsername.TabIndex = 2;
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 13F);
-            lblEmail.Location = new Point(112, 325);
+            lblEmail.Location = new Point(110, 249);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(70, 25);
+            lblEmail.Size = new Size(86, 30);
             lblEmail.TabIndex = 3;
             lblEmail.Text = "Имейл:";
             // 
@@ -101,9 +101,9 @@
             // 
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 13F);
-            lblPassword.Location = new Point(112, 447);
+            lblPassword.Location = new Point(110, 334);
             lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(78, 25);
+            lblPassword.Size = new Size(94, 30);
             lblPassword.TabIndex = 4;
             lblPassword.Text = "Парола:";
             // 
@@ -111,39 +111,39 @@
             // 
             lblConfirmPassword.AutoSize = true;
             lblConfirmPassword.Font = new Font("Segoe UI", 13F);
-            lblConfirmPassword.Location = new Point(112, 571);
+            lblConfirmPassword.Location = new Point(110, 426);
             lblConfirmPassword.Name = "lblConfirmPassword";
-            lblConfirmPassword.Size = new Size(237, 25);
+            lblConfirmPassword.Size = new Size(290, 30);
             lblConfirmPassword.TabIndex = 5;
             lblConfirmPassword.Text = "Потвърждаване на парола:";
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(112, 353);
+            txtEmail.Location = new Point(110, 277);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(358, 29);
+            txtEmail.Size = new Size(358, 34);
             txtEmail.TabIndex = 6;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(112, 475);
+            txtPassword.Location = new Point(110, 362);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(358, 29);
+            txtPassword.Size = new Size(358, 34);
             txtPassword.TabIndex = 7;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // txtConfirmPassword
             // 
-            txtConfirmPassword.Location = new Point(112, 599);
+            txtConfirmPassword.Location = new Point(110, 454);
             txtConfirmPassword.Name = "txtConfirmPassword";
-            txtConfirmPassword.Size = new Size(358, 29);
+            txtConfirmPassword.Size = new Size(358, 34);
             txtConfirmPassword.TabIndex = 8;
             txtConfirmPassword.UseSystemPasswordChar = true;
             // 
             // btnRegister
             // 
             btnRegister.Font = new Font("Segoe UI", 13F);
-            btnRegister.Location = new Point(112, 720);
+            btnRegister.Location = new Point(110, 566);
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(358, 50);
             btnRegister.TabIndex = 12;
@@ -154,7 +154,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.logopgtk;
-            pictureBox1.Location = new Point(82, 62);
+            pictureBox1.Location = new Point(80, 11);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(100, 100);
             pictureBox1.TabIndex = 13;
@@ -165,16 +165,16 @@
             lblMiniHelpDesk.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             lblMiniHelpDesk.AutoSize = true;
             lblMiniHelpDesk.Font = new Font("Segoe UI", 25F);
-            lblMiniHelpDesk.Location = new Point(172, 91);
+            lblMiniHelpDesk.Location = new Point(170, 40);
             lblMiniHelpDesk.Name = "lblMiniHelpDesk";
-            lblMiniHelpDesk.Size = new Size(229, 46);
+            lblMiniHelpDesk.Size = new Size(284, 57);
             lblMiniHelpDesk.TabIndex = 14;
             lblMiniHelpDesk.Text = "MiniHelpDesk";
             // 
             // btnLogin
             // 
             btnLogin.Font = new Font("Segoe UI", 13F);
-            btnLogin.Location = new Point(112, 786);
+            btnLogin.Location = new Point(110, 632);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(358, 50);
             btnLogin.TabIndex = 15;
@@ -184,9 +184,9 @@
             // 
             // RegisterForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(588, 881);
+            ClientSize = new Size(588, 699);
             Controls.Add(btnLogin);
             Controls.Add(lblMiniHelpDesk);
             Controls.Add(pictureBox1);

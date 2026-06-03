@@ -22,8 +22,10 @@ public partial class AdminForm : Form
 
     private readonly ILogger<CategoriesForm> _categoryLogger;
     private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
+    private readonly ILogger<TicketAdminForm> _ticketAdminForm;
+    private readonly ILogger<UserForm> _userFormLogger;
 
-    public AdminForm(IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger)
+    public AdminForm(IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminForm, ILogger<UserForm> userForm)
     {
         InitializeComponent();
         _adminService = adminService;
@@ -32,13 +34,15 @@ public partial class AdminForm : Form
         _ticketService = ticketService;
         _categoryLogger = categoryLogger;
         _roleAdminFormLogger = roleAdminFormLogger;
+        _ticketAdminForm = ticketAdminForm;
+        _userFormLogger = userForm;
     }
 
     private void btnUsers_Click(object sender, EventArgs e)
     {
         this.Hide();
 
-        UserForm userForm = new UserForm(_adminService, this, _roleService, _ticketService);
+        UserForm userForm = new UserForm(_adminService, this, _roleService, _ticketService, _ticketAdminForm, _userFormLogger);
         userForm.FormClosed += (s, args) => this.Show();
         userForm.Show();
     }

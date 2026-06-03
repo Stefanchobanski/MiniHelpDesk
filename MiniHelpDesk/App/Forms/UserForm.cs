@@ -4,7 +4,7 @@ using App.Models.DTOs;
 using App.Models.Enums;
 using App.Services;
 using App.Services.interfaces;
-using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,13 +23,19 @@ public partial class UserForm : Form
     private readonly IAdminService _adminService;
     private readonly IRoleService _roleService;
     private readonly TicketService _ticketService;
-    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService, TicketService ticketService)
+
+    private readonly ILogger<TicketAdminForm> _ticketAdminlogger;
+    private readonly ILogger<UserForm> _userFormLogger;
+
+    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService, TicketService ticketService, ILogger<TicketAdminForm> ticketRolelogger, ILogger<UserForm> userFormLogger)
     {
         InitializeComponent();
         _adminService = adminService;
         _adminForm = adminForm;
         _roleService = roleService;
         _ticketService = ticketService;
+        _ticketAdminlogger = ticketRolelogger;
+        _userFormLogger = userFormLogger;
     }
 
     private int _selectedIndex = -1;
@@ -50,6 +56,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
+            _userFormLogger.LogError(ex.Message);
             MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
@@ -72,6 +79,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
+            _userFormLogger.LogError(ex.Message);
             MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
@@ -87,6 +95,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
+            _userFormLogger.LogError(ex.Message);
             MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
@@ -107,6 +116,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
+            _userFormLogger.LogError(ex.Message);
             MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
@@ -121,6 +131,7 @@ public partial class UserForm : Form
         }
         catch (Exception ex)
         {
+            _userFormLogger.LogError(ex.Message);
             MessageBox.Show("Възникна грешка!");
         }
     }
@@ -133,12 +144,13 @@ public partial class UserForm : Form
 
             this.Hide();
 
-            TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService, (int)lbUsers.SelectedValue);
+            TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService, (int)lbUsers.SelectedValue, _ticketAdminlogger);
             ticketForm.FormClosed += (s, args) => this.Show();
             ticketForm.Show();
         }
         catch (Exception ex)
         {
+            _userFormLogger.LogError(ex.Message);
             MessageBox.Show("Възникна грешка!");
         }
     }

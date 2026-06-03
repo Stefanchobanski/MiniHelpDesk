@@ -59,7 +59,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
@@ -75,7 +75,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
@@ -93,7 +93,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }
@@ -111,7 +111,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Възникна грешка", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _logger.LogError(ex.Message + " " + ex.StackTrace);
             }
         }

@@ -2,6 +2,7 @@
 using App.Models.DTOs;
 using App.Services;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,12 +20,16 @@ namespace App.Forms
         private readonly UserForm _userForm;
         private readonly TicketService _ticketService;
         private readonly int _userId;
-        public TicketAdminForm(UserForm userForm, TicketService ticketService, int userId)
+
+        private readonly ILogger<TicketAdminForm> _logger;
+
+        public TicketAdminForm(UserForm userForm, TicketService ticketService, int userId, ILogger<TicketAdminForm> logger)
         {
             InitializeComponent();
             _userForm = userForm;
             _ticketService = ticketService;
             _userId = userId;
+            _logger = logger;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -45,6 +50,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 MessageBox.Show($"Грешка при зареждане на информация!");
             }
         }
@@ -61,13 +67,52 @@ namespace App.Forms
 
                 foreach (var ticketDTO in tikets)
                 {
-                   await _ticketService.UpdateTicket(ticketDTO);
+                    await _ticketService.UpdateTicket(ticketDTO);
                 }
                 dgvTikets.DataSource = _ticketService.GetAllTickets().ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 MessageBox.Show($"Грешка при обновяване на информация!");
+            }
+        }
+
+        private async void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (dgvTikets.SelectedRows.Count == 0)
+            {
+                _logger.LogWarning("Не е селектиран тикет");
+                MessageBox.Show("Моля, изберете ред за изтриване!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var confirmResult = MessageBox.Show(
+            "Сигурни ли сте, че искате да изтриете избрания билет?",
+            "Потвърждение за изтриване",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                try
+                {
+                    foreach (DataGridViewRow row in dgvTikets.SelectedRows)
+                    {
+                        var ticketDTO = (TicketResponseDTO)row.DataBoundItem;
+
+                        await _ticketService.DeleteTicket(ticketDTO.TicketId);
+                    }
+
+                    dgvTikets.DataSource = await _ticketService.GetAllTicketsForUser(_userId);
+
+                    MessageBox.Show("Успешно изтриване!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                    MessageBox.Show("Грешка при изтриване на информация!");
+                }
             }
         }
     }
