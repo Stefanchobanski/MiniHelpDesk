@@ -65,7 +65,6 @@ namespace App.Services
             var ticket = await _ticketRepository.GetByIdAsync(ticketId);
             if (ticket == null)
             {
-                //logger
                 _logger.LogError($"Ticket with ID {ticketId} was not found");
                 throw new Exception("Ticket not found");
             }
@@ -81,7 +80,6 @@ namespace App.Services
             var ticket = await _ticketRepository.GetByIdAsync(ticketId);
             if (ticket == null)
             {
-                //logger
                 _logger.LogError($"Ticket with ID {ticketId} was not found");
                 throw new Exception("Ticket not found");
             }
@@ -96,7 +94,6 @@ namespace App.Services
             var ticket = await _ticketRepository.GetByIdAsync(ticketId);
             if (ticket != null)
             {
-                //logger
                 _logger.LogInformation($"Deleting ticket with ID {ticket.TicketId}");
                 await _ticketRepository.DeleteAsync(ticket.TicketId);
             }
@@ -168,7 +165,6 @@ namespace App.Services
         {
             if (id < 0)
             {
-                //logger
                 _logger.LogError($"Invalid user ID: {id}");
                 throw new IndexOutOfRangeException("Invalid id");
             }

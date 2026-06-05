@@ -1,5 +1,6 @@
 ﻿using App.Services;
 using App.Services.interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,20 +19,30 @@ public partial class AdminForm : Form
     private readonly IRoleService _roleService;
     private readonly CategoryService _categoryService;
     private readonly TicketService _ticketService;
-    public AdminForm(IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService)
+
+    private readonly ILogger<CategoriesForm> _categoryLogger;
+    private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
+    private readonly ILogger<TicketAdminForm> _ticketAdminForm;
+    private readonly ILogger<UserForm> _userFormLogger;
+
+    public AdminForm(IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminForm, ILogger<UserForm> userForm)
     {
         InitializeComponent();
         _adminService = adminService;
         _roleService = roleService;
         _categoryService = categoryService;
         _ticketService = ticketService;
+        _categoryLogger = categoryLogger;
+        _roleAdminFormLogger = roleAdminFormLogger;
+        _ticketAdminForm = ticketAdminForm;
+        _userFormLogger = userForm;
     }
 
     private void btnUsers_Click(object sender, EventArgs e)
     {
         this.Hide();
 
-        UserForm userForm = new UserForm(_adminService, this, _roleService, _ticketService);
+        UserForm userForm = new UserForm(_adminService, this, _roleService, _ticketService, _ticketAdminForm, _userFormLogger);
         userForm.FormClosed += (s, args) => this.Show();
         userForm.Show();
     }
@@ -40,7 +51,7 @@ public partial class AdminForm : Form
     {
         this.Hide();
 
-        CategoriesForm categoryForm = new CategoriesForm(this, _categoryService);
+        CategoriesForm categoryForm = new CategoriesForm(this, _categoryService, _categoryLogger);
         categoryForm.FormClosed += (s, args) => this.Show();
         categoryForm.Show();
     }
@@ -49,7 +60,7 @@ public partial class AdminForm : Form
     {
         this.Hide();
 
-        RoleAdminForm roleForm = new RoleAdminForm(this, _roleService);
+        RoleAdminForm roleForm = new RoleAdminForm(this, _roleService, _roleAdminFormLogger);
         roleForm.FormClosed += (s, args) => this.Show();
         roleForm.Show();
     }
