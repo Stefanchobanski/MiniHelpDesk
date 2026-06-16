@@ -24,7 +24,7 @@ namespace App.Forms
 
         public CheckBox chkRevealPassword;
 
-        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminFormLogger, ILogger<UserForm> userFormLogger    )
+        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminFormLogger, ILogger<UserForm> userFormLogger)
         {
             InitializeComponent();
             _loginService = loginService;
@@ -103,5 +103,6 @@ namespace App.Forms
             _registerForm.FormClosed += (s, args) => this.Close();
             this.Close();
         }
+
     }
 }
