@@ -68,7 +68,7 @@
             // pictureBoxPgtk
             // 
             pictureBoxPgtk.Image = Properties.Resources.logopgtk;
-            pictureBoxPgtk.Location = new Point(82, 62);
+            pictureBoxPgtk.Location = new Point(66, 66);
             pictureBoxPgtk.Name = "pictureBoxPgtk";
             pictureBoxPgtk.Size = new Size(100, 100);
             pictureBoxPgtk.TabIndex = 16;
@@ -90,7 +90,7 @@
             // 
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 13F);
-            lblUsername.Location = new Point(112, 204);
+            lblUsername.Location = new Point(105, 204);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(173, 25);
             lblUsername.TabIndex = 19;
@@ -107,7 +107,7 @@
             // 
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 13F);
-            lblPassword.Location = new Point(112, 290);
+            lblPassword.Location = new Point(105, 290);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(78, 25);
             lblPassword.TabIndex = 21;

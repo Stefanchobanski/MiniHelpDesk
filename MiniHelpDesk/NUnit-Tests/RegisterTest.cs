@@ -66,5 +66,33 @@ public class RegisterTest
         _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
     }
 
+    [Test]
+    public void RegisterUser_NullUsername_ThrowsFormatException()
+    {
+        Assert.ThrowsAsync<FormatException>(() =>
+            _registerService.RegisterUser(null!, "test@test.com", "password123"));
+
+        _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
+    }
+
+    [Test]
+    public void RegisterUser_NullEmail_ThrowsFormatException()
+    {
+        Assert.ThrowsAsync<FormatException>(() =>
+            _registerService.RegisterUser("testuser", null!, "password123"));
+
+        _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
+    }
+
+    [Test]
+    public void RegisterUser_NullPassword_ThrowsFormatException()
+    {
+        Assert.ThrowsAsync<FormatException>(() =>
+            _registerService.RegisterUser("testuser", "test@test.com", null!));
+
+        _registerUserRepoMock.Verify(r => r.AddAsync(It.IsAny<User>()), Times.Never);
+    }
+
     #endregion
+
 }

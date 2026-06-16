@@ -1,4 +1,5 @@
-﻿using App.Services;
+﻿using App.Models;
+using App.Services;
 using App.Services.interfaces;
 using App.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -63,24 +64,25 @@ namespace App.Forms
                     return;
                 }
 
-                string role = await _loginService.LoginAsync(username, password);
+                User user = await _loginService.LoginAsync(username, password);
+                string role = user.Role?.Name ?? string.Empty;
 
 
 
-                Form nextForm = default;
+                Form nextForm;
                 switch (role)
                 {
                     case "Admin":
                         nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger, _ticketAdminFormLogger, _userFormLogger);
                         break;
                     case "Requester":
+                        nextForm = new TicketForm(_ticketService);
                         break;
                     case "Technician":
-                        break;
-                    case "Null":
+                        nextForm = new TechnicianForm(_ticketService, user, _ticketAdminFormLogger);
                         break;
                     default:
-                        MessageBox.Show("Невалидна роля!");
+                        MessageBox.Show($"Role '{role}' has no assigned form.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                 }
 
@@ -91,7 +93,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("login error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Login error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
