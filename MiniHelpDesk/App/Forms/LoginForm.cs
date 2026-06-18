@@ -17,14 +17,18 @@ namespace App.Forms
         private readonly CategoryService _categoryService;
         private readonly TicketService _ticketService;
 
+        private readonly CommentService _commentService;
+
         private readonly ILogger<CategoriesForm> _categoryLogger;
         private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
         private readonly ILogger<TicketAdminForm> _ticketAdminFormLogger;
+        private readonly ILogger<TechnicianForm> _technicianLogger;
         private readonly ILogger<UserForm> _userFormLogger;
+        private readonly ILogger<CommentForm> _commentFormLogger;
 
         public CheckBox chkRevealPassword;
 
-        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminFormLogger, ILogger<UserForm> userFormLogger)
+        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminFormLogger, ILogger<UserForm> userFormLogger, CommentService commentService, ILogger<TechnicianForm> technicianLogger, ILogger<CommentForm> commentFormLogger)
         {
             InitializeComponent();
             _loginService = loginService;
@@ -37,6 +41,9 @@ namespace App.Forms
             _roleAdminFormLogger = roleAdminFormLogger;
             _ticketAdminFormLogger = ticketAdminFormLogger;
             _userFormLogger = userFormLogger;
+            _commentService = commentService;
+            _technicianLogger = technicianLogger;
+            _commentFormLogger = commentFormLogger;
         }
 
         private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
@@ -73,13 +80,13 @@ namespace App.Forms
                 switch (role)
                 {
                     case "Admin":
-                        nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger, _ticketAdminFormLogger, _userFormLogger);
+                        nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger, _ticketAdminFormLogger, _userFormLogger, _commentService, user.UserID, _commentFormLogger, _technicianLogger);
                         break;
                     case "Requester":
                         nextForm = new TicketForm(_ticketService);
                         break;
                     case "Technician":
-                        nextForm = new TechnicianForm(_ticketService, user, _ticketAdminFormLogger);
+                        nextForm = new TechnicianForm(_ticketService, _technicianLogger, user.UserID, _commentService, _commentFormLogger);
                         break;
                     default:
                         MessageBox.Show($"Role '{role}' has no assigned form.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);

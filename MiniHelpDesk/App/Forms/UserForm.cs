@@ -5,6 +5,7 @@ using App.Models.Enums;
 using App.Services;
 using App.Services.interfaces;
 using Microsoft.Extensions.Logging;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,10 +25,16 @@ public partial class UserForm : Form
     private readonly IRoleService _roleService;
     private readonly TicketService _ticketService;
 
+    private readonly CommentService _commentService;
+
+    private readonly int _idUser;
+
     private readonly ILogger<TicketAdminForm> _ticketAdminlogger;
     private readonly ILogger<UserForm> _userFormLogger;
+    private readonly ILogger<CommentForm> _commentFormnLogger;
+    private readonly ILogger<TechnicianForm> _technicianFormLogger;
 
-    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService, TicketService ticketService, ILogger<TicketAdminForm> ticketRolelogger, ILogger<UserForm> userFormLogger)
+    public UserForm(IAdminService adminService, AdminForm adminForm, IRoleService roleService, TicketService ticketService, ILogger<TicketAdminForm> ticketRolelogger, ILogger<UserForm> userFormLogger, CommentService commentService, int idUser, ILogger<CommentForm> commentFormnLogger, ILogger<TechnicianForm> technicianLogger)
     {
         InitializeComponent();
         _adminService = adminService;
@@ -36,6 +43,10 @@ public partial class UserForm : Form
         _ticketService = ticketService;
         _ticketAdminlogger = ticketRolelogger;
         _userFormLogger = userFormLogger;
+        _commentService = commentService;
+        _idUser = idUser;
+        _commentFormnLogger = commentFormnLogger;
+        _technicianFormLogger = technicianLogger;
     }
 
     private int _selectedIndex = -1;
@@ -144,7 +155,7 @@ public partial class UserForm : Form
 
             this.Hide();
 
-            TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService, (int)lbUsers.SelectedValue, _ticketAdminlogger);
+            TicketAdminForm ticketForm = new TicketAdminForm(this, _ticketService, (int)lbUsers.SelectedValue, _ticketAdminlogger, _commentService, _idUser, _commentFormnLogger, _technicianFormLogger);
             ticketForm.FormClosed += (s, args) => this.Show();
             ticketForm.Show();
         }

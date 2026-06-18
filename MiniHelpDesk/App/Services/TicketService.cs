@@ -1,16 +1,16 @@
 ﻿using App.Models;
 using App.Models.DTOs;
+using App.Models.Enums;
 using App.Repositories;
 using App.Repositories.interfaces;
 using App.Services.interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using App.Models.Enums;
-using Microsoft.Extensions.Logging;
 
 namespace App.Services
 {
@@ -68,7 +68,7 @@ namespace App.Services
                 _logger.LogError($"Ticket with ID {ticketId} was not found");
                 throw new Exception("Ticket not found");
             }
-                    _logger.LogInformation($"Ticket {ticketId} assigned to technician {technicalEmail}");
+            _logger.LogInformation($"Ticket {ticketId} assigned to technician {technicalEmail}");
 
             ticket.AssignedTo = technicalEmail;
             ticket.Status = App.Models.Enums.Status.InProgress;
@@ -176,12 +176,65 @@ namespace App.Services
             //ServiceHelper.CheckFields();
             if (tickets == null)
             {
-                //logger
                 _logger.LogError($"No tickets found for user with ID {id}");
                 throw new Exception("No tickets found for user");
             }
 
             return tickets.Select(MapToResponse).ToList();
+        }
+
+        public async Task<List<User>> GetTechnicianUsers(int id)
+        {
+            try
+            {
+                var users = await _ticketRepository.GetTechnicianUsers(id);
+                ServiceHelper.ObjectIsNull(users, _logger);
+
+                return users;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
+                throw new Exception("Възникна грешка");
+            }
+        }
+
+        public async Task<List<TicketResponseDTO>> GetAllTicketTechnic(int techId, int userId)
+        {
+            try
+            {
+                var tickets = await _ticketRepository.GetAllTicketTechnic(techId, userId);
+                ServiceHelper.ObjectIsNull(tickets, _logger);
+
+                return tickets.Select(t => MapToResponse(t)).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message} {ex.StackTrace}");
+                throw new Exception("Възникна грешка");
+            }
+        }
+
+        public async Task<List<CommentDTO>> GetTicketComments(int id)
+        {
+            try
+            {
+                var comments = await _ticketRepository.GetTicketComments(id);
+                ServiceHelper.ObjectIsNull(comments, _logger);
+
+                return comments.Select(c => new CommentDTO
+                {
+                    CommentID = c.CommentID, 
+                    Text = c.Text,
+                    CreatedDate = c.CreatedDate
+                }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message} {ex.StackTrace}");
+                throw new Exception("Възникна грешка");
+            }
         }
     }
 }

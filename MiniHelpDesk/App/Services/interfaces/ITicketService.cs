@@ -24,5 +24,8 @@ namespace App.Services.interfaces
         Task DeleteTicket(int ticketId);
         Task UpdateTicket(TicketResponseDTO ticketDTO);
         Task<List<TicketResponseDTO>> GetAllTicketsForUser(int id);
+        Task<List<User>> GetTechnicianUsers(int id);
+        Task<List<TicketResponseDTO>> GetAllTicketTechnic(int techId, int userId);
+        Task<List<CommentDTO>> GetTicketComments(int id);
     }
 }
