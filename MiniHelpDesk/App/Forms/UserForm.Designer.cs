@@ -2,186 +2,244 @@
 {
     partial class UserForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            lbUsers = new ListBox();
+            pnlSidebar = new Panel();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
             lblUsername = new Label();
-            lblEmail = new Label();
-            cmbRoles = new ComboBox();
-            lblRole = new Label();
             txtbUsername = new TextBox();
+            lblEmail = new Label();
             txtbEmail = new TextBox();
+            lblRole = new Label();
+            cmbRoles = new ComboBox();
+            btnShowTickets = new Button();
             btnRemoveUser = new Button();
             btnUpdate = new Button();
             btnBack = new Button();
-            btnShowTickets = new Button();
+            pnlList = new Panel();
+            lblListTitle = new Label();
+            lbUsers = new ListBox();
+
+            pnlSidebar.SuspendLayout();
+            pnlList.SuspendLayout();
             SuspendLayout();
-            // 
-            // lbUsers
-            // 
-            lbUsers.FormattingEnabled = true;
-            lbUsers.Location = new Point(396, 39);
-            lbUsers.Margin = new Padding(4);
-            lbUsers.Name = "lbUsers";
-            lbUsers.Size = new Size(546, 487);
-            lbUsers.TabIndex = 0;
-            lbUsers.SelectedIndexChanged += lbUsers_SelectedIndexChanged;
-            // 
-            // lblUsername
-            // 
-            lblUsername.AutoSize = true;
-            lblUsername.Location = new Point(100, 63);
+
+            // ── Form ──────────────────────────────────────────────
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(980, 580);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "UserForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "MiniHelpDesk – Потребители";
+            Font = new Font("Segoe UI", 9F);
+            Controls.Add(pnlSidebar);
+            Controls.Add(pnlList);
+            Load += UserForm_Load;
+
+            // ── pnlSidebar (left panel) ───────────────────────────
+            pnlSidebar.BackColor = Color.White;
+            pnlSidebar.Location = new Point(20, 20);
+            pnlSidebar.Name = "pnlSidebar";
+            pnlSidebar.Size = new Size(320, 540);
+            pnlSidebar.TabIndex = 0;
+            pnlSidebar.Controls.Add(lblTitle);
+            pnlSidebar.Controls.Add(lblSubtitle);
+            pnlSidebar.Controls.Add(lblUsername);
+            pnlSidebar.Controls.Add(txtbUsername);
+            pnlSidebar.Controls.Add(lblEmail);
+            pnlSidebar.Controls.Add(txtbEmail);
+            pnlSidebar.Controls.Add(lblRole);
+            pnlSidebar.Controls.Add(cmbRoles);
+            pnlSidebar.Controls.Add(btnShowTickets);
+            pnlSidebar.Controls.Add(btnRemoveUser);
+            pnlSidebar.Controls.Add(btnUpdate);
+            pnlSidebar.Controls.Add(btnBack);
+
+            // ── lblTitle ──────────────────────────────────────────
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(27, 64, 121);
+            lblTitle.Location = new Point(60, 18);
+            lblTitle.Name = "lblTitle";
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Потребители";
+
+            // ── lblSubtitle ───────────────────────────────────────
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.ForeColor = Color.FromArgb(77, 124, 138);
+            lblSubtitle.Location = new Point(62, 58);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Управление на акаунти";
+
+            // ── lblUsername ───────────────────────────────────────
+            lblUsername.Location = new Point(30, 105);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(81, 21);
-            lblUsername.TabIndex = 1;
-            lblUsername.Text = "Username";
-            // 
-            // lblEmail
-            // 
-            lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(112, 135);
+            lblUsername.Size = new Size(260, 20);
+            lblUsername.TabIndex = 2;
+            lblUsername.Text = "Потребител";
+            lblUsername.ForeColor = Color.FromArgb(27, 64, 121);
+
+            // ── txtbUsername ──────────────────────────────────────
+            txtbUsername.Enabled = false;
+            txtbUsername.Location = new Point(30, 128);
+            txtbUsername.Name = "txtbUsername";
+            txtbUsername.Size = new Size(260, 23);
+            txtbUsername.TabIndex = 3;
+            txtbUsername.BorderStyle = BorderStyle.FixedSingle;
+
+            // ── lblEmail ──────────────────────────────────────────
+            lblEmail.Location = new Point(30, 172);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(48, 21);
-            lblEmail.TabIndex = 2;
-            lblEmail.Text = "Email";
-            // 
-            // cmbRoles
-            // 
+            lblEmail.Size = new Size(260, 20);
+            lblEmail.TabIndex = 4;
+            lblEmail.Text = "Имейл";
+            lblEmail.ForeColor = Color.FromArgb(27, 64, 121);
+
+            // ── txtbEmail ─────────────────────────────────────────
+            txtbEmail.Enabled = false;
+            txtbEmail.Location = new Point(30, 195);
+            txtbEmail.Name = "txtbEmail";
+            txtbEmail.Size = new Size(260, 23);
+            txtbEmail.TabIndex = 5;
+            txtbEmail.BorderStyle = BorderStyle.FixedSingle;
+
+            // ── lblRole ───────────────────────────────────────────
+            lblRole.Location = new Point(30, 240);
+            lblRole.Name = "lblRole";
+            lblRole.Size = new Size(260, 20);
+            lblRole.TabIndex = 6;
+            lblRole.Text = "Роля";
+            lblRole.ForeColor = Color.FromArgb(27, 64, 121);
+
+            // ── cmbRoles ──────────────────────────────────────────
             cmbRoles.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRoles.FormattingEnabled = true;
-            cmbRoles.Location = new Point(72, 236);
+            cmbRoles.Location = new Point(30, 263);
             cmbRoles.Name = "cmbRoles";
-            cmbRoles.Size = new Size(146, 29);
-            cmbRoles.TabIndex = 4;
-            // 
-            // lblRole
-            // 
-            lblRole.AutoSize = true;
-            lblRole.Location = new Point(112, 212);
-            lblRole.Name = "lblRole";
-            lblRole.Size = new Size(41, 21);
-            lblRole.TabIndex = 5;
-            lblRole.Text = "Role";
-            // 
-            // txtbUsername
-            // 
-            txtbUsername.Enabled = false;
-            txtbUsername.Location = new Point(72, 87);
-            txtbUsername.Name = "txtbUsername";
-            txtbUsername.Size = new Size(146, 29);
-            txtbUsername.TabIndex = 6;
-            // 
-            // txtbEmail
-            // 
-            txtbEmail.Enabled = false;
-            txtbEmail.Location = new Point(72, 159);
-            txtbEmail.Name = "txtbEmail";
-            txtbEmail.Size = new Size(146, 29);
-            txtbEmail.TabIndex = 7;
-            // 
-            // btnRemoveUser
-            // 
-            btnRemoveUser.Location = new Point(72, 412);
-            btnRemoveUser.Name = "btnRemoveUser";
-            btnRemoveUser.Size = new Size(119, 44);
-            btnRemoveUser.TabIndex = 8;
-            btnRemoveUser.Text = "Remove";
-            btnRemoveUser.UseVisualStyleBackColor = true;
-            btnRemoveUser.Click += btnRemoveUser_Click;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(72, 471);
+            cmbRoles.Size = new Size(260, 23);
+            cmbRoles.TabIndex = 7;
+            //cmbRoles.FlatStyle = FlatStyle.Flat;
+
+            // ── btnShowTickets ────────────────────────────────────
+            btnShowTickets.BackColor = Color.FromArgb(77, 124, 138);
+            btnShowTickets.FlatStyle = FlatStyle.Flat;
+            btnShowTickets.FlatAppearance.BorderSize = 0;
+            btnShowTickets.ForeColor = Color.White;
+            btnShowTickets.Location = new Point(30, 320);
+            btnShowTickets.Name = "btnShowTickets";
+            btnShowTickets.Size = new Size(260, 38);
+            btnShowTickets.TabIndex = 8;
+            btnShowTickets.Text = "Преглед на тикети";
+            btnShowTickets.UseVisualStyleBackColor = false;
+            btnShowTickets.Click += btnShowTickets_Click;
+
+            // ── btnUpdate ─────────────────────────────────────────
+            btnUpdate.BackColor = Color.FromArgb(27, 64, 121);
+            btnUpdate.FlatStyle = FlatStyle.Flat;
+            btnUpdate.FlatAppearance.BorderSize = 0;
+            btnUpdate.ForeColor = Color.White;
+            btnUpdate.Location = new Point(30, 373);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(119, 44);
+            btnUpdate.Size = new Size(260, 38);
             btnUpdate.TabIndex = 9;
-            btnUpdate.Text = "Update";
-            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Text = "Запази промените";
+            btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
-            // 
-            // btnBack
-            // 
-            btnBack.Location = new Point(72, 530);
+
+            // ── btnRemoveUser ─────────────────────────────────────
+            btnRemoveUser.BackColor = Color.FromArgb(180, 50, 50);
+            btnRemoveUser.FlatStyle = FlatStyle.Flat;
+            btnRemoveUser.FlatAppearance.BorderSize = 0;
+            btnRemoveUser.ForeColor = Color.White;
+            btnRemoveUser.Location = new Point(30, 426);
+            btnRemoveUser.Name = "btnRemoveUser";
+            btnRemoveUser.Size = new Size(260, 38);
+            btnRemoveUser.TabIndex = 10;
+            btnRemoveUser.Text = "Премахни потребител";
+            btnRemoveUser.UseVisualStyleBackColor = false;
+            btnRemoveUser.Click += btnRemoveUser_Click;
+
+            // ── btnBack ───────────────────────────────────────────
+            btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.FlatAppearance.BorderColor = Color.FromArgb(27, 64, 121);
+            btnBack.ForeColor = Color.FromArgb(27, 64, 121);
+            btnBack.Location = new Point(30, 487);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(119, 44);
-            btnBack.TabIndex = 10;
-            btnBack.Text = "Back";
+            btnBack.Size = new Size(260, 35);
+            btnBack.TabIndex = 11;
+            btnBack.Text = "← Назад";
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
-            // 
-            // btnShowTickets
-            // 
-            btnShowTickets.Location = new Point(72, 353);
-            btnShowTickets.Name = "btnShowTickets";
-            btnShowTickets.Size = new Size(119, 44);
-            btnShowTickets.TabIndex = 11;
-            btnShowTickets.Text = "View tickets";
-            btnShowTickets.UseVisualStyleBackColor = true;
-            btnShowTickets.Click += btnShowTickets_Click;
-            // 
-            // UserForm
-            // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1029, 630);
-            Controls.Add(btnShowTickets);
-            Controls.Add(btnBack);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnRemoveUser);
-            Controls.Add(txtbEmail);
-            Controls.Add(txtbUsername);
-            Controls.Add(lblRole);
-            Controls.Add(cmbRoles);
-            Controls.Add(lblEmail);
-            Controls.Add(lblUsername);
-            Controls.Add(lbUsers);
-            Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Margin = new Padding(4);
-            Name = "UserForm";
-            Text = "UserForm";
-            Load += UserForm_Load;
+
+            // ── pnlList (right panel) ─────────────────────────────
+            pnlList.BackColor = Color.FromArgb(245, 248, 252);
+            pnlList.Location = new Point(360, 20);
+            pnlList.Name = "pnlList";
+            pnlList.Size = new Size(600, 540);
+            pnlList.TabIndex = 1;
+            pnlList.Controls.Add(lblListTitle);
+            pnlList.Controls.Add(lbUsers);
+
+            // ── lblListTitle ──────────────────────────────────────
+            lblListTitle.AutoSize = true;
+            lblListTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblListTitle.ForeColor = Color.FromArgb(27, 64, 121);
+            lblListTitle.Location = new Point(20, 18);
+            lblListTitle.Name = "lblListTitle";
+            lblListTitle.TabIndex = 0;
+            lblListTitle.Text = "Списък с потребители";
+
+            // ── lbUsers ───────────────────────────────────────────
+            lbUsers.BorderStyle = BorderStyle.None;
+            lbUsers.Font = new Font("Segoe UI", 10F);
+            lbUsers.FormattingEnabled = true;
+            lbUsers.ItemHeight = 28;
+            lbUsers.Location = new Point(20, 50);
+            lbUsers.Name = "lbUsers";
+            lbUsers.Size = new Size(560, 475);
+            lbUsers.TabIndex = 1;
+            lbUsers.SelectedIndexChanged += lbUsers_SelectedIndexChanged;
+
+            pnlSidebar.ResumeLayout(false);
+            pnlSidebar.PerformLayout();
+            pnlList.ResumeLayout(false);
+            pnlList.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private ListBox lbUsers;
+        private Panel pnlSidebar;
+        private Panel pnlList;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private Label lblListTitle;
         private Label lblUsername;
         private Label lblEmail;
         private Label lblRole;
-        private ComboBox cmbRoles;
-        private Label label4;
         private TextBox txtbUsername;
         private TextBox txtbEmail;
-        private TextBox textBox3;
-        private Button btnRemoveUser;
-        private Button btnUpdate;
-        private Button btnBack;
+        private ComboBox cmbRoles;
+        private ListBox lbUsers;
         private Button btnShowTickets;
+        private Button btnUpdate;
+        private Button btnRemoveUser;
+        private Button btnBack;
     }
 }

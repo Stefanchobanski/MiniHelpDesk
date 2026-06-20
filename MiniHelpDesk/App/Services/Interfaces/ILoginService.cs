@@ -4,6 +4,6 @@ namespace App.Services.Interfaces
 {
     public interface ILoginService
     {
-        Task<string> LoginAsync(string username, string password);
+        Task<User> LoginAsync(string username, string password);
     }
 }

@@ -2,36 +2,25 @@
 {
     partial class LoginForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
+
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             CheckBox chkRevealPassword;
-            lblMiniHelpDesk = new Label();
-            pictureBoxPgtk = new PictureBox();
+            pnlBody = new Panel();
+            pictureBox1 = new PictureBox();
             lblTitle = new Label();
+            lblSubtitle = new Label();
             lblUsername = new Label();
             txtUsername = new TextBox();
             lblPassword = new Label();
@@ -39,142 +28,148 @@
             btnLogin = new Button();
             btnRegister = new Button();
             chkRevealPassword = new CheckBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxPgtk).BeginInit();
+            pnlBody.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // chkRevealPassword
             // 
-            chkRevealPassword.AutoSize = true;
-            chkRevealPassword.Font = new Font("Segoe UI", 13F);
-            chkRevealPassword.Location = new Point(112, 347);
+            chkRevealPassword.Location = new Point(40, 330);
             chkRevealPassword.Name = "chkRevealPassword";
-            chkRevealPassword.Size = new Size(160, 29);
-            chkRevealPassword.TabIndex = 24;
-            chkRevealPassword.Text = "Покажи парола";
-            chkRevealPassword.UseVisualStyleBackColor = true;
+            chkRevealPassword.Size = new Size(160, 24);
+            chkRevealPassword.TabIndex = 7;
+            chkRevealPassword.Text = "Покажи паролата";
             chkRevealPassword.CheckedChanged += chkRevealPassword_CheckedChanged;
             // 
-            // lblMiniHelpDesk
+            // pnlBody
             // 
-            lblMiniHelpDesk.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            lblMiniHelpDesk.AutoSize = true;
-            lblMiniHelpDesk.Font = new Font("Segoe UI", 25F);
-            lblMiniHelpDesk.Location = new Point(172, 91);
-            lblMiniHelpDesk.Name = "lblMiniHelpDesk";
-            lblMiniHelpDesk.Size = new Size(229, 46);
-            lblMiniHelpDesk.TabIndex = 17;
-            lblMiniHelpDesk.Text = "MiniHelpDesk";
+            pnlBody.BackColor = Color.White;
+            pnlBody.Controls.Add(pictureBox1);
+            pnlBody.Controls.Add(lblTitle);
+            pnlBody.Controls.Add(lblSubtitle);
+            pnlBody.Controls.Add(lblUsername);
+            pnlBody.Controls.Add(txtUsername);
+            pnlBody.Controls.Add(lblPassword);
+            pnlBody.Controls.Add(txtPassword);
+            pnlBody.Controls.Add(chkRevealPassword);
+            pnlBody.Controls.Add(btnLogin);
+            pnlBody.Controls.Add(btnRegister);
+            pnlBody.Location = new Point(35, 20);
+            pnlBody.Name = "pnlBody";
+            pnlBody.Size = new Size(450, 477);
+            pnlBody.TabIndex = 0;
             // 
-            // pictureBoxPgtk
+            // pictureBox1
             // 
-            pictureBoxPgtk.Image = Properties.Resources.logopgtk;
-            pictureBoxPgtk.Location = new Point(82, 62);
-            pictureBoxPgtk.Name = "pictureBoxPgtk";
-            pictureBoxPgtk.Size = new Size(100, 100);
-            pictureBoxPgtk.TabIndex = 16;
-            pictureBoxPgtk.TabStop = false;
+            pictureBox1.Image = Properties.Resources.logopgtk;
+            pictureBox1.Location = new Point(178, 20);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(80, 80);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // lblTitle
             // 
-            lblTitle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 17F);
-            lblTitle.Location = new Point(242, 155);
+            lblTitle.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(27, 64, 121);
+            lblTitle.Location = new Point(170, 110);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(64, 31);
-            lblTitle.TabIndex = 18;
+            lblTitle.Size = new Size(91, 41);
+            lblTitle.TabIndex = 1;
             lblTitle.Text = "Вход";
-            lblTitle.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lblSubtitle
+            // 
+            lblSubtitle.AutoSize = true;
+            lblSubtitle.ForeColor = Color.FromArgb(77, 124, 138);
+            lblSubtitle.Location = new Point(153, 155);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(129, 15);
+            lblSubtitle.TabIndex = 2;
+            lblSubtitle.Text = "Влезте в MiniHelpDesk";
             // 
             // lblUsername
             // 
-            lblUsername.AutoSize = true;
-            lblUsername.Font = new Font("Segoe UI", 13F);
-            lblUsername.Location = new Point(112, 204);
+            lblUsername.Location = new Point(40, 200);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(173, 25);
-            lblUsername.TabIndex = 19;
-            lblUsername.Text = "Име на потребител:";
+            lblUsername.Size = new Size(150, 23);
+            lblUsername.TabIndex = 3;
+            lblUsername.Text = "Потребител";
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(112, 232);
+            txtUsername.Location = new Point(40, 225);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(358, 23);
-            txtUsername.TabIndex = 20;
+            txtUsername.Size = new Size(370, 23);
+            txtUsername.TabIndex = 4;
             // 
             // lblPassword
             // 
-            lblPassword.AutoSize = true;
-            lblPassword.Font = new Font("Segoe UI", 13F);
-            lblPassword.Location = new Point(112, 290);
+            lblPassword.Location = new Point(40, 270);
             lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(78, 25);
-            lblPassword.TabIndex = 21;
-            lblPassword.Text = "Парола:";
+            lblPassword.Size = new Size(100, 23);
+            lblPassword.TabIndex = 5;
+            lblPassword.Text = "Парола";
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(112, 318);
+            txtPassword.Location = new Point(40, 295);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(358, 23);
-            txtPassword.TabIndex = 22;
+            txtPassword.Size = new Size(370, 23);
+            txtPassword.TabIndex = 6;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // btnLogin
             // 
-            btnLogin.Font = new Font("Segoe UI", 13F);
-            btnLogin.Location = new Point(112, 393);
+            btnLogin.BackColor = Color.FromArgb(27, 64, 121);
+            btnLogin.FlatStyle = FlatStyle.Flat;
+            btnLogin.ForeColor = Color.White;
+            btnLogin.Location = new Point(40, 370);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(358, 50);
-            btnLogin.TabIndex = 23;
+            btnLogin.Size = new Size(370, 45);
+            btnLogin.TabIndex = 8;
             btnLogin.Text = "Вход";
-            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
             // btnRegister
             // 
-            btnRegister.Font = new Font("Segoe UI", 13F);
-            btnRegister.Location = new Point(112, 449);
+            btnRegister.Location = new Point(40, 425);
             btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(358, 50);
-            btnRegister.TabIndex = 25;
-            btnRegister.Text = "Регистация";
-            btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.Size = new Size(370, 35);
+            btnRegister.TabIndex = 9;
+            btnRegister.Text = "Регистрация";
             btnRegister.Click += btnRegister_Click;
             // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(588, 528);
-            Controls.Add(btnRegister);
-            Controls.Add(chkRevealPassword);
-            Controls.Add(btnLogin);
-            Controls.Add(txtPassword);
-            Controls.Add(lblPassword);
-            Controls.Add(txtUsername);
-            Controls.Add(lblUsername);
-            Controls.Add(lblTitle);
-            Controls.Add(lblMiniHelpDesk);
-            Controls.Add(pictureBoxPgtk);
+            BackColor = Color.White;
+            ClientSize = new Size(520, 520);
+            Controls.Add(pnlBody);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "LoginForm";
-            ((System.ComponentModel.ISupportInitialize)pictureBoxPgtk).EndInit();
+            Text = "MiniHelpDesk - Вход";
+            pnlBody.ResumeLayout(false);
+            pnlBody.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label lblMiniHelpDesk;
-        private PictureBox pictureBoxPgtk;
+        private Panel pnlBody;
+        private PictureBox pictureBox1;
         private Label lblTitle;
+        private Label lblSubtitle;
         private Label lblUsername;
-        private TextBox txtUsername;
         private Label lblPassword;
+        private TextBox txtUsername;
         private TextBox txtPassword;
         private Button btnLogin;
         private Button btnRegister;

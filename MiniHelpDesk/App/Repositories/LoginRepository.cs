@@ -9,6 +9,6 @@ namespace App.Repositories
     {
         public LoginRepository(AppDbContext db) : base(db) { }
 
-        public async Task<User?> GetByUsernameAsync(string username) => await _dbSet.FirstOrDefaultAsync(u => u.Username == username);
+        public async Task<User?> GetByUsernameAsync(string username) => await _dbSet.Include(u => u.Role).FirstOrDefaultAsync(u => u.Username == username);
     }
 }

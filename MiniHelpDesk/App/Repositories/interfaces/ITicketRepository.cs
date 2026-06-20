@@ -15,5 +15,8 @@ namespace App.Repositories.interfaces
         IEnumerable<Ticket> GetAllTickets();
         Task SaveChanges();
         Task<List<Ticket>> GetAllTicketsForUser(int id);
+        Task<List<Ticket>> GetAllTicketTechnic(int techId, int userId);
+        Task<List<User>> GetTechnicianUsers(int id);
+        Task<List<Comment>> GetTicketComments(int id);
     }
 }
