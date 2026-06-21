@@ -43,5 +43,18 @@ namespace App.Services
                 throw new Exception("Възникна грешка с добавянето!");
             }
         }
+
+        public async Task<List<Comment>> GetFromTicketAllComments(int idTicket)
+        {
+            try
+            {
+                return await _commentRepo.GetAllForTicket(idTicket);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message + " " + ex.StackTrace);
+                throw new Exception("Възникна грешка!");
+            }
+        }
     }
 }

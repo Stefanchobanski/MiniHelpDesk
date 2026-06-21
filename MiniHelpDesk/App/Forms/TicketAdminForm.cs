@@ -68,12 +68,13 @@ namespace App.Forms
                     _techForm.FormClosed += (s, args) => this.Close();
                     this.Close();
                 }
-                else
+                else if(!_isTechnich)
                 {
                     _userForm.Show();
                     _userForm.FormClosed += (s, args) => this.Close();
                     this.Close();
                 }
+
             }
             catch (Exception ex)
             {
@@ -90,7 +91,7 @@ namespace App.Forms
                 {
                     dgvTikets.DataSource = await _ticketService.GetAllTicketTechnic(_userid, _requesterId);
                 }
-                else
+                else if(!_isTechnich)
                 {
                     dgvTikets.DataSource = await _ticketService.GetAllTicketsForUser(_requesterId);
                 }

@@ -52,5 +52,10 @@ namespace App.Repositories
         {
             return await _db.Comments.Where(c => c.TicketID == id).ToListAsync();
         }
+
+        public async Task<List<Ticket>> GetTicketFromRequester(int id)
+        {
+            return await _db.Tickets.Where(t => t.RequesterId == id).ToListAsync();
+        }
     }
 }

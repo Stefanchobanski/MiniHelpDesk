@@ -26,17 +26,10 @@ namespace App.Services
             _logger = logger;
         }
 
-        public async Task<TicketResponseDTO> CreateTicket(CreateTicketRequestDTO request)
+        public async Task CreateTicket(Ticket request)
         {
-            var ticket = new Ticket
-            {
-                Email = request.Email,
-                Description = request.Description,
-                Status = App.Models.Enums.Status.New
-            };
 
-            await _ticketRepository.AddAsync(ticket);
-            return MapToResponse(ticket);
+            await _ticketRepository.AddAsync(request);
         }
 
         public async Task<TicketResponseDTO> GetTicketById(int ticketId)
@@ -229,6 +222,19 @@ namespace App.Services
                     CreatedDate = c.CreatedDate
                 }).ToList();
 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message} {ex.StackTrace}");
+                throw new Exception("Възникна грешка");
+            }
+        }
+
+        public async Task<List<Ticket>> GetAllTicketFromRequester(int id)
+        {
+            try
+            {
+                return await _ticketRepository.GetTicketFromRequester(id);
             }
             catch (Exception ex)
             {

@@ -83,7 +83,7 @@ namespace App.Forms
                         nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger, _ticketAdminFormLogger, _userFormLogger, _commentService, user.UserID, _commentFormLogger, _technicianLogger);
                         break;
                     case "Requester":
-                        nextForm = new TicketForm(_ticketService);
+                        nextForm = new DashboardForm(_ticketService, user.UserID, _adminService, _ticketAdminFormLogger, _commentService, _commentFormLogger, _categoryService);
                         break;
                     case "Technician":
                         nextForm = new TechnicianForm(_ticketService, _technicianLogger, user.UserID, _commentService, _commentFormLogger);
@@ -100,7 +100,7 @@ namespace App.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Login error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Възникна грешка", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

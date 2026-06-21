@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace App.Services.interfaces
 {
     public interface ITicketService
     {
-        Task<TicketResponseDTO> CreateTicket(CreateTicketRequestDTO request);
+        Task CreateTicket(Ticket request);
 
         Task<TicketResponseDTO> GetTicketById(int ticketId);
 
@@ -27,5 +26,6 @@ namespace App.Services.interfaces
         Task<List<User>> GetTechnicianUsers(int id);
         Task<List<TicketResponseDTO>> GetAllTicketTechnic(int techId, int userId);
         Task<List<CommentDTO>> GetTicketComments(int id);
+        Task<List<Ticket>> GetAllTicketFromRequester(int id);
     }
 }

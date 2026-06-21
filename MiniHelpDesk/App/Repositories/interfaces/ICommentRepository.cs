@@ -1,4 +1,6 @@
-﻿using System;
+﻿using App.Models;
+using App.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,6 @@ namespace App.Repositories.interfaces
 {
     public interface ICommentRepository
     {
-
+        Task<List<Comment>> GetAllForTicket(int idTicket);
     }
 }

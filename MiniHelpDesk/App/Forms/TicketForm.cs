@@ -1,4 +1,5 @@
-﻿using App.Models.DTOs;
+﻿using App.Models;
+using App.Models.DTOs;
 using App.Services.interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace App.Forms
     public partial class TicketForm : Form
     {
         private readonly ITicketService _ticketService;
-        public TicketForm(ITicketService ticketService)
+        private readonly int _idRequester;
+        public TicketForm(ITicketService ticketService, int idRequester)
         {
             InitializeComponent();
             _ticketService = ticketService;
+            _idRequester = idRequester;
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -32,17 +35,22 @@ namespace App.Forms
 
             try
             {
-                var request = new CreateTicketRequestDTO
+                Ticket ticket = new Ticket()
                 {
                     Email = txtEmail.Text,
-                    Description = txtDescription.Text
+                    Description = txtDescription.Text,
+                    Title = txtTitle.Text,
+                    Status = Models.Enums.Status.New,
+                    Priority = Models.Enums.Priority.Low,
+                    RequesterId = _idRequester
                 };
 
-                _ticketService.CreateTicket(request);
+                _ticketService.CreateTicket(ticket);
 
                 MessageBox.Show("Ticket created successfully!");
 
                 txtDescription.Clear();
+                this.Close();
             }
             catch (Exception ex)
             {

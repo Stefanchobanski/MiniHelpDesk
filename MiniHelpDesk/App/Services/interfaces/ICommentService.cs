@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace App.Services.interfaces
     public interface ICommentService
     {
         Task Add(string comment, DateTime date, int ticketID, int UserId);
+        Task<List<Comment>> GetFromTicketAllComments(int idTicket);
     }
 }

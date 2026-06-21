@@ -18,5 +18,6 @@ namespace App.Repositories.interfaces
         Task<List<Ticket>> GetAllTicketTechnic(int techId, int userId);
         Task<List<User>> GetTechnicianUsers(int id);
         Task<List<Comment>> GetTicketComments(int id);
+        Task<List<Ticket>> GetTicketFromRequester(int id);
     }
 }
