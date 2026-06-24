@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="App/App.csproj" />
+  <Project Path="NUnit-Tests/NUnit-Tests.csproj" Id="eb0d2982-dd1d-40c8-a2fb-8ef7205ec302" />
 </Solution>

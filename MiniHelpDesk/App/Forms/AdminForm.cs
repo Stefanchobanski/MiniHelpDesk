@@ -1,0 +1,77 @@
+﻿using App.Services;
+using App.Services.interfaces;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace App.Forms;
+
+public partial class AdminForm : Form
+{
+    private readonly IAdminService _adminService;
+    private readonly IRoleService _roleService;
+    private readonly CategoryService _categoryService;
+    private readonly TicketService _ticketService;
+
+    private readonly CommentService _commentService;
+
+    private readonly int _idUser;
+
+    private readonly ILogger<CategoriesForm> _categoryLogger;
+    private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
+    private readonly ILogger<TicketAdminForm> _ticketAdminForm;
+    private readonly ILogger<UserForm> _userFormLogger;
+    private readonly ILogger<CommentForm> _commentFormLogger;
+    private readonly ILogger<TechnicianForm> _technicianFormLogger;
+
+    public AdminForm(IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminForm, ILogger<UserForm> userForm, CommentService commentService, int idUser, ILogger<CommentForm> commentFormLogger, ILogger<TechnicianForm> technicianFormLogger)
+    {
+        InitializeComponent();
+        _adminService = adminService;
+        _roleService = roleService;
+        _categoryService = categoryService;
+        _ticketService = ticketService;
+        _categoryLogger = categoryLogger;
+        _roleAdminFormLogger = roleAdminFormLogger;
+        _ticketAdminForm = ticketAdminForm;
+        _userFormLogger = userForm;
+        _commentService = commentService;
+        _idUser = idUser;
+        _commentFormLogger = commentFormLogger;
+        _technicianFormLogger = technicianFormLogger;
+    }
+
+    private void btnUsers_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+
+        UserForm userForm = new UserForm(_adminService, this, _roleService, _ticketService, _ticketAdminForm, _userFormLogger, _commentService, _idUser, _commentFormLogger, _technicianFormLogger);
+        userForm.FormClosed += (s, args) => this.Show();
+        userForm.Show();
+    }
+
+    private void btnCategories_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+
+        CategoriesForm categoryForm = new CategoriesForm(this, _categoryService, _categoryLogger);
+        categoryForm.FormClosed += (s, args) => this.Show();
+        categoryForm.Show();
+    }
+
+    private void btnRoles_Click(object sender, EventArgs e)
+    {
+        this.Hide();
+
+        RoleAdminForm roleForm = new RoleAdminForm(this, _roleService, _roleAdminFormLogger);
+        roleForm.FormClosed += (s, args) => this.Show();
+        roleForm.Show();
+    }
+}

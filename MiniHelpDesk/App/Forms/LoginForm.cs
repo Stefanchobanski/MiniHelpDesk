@@ -1,0 +1,115 @@
+﻿using App.Models;
+using App.Services;
+using App.Services.interfaces;
+using App.Services.Interfaces;
+using Microsoft.Extensions.Logging;
+using System.CodeDom;
+
+namespace App.Forms
+{
+    public partial class LoginForm : Form
+    {
+        private readonly ILoginService _loginService;
+        private readonly RegisterForm _registerForm;
+
+        private readonly IAdminService _adminService;
+        private readonly IRoleService _roleService;
+        private readonly CategoryService _categoryService;
+        private readonly TicketService _ticketService;
+
+        private readonly CommentService _commentService;
+
+        private readonly ILogger<CategoriesForm> _categoryLogger;
+        private readonly ILogger<RoleAdminForm> _roleAdminFormLogger;
+        private readonly ILogger<TicketAdminForm> _ticketAdminFormLogger;
+        private readonly ILogger<TechnicianForm> _technicianLogger;
+        private readonly ILogger<UserForm> _userFormLogger;
+        private readonly ILogger<CommentForm> _commentFormLogger;
+
+        public CheckBox chkRevealPassword;
+
+        public LoginForm(ILoginService loginService, RegisterForm registerForm, IAdminService adminService, IRoleService roleService, CategoryService categoryService, TicketService ticketService, ILogger<CategoriesForm> categoryLogger, ILogger<RoleAdminForm> roleAdminFormLogger, ILogger<TicketAdminForm> ticketAdminFormLogger, ILogger<UserForm> userFormLogger, CommentService commentService, ILogger<TechnicianForm> technicianLogger, ILogger<CommentForm> commentFormLogger)
+        {
+            InitializeComponent();
+            _loginService = loginService;
+            _registerForm = registerForm;
+            _adminService = adminService;
+            _roleService = roleService;
+            _categoryService = categoryService;
+            _ticketService = ticketService;
+            _categoryLogger = categoryLogger;
+            _roleAdminFormLogger = roleAdminFormLogger;
+            _ticketAdminFormLogger = ticketAdminFormLogger;
+            _userFormLogger = userFormLogger;
+            _commentService = commentService;
+            _technicianLogger = technicianLogger;
+            _commentFormLogger = commentFormLogger;
+        }
+
+        private void chkRevealPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            chkRevealPassword = (CheckBox)sender;
+            if (chkRevealPassword.Checked)
+            {
+                txtPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                txtPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private async void btnLogin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string username = txtUsername.Text;
+                string password = txtPassword.Text;
+                if (RegisterEventHelpers.CheckAllFieldsLogin(username, password))
+                {
+                    MessageBox.Show("Please fill in all fields to log in.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                User user = await _loginService.LoginAsync(username, password);
+                string role = user.Role?.Name ?? string.Empty;
+
+
+
+                Form nextForm;
+                switch (role)
+                {
+                    case "Admin":
+                        nextForm = new AdminForm(_adminService, _roleService, _categoryService, _ticketService, _categoryLogger, _roleAdminFormLogger, _ticketAdminFormLogger, _userFormLogger, _commentService, user.UserID, _commentFormLogger, _technicianLogger);
+                        break;
+                    case "Requester":
+                        nextForm = new DashboardForm(_ticketService, user.UserID, _adminService, _ticketAdminFormLogger, _commentService, _commentFormLogger, _categoryService);
+                        break;
+                    case "Technician":
+                        nextForm = new TechnicianForm(_ticketService, _technicianLogger, user.UserID, _commentService, _commentFormLogger);
+                        break;
+                    default:
+                        MessageBox.Show($"Role '{role}' has no assigned form.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                }
+
+                this.Hide();
+                nextForm.FormClosed += (s, args) => this.Show();
+                nextForm.Show();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Възникна грешка", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            _registerForm.Show();
+            _registerForm.FormClosed += (s, args) => this.Close();
+            this.Close();
+        }
+
+    }
+}

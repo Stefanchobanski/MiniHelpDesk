@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniHelpDesk.Repositories;
+namespace App.Models.Enums;
 
-public interface IRepository
+public enum Priority
 {
+    Low,
+    Medium,
+    High
 }
